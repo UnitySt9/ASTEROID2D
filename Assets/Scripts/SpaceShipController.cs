@@ -4,76 +4,72 @@ using TMPro;
 public class SpaceShipController : MonoBehaviour
 {
     // Корабль
-    public float acceleration = 5f; // ускорение
-    public float maxSpeed = 10f; // максимальная скорость
+    private float acceleration = 5f;
+    private float maxSpeed = 10f; 
     private float currentSpeed = 0f;
-    public float rotationSpeed = 200f; // Скорость поворота
+    private float rotationSpeed = 200f;
     // Пуля
-    public GameObject bulletPrefab; // Префаб пули
-    public Transform firePoint; // Точка, из которой будет вылетать пуля
-    public float bulletSpeed = 10; // Скорость пули
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform firePoint; 
+    private float bulletSpeed = 10;
     // Лазер
-    public GameObject laserPrefab; // Префаб лазера
-    public static float laserCooldown = 5f; // Время перезарядки
-    public static int currentLaserShots;
-    private int maxLaserShots = 3; // Максимальное количество выстрелов
-
-    public GameObject gameOverPanel;
-    public TextMeshProUGUI endScore;
+    [SerializeField] GameObject laserPrefab; 
+    public float laserCooldown = 5f; 
+    public int currentLaserShots;
+    private int maxLaserShots = 3;
+    // Счёт
+    [SerializeField] GameObject gameOverPanel;
+    [SerializeField] TextMeshProUGUI endScore;
+    [SerializeField] Score score;
     void Start()
     {
         currentLaserShots = maxLaserShots;
         InvokeRepeating("RechargeLaser", laserCooldown, laserCooldown);
     }
-
     void Update()
     {
-        // Управление поворотом
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
         transform.Rotate(0, 0, -rotation);
 
-        // Движение вперед
         if (Input.GetKey(KeyCode.UpArrow))
         {
             currentSpeed += acceleration * Time.deltaTime;
         }
         else
         {
-            currentSpeed -= acceleration * Time.deltaTime; // Инерция при отпускании клавиши
+            currentSpeed -= acceleration * Time.deltaTime; 
         }
         
-        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed); // Ограничение скорости
-        
-        transform.position += transform.up * currentSpeed * Time.deltaTime; // Движение корабля вперед
-        
-        TeleportIfOutOfBound();  // Проверка выхода за границы экрана
+        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed); 
+        transform.position += transform.up * currentSpeed * Time.deltaTime;
+        TeleportIfOutOfBound();
 
-        // Стрельба пули
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Shoot();
         }
-        // Стрельба лазер
+
         if (Input.GetKeyDown(KeyCode.Mouse1) && currentLaserShots > 0)
         {
             ShootLaser();
         }
     }
-
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation); // Создаем пулю
-        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>(); // Получаем Rigidbody2D пули и задаем ей скорость
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
         bulletRb.velocity = firePoint.up * bulletSpeed;
-        Destroy(bullet, 2f); // Уничтожить пулю через 2 секунды
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.Initialize(score);
+        Destroy(bullet, 2f);
     }
-
     private void ShootLaser()
     {
-        Instantiate(laserPrefab, firePoint.position, firePoint.rotation);
+        GameObject lazer = Instantiate(laserPrefab, firePoint.position, firePoint.rotation);
+        Lazer lazerScript = lazer.GetComponent<Lazer>();
+        lazerScript.Initialize(score);
         currentLaserShots--;
     }
-
     private void RechargeLaser()
     {
         if (currentLaserShots < maxLaserShots)
@@ -95,11 +91,11 @@ public class SpaceShipController : MonoBehaviour
 
         transform.position = viewPos;
     }
-    // Столкновение с др объектами
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         gameOverPanel.SetActive(true);
-        endScore.text = "GAME OVER. SCORE: " + Score.score;
+        endScore.text = "GAME OVER. SCORE: " + score.score;
         Time.timeScale = 0;
     }
 }

@@ -2,19 +2,24 @@ using UnityEngine;
 
 public class Lazer : MonoBehaviour
 {
-    private float laserDuration = 0.5f; // ƒлительность существовани€ лазера
-
+    private float laserDuration = 0.5f;
+    private int scoreValue = 1;
+    private Score _score;
+    public void Initialize(Score score)
+    {
+        _score = score;
+    }
     private void Start()
     {
-        Destroy(gameObject, laserDuration); // ”ничтожаем лазер через заданное врем€
+        Destroy(gameObject, laserDuration);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Asteroid") || collision.CompareTag("UFO") || collision.CompareTag("Debris"))
+        if (collision.TryGetComponent<Asteroid>(out Asteroid asteroidComponent) || collision.TryGetComponent<UFO>(out UFO ufoComponent) || collision.TryGetComponent<Debris>(out Debris debrisComponent))
         {
-            Destroy(collision.gameObject); // ”ничтожаем объект, с которым пересекаетс€ лазер
-            Score.score++;
+            Destroy(collision.gameObject);
+            _score.AddScore(scoreValue);
         }
     }
 }

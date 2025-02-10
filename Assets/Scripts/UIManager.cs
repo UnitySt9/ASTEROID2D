@@ -3,39 +3,30 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public TextMeshProUGUI coordinatesText;
-    public TextMeshProUGUI angleText;
-    public TextMeshProUGUI speedText;
-    public TextMeshProUGUI laserChargesText;
-    public TextMeshProUGUI laserCooldownText;
-    public TextMeshProUGUI scoreText;
-
-    private Transform player;
-    
+    [SerializeField] TextMeshProUGUI coordinatesText;
+    [SerializeField] TextMeshProUGUI angleText;
+    [SerializeField] TextMeshProUGUI speedText;
+    [SerializeField] TextMeshProUGUI laserChargesText;
+    [SerializeField] TextMeshProUGUI laserCooldownText;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] SpaceShipController spaceShip;
+    [SerializeField] Score score;
     private Vector2 previousPosition;
-    public float speed;
-
-    private void Awake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
+    private float speed;
     private void FixedUpdate()
     {
-        Vector2 currentPosition = player.transform.position;
+        Vector2 currentPosition = spaceShip.transform.position;
         float distanceMoved = Vector2.Distance(previousPosition, currentPosition);
         speed = distanceMoved / Time.deltaTime;
         previousPosition = currentPosition;
     }
-
     void Update()
     {
-        // Обновление текстовых полей
-        coordinatesText.text = "Coordinates: " + player.transform.position.ToString();
-        angleText.text = "Angle: " + player.transform.eulerAngles.z.ToString();
+        coordinatesText.text = "Coordinates: " + spaceShip.transform.position.ToString();
+        angleText.text = "Angle: " + spaceShip.transform.eulerAngles.z.ToString();
         speedText.text = "Speed: " + speed.ToString();
-        laserChargesText.text = "Laser Charges: " + SpaceShipController.currentLaserShots.ToString();
-        laserCooldownText.text = "Laser Cooldown: " + SpaceShipController.laserCooldown.ToString();
-        scoreText.text = "Score: " + Score.score.ToString();
+        laserChargesText.text = "Laser Charges: " + spaceShip.currentLaserShots.ToString();
+        laserCooldownText.text = "Laser Cooldown: " + spaceShip.laserCooldown.ToString();
+        scoreText.text = "Score: " + score.score.ToString();
     }
 }

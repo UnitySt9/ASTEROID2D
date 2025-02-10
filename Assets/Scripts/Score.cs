@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Score : MonoBehaviour
+public class Score: MonoBehaviour
 {
-    public static int score;
-    private void Start()
+    public int score;
+    public void AddScore(int amount)
     {
-        score = 0;
+        score += amount;
     }
 }

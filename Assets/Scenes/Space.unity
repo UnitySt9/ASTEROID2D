@@ -449,6 +449,8 @@ MonoBehaviour:
   laserChargesText: {fileID: 871791698}
   laserCooldownText: {fileID: 945193505}
   scoreText: {fileID: 1771404435}
+  spaceShip: {fileID: 1032300173}
+  score: {fileID: 1311482879}
 --- !u!114 &431893374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1646,15 +1648,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a491463737ddb6d4abf64f6fa81f334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 5
-  maxSpeed: 10
-  rotationSpeed: 200
   bulletPrefab: {fileID: 336148340652094927, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
   firePoint: {fileID: 1837922387}
-  bulletSpeed: 20
   laserPrefab: {fileID: 128466666121450198, guid: d8898fe553285c845895e23a4916d62e, type: 3}
+  laserCooldown: 5
+  currentLaserShots: 0
   gameOverPanel: {fileID: 1618197267}
   endScore: {fileID: 931342249}
+  score: {fileID: 1311482879}
 --- !u!850595691 &1197798235
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1763,6 +1764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidPrefab: {fileID: 8384720147553082200, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
   ufoPrefab: {fileID: 1318582958563323054, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
+  spaceShipTransform: {fileID: 1032300164}
 --- !u!1 &1311482877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1807,6 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a168a14eba569544989336ef96163dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 0
 --- !u!1 &1618197267
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,38 +1,38 @@
 using UnityEngine;
-
 public class Asteroid : MonoBehaviour
 {
-    // Движение
-    public float speed = 2f;
+    private float speed = 3f;
     private Vector2 randomDirection;
-
-    // Осколки
-    public GameObject debrisPrefab;
-    private float speedIncrement = 1.5f;
-
+    [SerializeField] GameObject debrisPrefab;
     private void Start()
     {
         randomDirection = Random.insideUnitCircle.normalized;
     }
-
     private void Update()
     {
         transform.Translate(randomDirection * speed * Time.deltaTime);
+        TeleportIfOutOfBound();
     }
-    
     // Разрушение астероида
     public void Shatter()
     {
-        // Создание обломков и увеличение их скорости
-        for (int i = 0; i < 5; i++) // кол-во обломков
+        for (int i = 0; i < 5; i++) 
         {
-            GameObject debris = Instantiate(debrisPrefab, transform.position, Quaternion.identity);
-            Rigidbody2D rb = debris.GetComponent<Rigidbody2D>();
-            rb.velocity *= speedIncrement; // Увеличение скорости обломков
+            GameObject debris =  Instantiate(debrisPrefab, transform.position, Quaternion.identity);
             if(debris != null)
             Destroy(debris, 2f);
         }
-
-        Destroy(gameObject); // Уничтожаем астероид
+        Destroy(gameObject);
+    }
+    void TeleportIfOutOfBound()
+    {
+        Camera camera = Camera.main;
+        Vector3 viewPos = transform.position;
+        Vector3 cameraBounds = camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, camera.transform.position.z));
+        if (viewPos.x > cameraBounds.x) viewPos.x = -cameraBounds.x;
+        if (viewPos.x < -cameraBounds.x) viewPos.x = cameraBounds.x;
+        if (viewPos.y > cameraBounds.y) viewPos.y = -cameraBounds.y;
+        if (viewPos.y < -cameraBounds.y) viewPos.y = cameraBounds.y;
+        transform.position = viewPos;
     }
 }
