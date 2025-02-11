@@ -3,10 +3,9 @@ using UnityEngine;
 public class UFOFactory
 {
     private GameObject ufoPrefab;
-
     public UFOFactory(GameObject prefab)
     {
-        this.ufoPrefab = prefab;
+        ufoPrefab = prefab;
     }
 
     public IUfo CreateUFO(Vector2 position, Transform spaceShipTransform)

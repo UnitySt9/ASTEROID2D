@@ -8,7 +8,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] UFOFactory factory;
     [SerializeField] Transform spaceShipTransform;
     private int spawnInterval =5;
-
     private void Start()
     {
         factory = new UFOFactory(ufoPrefab);

@@ -14,16 +14,6 @@ public class UFO : MonoBehaviour, IUfo
         ShipChase();
         TeleportIfOutOfBound();
     }
-
-    //public void SetSpaceShipTransform(Transform transform)
-    //{
-    //    spaceShipTransform = transform;
-    //}
-    //private void Update()
-    //{
-    //    ShipChase();
-    //    TeleportIfOutOfBound();
-    //}
     void ShipChase()
     {
         if (_spaceShipTransform != null)

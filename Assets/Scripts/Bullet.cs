@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Bullet : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class Bullet : MonoBehaviour
         if (collision.TryGetComponent<Asteroid>(out Asteroid asteroidComponent))
         {
             Asteroid asteroid = collision.GetComponent<Asteroid>();
-            asteroid.Shatter();// Разрушение астероида
+            asteroid.Shatter();
             _score.AddScore(scoreValue);
         }
         else if (collision.TryGetComponent<Debris>(out Debris debrisComponent) || collision.TryGetComponent<UFO>(out UFO ufoComponent))

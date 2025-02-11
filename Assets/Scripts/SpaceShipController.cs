@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-
 public class SpaceShipController : MonoBehaviour
 {
     // Корабль
@@ -91,7 +90,6 @@ public class SpaceShipController : MonoBehaviour
 
         transform.position = viewPos;
     }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         gameOverPanel.SetActive(true);
