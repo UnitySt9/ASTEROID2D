@@ -3,6 +3,7 @@ using UnityEngine;
 public class UFOFactory
 {
     private GameObject ufoPrefab;
+
     public UFOFactory(GameObject prefab)
     {
         ufoPrefab = prefab;

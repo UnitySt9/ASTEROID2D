@@ -1,11 +1,12 @@
 using UnityEngine;
+
 public class Debris : MonoBehaviour
 {
-    private float speed = 5f;
-    private Vector2 randomDirection;
+    private float _speed = 5f;
+    private Vector2 _randomDirection;
     private void Start()
     {
-        randomDirection = Random.insideUnitCircle.normalized;
+        _randomDirection = Random.insideUnitCircle.normalized;
     }
     private void Update()
     {
@@ -13,6 +14,6 @@ public class Debris : MonoBehaviour
     }
     void SetSpeed()
     {
-        transform.Translate(randomDirection * speed * Time.deltaTime);
+        transform.Translate(_randomDirection * _speed * Time.deltaTime);
     }
 }

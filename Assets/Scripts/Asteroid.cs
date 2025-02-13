@@ -1,19 +1,22 @@
 using UnityEngine;
+
 public class Asteroid : MonoBehaviour
 {
-    private float speed = 3f;
-    private Vector2 randomDirection;
     [SerializeField] GameObject debrisPrefab;
+    private float _speed = 3f;
+    private Vector2 _randomDirection;
+
     private void Start()
     {
-        randomDirection = Random.insideUnitCircle.normalized;
+        _randomDirection = Random.insideUnitCircle.normalized;
     }
+
     private void Update()
     {
-        transform.Translate(randomDirection * speed * Time.deltaTime);
+        transform.Translate(_randomDirection * _speed * Time.deltaTime);
         TeleportIfOutOfBound();
     }
-    // Разрушение астероида
+
     public void Shatter()
     {
         for (int i = 0; i < 5; i++) 
@@ -24,6 +27,7 @@ public class Asteroid : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
     void TeleportIfOutOfBound()
     {
         Camera camera = Camera.main;

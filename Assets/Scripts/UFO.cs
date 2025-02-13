@@ -3,25 +3,28 @@ using UnityEngine;
 public class UFO : MonoBehaviour, IUfo
 {
     private Transform _spaceShipTransform;
-    private float speed = 2f;
+    private float _speed = 2f;
 
-    public void Initialize(Transform spaceShipTransform)
-    {
-        _spaceShipTransform = spaceShipTransform;
-    }
     private void Update()
     {
         ShipChase();
         TeleportIfOutOfBound();
     }
+
+    public void Initialize(Transform spaceShipTransform)
+    {
+        _spaceShipTransform = spaceShipTransform;
+    }
+
     void ShipChase()
     {
         if (_spaceShipTransform != null)
         {
             Vector2 direction = (_spaceShipTransform.position - transform.position).normalized;
-            transform.Translate(direction * speed * Time.deltaTime);
+            transform.Translate(direction * _speed * Time.deltaTime);
         }
     }
+
     void TeleportIfOutOfBound()
     {
         Camera camera = Camera.main;

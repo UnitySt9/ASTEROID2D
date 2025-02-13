@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject ufoPrefab;
     [SerializeField] UFOFactory factory;
     [SerializeField] Transform spaceShipTransform;
-    private int spawnInterval =5;
+    private int _spawnInterval =5;
     private void Start()
     {
         factory = new UFOFactory(ufoPrefab);
@@ -19,7 +19,7 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnAsteroid();
             SpawnUFO();
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(_spawnInterval);
         }
     }
     void SpawnAsteroid()

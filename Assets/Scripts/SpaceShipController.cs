@@ -2,45 +2,42 @@ using UnityEngine;
 using TMPro;
 public class SpaceShipController : MonoBehaviour
 {
-    // Корабль
-    private float acceleration = 5f;
-    private float maxSpeed = 10f; 
-    private float currentSpeed = 0f;
-    private float rotationSpeed = 200f;
-    // Пуля
-    [SerializeField] GameObject bulletPrefab;
-    [SerializeField] Transform firePoint; 
-    private float bulletSpeed = 10;
-    // Лазер
-    [SerializeField] GameObject laserPrefab; 
-    public float laserCooldown = 5f; 
+    public float laserCooldown = 5f;
     public int currentLaserShots;
-    private int maxLaserShots = 3;
-    // Счёт
-    [SerializeField] GameObject gameOverPanel;
-    [SerializeField] TextMeshProUGUI endScore;
-    [SerializeField] Score score;
+    [SerializeField] GameObject _bulletPrefab;
+    [SerializeField] Transform _firePoint;
+    [SerializeField] GameObject _laserPrefab;
+    [SerializeField] GameObject _gameOverPanel;
+    [SerializeField] TextMeshProUGUI _endScore;
+    [SerializeField] Score _score;
+    private float _acceleration = 5f;
+    private float _maxSpeed = 10f; 
+    private float _currentSpeed = 0f;
+    private float _rotationSpeed = 200f;
+    private float _bulletSpeed = 10;
+    private int _maxLaserShots = 3;
+
     void Start()
     {
-        currentLaserShots = maxLaserShots;
+        currentLaserShots = _maxLaserShots;
         InvokeRepeating("RechargeLaser", laserCooldown, laserCooldown);
     }
     void Update()
     {
-        float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+        float rotation = Input.GetAxis("Horizontal") * _rotationSpeed * Time.deltaTime;
         transform.Rotate(0, 0, -rotation);
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            currentSpeed += acceleration * Time.deltaTime;
+            _currentSpeed += _acceleration * Time.deltaTime;
         }
         else
         {
-            currentSpeed -= acceleration * Time.deltaTime; 
+            _currentSpeed -= _acceleration * Time.deltaTime; 
         }
         
-        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed); 
-        transform.position += transform.up * currentSpeed * Time.deltaTime;
+        _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxSpeed); 
+        transform.position += transform.up * _currentSpeed * Time.deltaTime;
         TeleportIfOutOfBound();
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -53,25 +50,34 @@ public class SpaceShipController : MonoBehaviour
             ShootLaser();
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        _gameOverPanel.SetActive(true);
+        _endScore.text = "GAME OVER. SCORE: " + _score.score;
+        Time.timeScale = 0;
+    }
+
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = firePoint.up * bulletSpeed;
+        bulletRb.velocity = _firePoint.up * _bulletSpeed;
         Bullet bulletScript = bullet.GetComponent<Bullet>();
-        bulletScript.Initialize(score);
+        bulletScript.Initialize(_score);
         Destroy(bullet, 2f);
     }
-    private void ShootLaser()
+
+    void ShootLaser()
     {
-        GameObject lazer = Instantiate(laserPrefab, firePoint.position, firePoint.rotation);
+        GameObject lazer = Instantiate(_laserPrefab, _firePoint.position, _firePoint.rotation);
         Lazer lazerScript = lazer.GetComponent<Lazer>();
-        lazerScript.Initialize(score);
+        lazerScript.Initialize(_score);
         currentLaserShots--;
     }
-    private void RechargeLaser()
+    void RechargeLaser()
     {
-        if (currentLaserShots < maxLaserShots)
+        if (currentLaserShots < _maxLaserShots)
         {
             currentLaserShots++;
         }
@@ -87,13 +93,6 @@ public class SpaceShipController : MonoBehaviour
         if (viewPos.x < -cameraBounds.x) viewPos.x = cameraBounds.x;
         if (viewPos.y > cameraBounds.y) viewPos.y = -cameraBounds.y;
         if (viewPos.y < -cameraBounds.y) viewPos.y = cameraBounds.y;
-
         transform.position = viewPos;
-    }
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        gameOverPanel.SetActive(true);
-        endScore.text = "GAME OVER. SCORE: " + score.score;
-        Time.timeScale = 0;
     }
 }
