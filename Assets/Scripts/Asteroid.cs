@@ -3,7 +3,7 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     [SerializeField] GameObject debrisPrefab;
-    private float _speed = 3f;
+    private readonly float _speed = 3f;
     private Vector2 _randomDirection;
 
     private void Start()
@@ -13,7 +13,7 @@ public class Asteroid : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(_randomDirection * _speed * Time.deltaTime);
+        transform.Translate(_randomDirection * (_speed * Time.deltaTime));
         TeleportIfOutOfBound();
     }
 
@@ -23,16 +23,16 @@ public class Asteroid : MonoBehaviour
         {
             GameObject debris =  Instantiate(debrisPrefab, transform.position, Quaternion.identity);
             if(debris != null)
-            Destroy(debris, 2f);
+                Destroy(debris, 2f);
         }
         Destroy(gameObject);
     }
 
     void TeleportIfOutOfBound()
     {
-        Camera camera = Camera.main;
+        Camera maincamera = Camera.main;
         Vector3 viewPos = transform.position;
-        Vector3 cameraBounds = camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, camera.transform.position.z));
+        Vector3 cameraBounds = maincamera!.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, maincamera.transform.position.z));
         if (viewPos.x > cameraBounds.x) viewPos.x = -cameraBounds.x;
         if (viewPos.x < -cameraBounds.x) viewPos.x = cameraBounds.x;
         if (viewPos.y > cameraBounds.y) viewPos.y = -cameraBounds.y;

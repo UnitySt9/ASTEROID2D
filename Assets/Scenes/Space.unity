@@ -1648,14 +1648,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a491463737ddb6d4abf64f6fa81f334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 336148340652094927, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
-  firePoint: {fileID: 1837922387}
-  laserPrefab: {fileID: 128466666121450198, guid: d8898fe553285c845895e23a4916d62e, type: 3}
   laserCooldown: 5
   currentLaserShots: 0
-  gameOverPanel: {fileID: 1618197267}
-  endScore: {fileID: 931342249}
-  score: {fileID: 1311482879}
+  _bulletPrefab: {fileID: 336148340652094927, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
+  _firePoint: {fileID: 1837922387}
+  _laserPrefab: {fileID: 128466666121450198, guid: d8898fe553285c845895e23a4916d62e, type: 3}
+  _gameOverPanel: {fileID: 1618197267}
+  _endScore: {fileID: 931342249}
+  _score: {fileID: 1311482879}
 --- !u!850595691 &1197798235
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1809,7 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a168a14eba569544989336ef96163dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 0
+  score: 0
 --- !u!1 &1618197267
 GameObject:
   m_ObjectHideFlags: 0
