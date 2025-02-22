@@ -20,10 +20,10 @@ namespace _Project.Scripts
 
         public Vector3 ConfineToBounds(Vector3 position)
         {
-            if (_camera == null) return position;
+            if (_camera == null) 
+                return position;
 
             Vector3 viewPos = position;
-
             if (viewPos.x > _cameraBounds.x)
                 viewPos.x = -_cameraBounds.x;
             if (viewPos.x < -_cameraBounds.x)
@@ -32,7 +32,6 @@ namespace _Project.Scripts
                 viewPos.y = -_cameraBounds.y;
             if (viewPos.y < -_cameraBounds.y)
                 viewPos.y = _cameraBounds.y;
-
             return viewPos;
         }
     }

@@ -46,7 +46,7 @@ namespace _Project.Scripts
         
             _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxSpeed); 
             transform.position += transform.up * (_currentSpeed * Time.deltaTime);
-            TeleportIfOutOfBound();
+            transform.position = _teleportBounds.ConfineToBounds(transform.position);
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
@@ -91,14 +91,6 @@ namespace _Project.Scripts
             if (currentLaserShots < _maxLaserShots)
             {
                 currentLaserShots++;
-            }
-        }
-        
-        private void TeleportIfOutOfBound()
-        {
-            if (_teleportBounds != null)
-            {
-                transform.position = _teleportBounds.ConfineToBounds(transform.position);
             }
         }
     }

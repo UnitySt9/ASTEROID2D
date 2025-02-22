@@ -6,7 +6,7 @@ namespace _Project.Scripts
     {
         public int Count {get; private set;}
         
-        public void AddScore(int amount)
+        private void AddScore(int amount)
         {
             Count += amount;
         }
@@ -14,13 +14,11 @@ namespace _Project.Scripts
         public void SubscribeToBullet(Bullet bullet)
         {
             bullet.OnBulletHit += AddScore;
-            Debug.Log("1");
         }
         
         public void UnsubscribeFromBullet(Bullet bullet)
         {
             bullet.OnBulletHit -= AddScore;
-            Debug.Log("2");
         }
         
         public void SubscribeToLazer(Lazer lazer)

@@ -6,18 +6,26 @@ namespace _Project.Scripts
     {
         private Transform _spaceShipTransform;
         private TeleportBounds _teleportBounds;
+        private Rigidbody2D _rb;
+        private Vector2 _randomDirection;
         
         private readonly float _speed = 2f;
+
+        private void Awake()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+        }
 
         private void Start()
         {
             _teleportBounds = GetComponent<TeleportBounds>();
+            _randomDirection = Random.insideUnitCircle.normalized;
         }
 
         private void Update()
         {
             FollowTheShip();
-            TeleportIfOutOfBound();
+            transform.position = _teleportBounds.ConfineToBounds(transform.position);
         }
         
         private void OnTriggerEnter2D(Collider2D collision)
@@ -25,6 +33,10 @@ namespace _Project.Scripts
             if (collision.TryGetComponent(out Bullet _) || collision.TryGetComponent(out Lazer _))
             {
                 Destroy(gameObject);
+            }
+            else
+            {
+                _rb.velocity = _randomDirection * _speed;
             }
         }
         public void Initialize(Transform spaceShipTransform)
@@ -37,15 +49,7 @@ namespace _Project.Scripts
             if (_spaceShipTransform)
             {
                 Vector2 direction = (_spaceShipTransform.position - transform.position).normalized;
-                transform.Translate(direction * (_speed * Time.deltaTime));
-            }
-        }
-
-        private void TeleportIfOutOfBound()
-        {
-            if (_teleportBounds != null)
-            {
-                transform.position = _teleportBounds.ConfineToBounds(transform.position);
+                _rb.velocity = direction * _speed;
             }
         }
     }
