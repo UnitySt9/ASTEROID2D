@@ -1457,6 +1457,8 @@ GameObject:
   - component: {fileID: 1032300172}
   - component: {fileID: 1032300173}
   - component: {fileID: 1032300174}
+  - component: {fileID: 1032300175}
+  - component: {fileID: 1032300176}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Player
@@ -1632,8 +1634,6 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 336148340652094927, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
   _firePoint: {fileID: 1837922387}
   _laserPrefab: {fileID: 128466666121450198, guid: d8898fe553285c845895e23a4916d62e, type: 3}
-  _gameOverPanel: {fileID: 1618197267}
-  _endScore: {fileID: 931342249}
   _score: {fileID: 1311482879}
 --- !u!114 &1032300174
 MonoBehaviour:
@@ -1647,6 +1647,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21dd6e4a6bd887846a2088d32e36027c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1032300175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032300162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f40dce4b87a4b84e9901a9cd072c1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1032300176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032300162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62709447223e0664cac599d310eafa63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameOverPanel: {fileID: 1618197267}
+  _endScore: {fileID: 931342249}
+  _score: {fileID: 1311482879}
 --- !u!850595691 &1197798235
 LightingSettings:
   m_ObjectHideFlags: 0
