@@ -11,7 +11,7 @@ namespace _Project.Scripts
         [SerializeField] TextMeshProUGUI laserChargesText;
         [SerializeField] TextMeshProUGUI laserCooldownText;
         [SerializeField] TextMeshProUGUI scoreText;
-        [SerializeField] SpaceShipController spaceShip;
+        [SerializeField] SpaceShipShooting spaceShip;
         [SerializeField] Score score;
         
         private Vector2 _previousPosition;
@@ -27,12 +27,12 @@ namespace _Project.Scripts
 
         private void Update()
         {
-            coordinatesText.text = "Coordinates: " + spaceShip.transform.position.ToString();
-            angleText.text = "Angle: " + spaceShip.transform.eulerAngles.z.ToString();
-            speedText.text = "Speed: " + _speed.ToString();
-            laserChargesText.text = "Laser Charges: " + spaceShip.currentLaserShots.ToString();
-            laserCooldownText.text = "Laser Cooldown: " + spaceShip.laserCooldown.ToString();
-            scoreText.text = "Score: " + score.Count.ToString();
+            coordinatesText.text = "Coordinates: " + spaceShip.transform.position;
+            angleText.text = "Angle: " + spaceShip.transform.eulerAngles.z;
+            speedText.text = "Speed: " + _speed;
+            laserChargesText.text = "Laser Charges: " + spaceShip.currentLaserShots;
+            laserCooldownText.text = "Laser Cooldown: " + spaceShip.laserCooldown;
+            scoreText.text = "Score: " + score.Count;
         }
     }
 }

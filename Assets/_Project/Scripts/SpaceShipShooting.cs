@@ -1,9 +1,9 @@
-using TMPro;
+using System.Collections;
 using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class SpaceShipController : MonoBehaviour
+    public class SpaceShipShooting : MonoBehaviour
     {
         public float laserCooldown = 5f;
         public int currentLaserShots;
@@ -11,43 +11,19 @@ namespace _Project.Scripts
         [SerializeField] GameObject _bulletPrefab;
         [SerializeField] Transform _firePoint;
         [SerializeField] GameObject _laserPrefab;
-        [SerializeField] GameObject _gameOverPanel;
-        [SerializeField] TextMeshProUGUI _endScore;
         [SerializeField] Score _score;
         
-        private TeleportBounds _teleportBounds;
-        private float _acceleration = 5f;
-        private float _maxSpeed = 10f; 
-        private float _currentSpeed;
-        private float _rotationSpeed = 200f;
         private float _bulletSpeed = 10;
         private int _maxLaserShots = 3;
 
         private void Start()
         {
             currentLaserShots = _maxLaserShots;
-            _teleportBounds = GetComponent<TeleportBounds>();
-            InvokeRepeating(nameof(RechargeLaser), laserCooldown, laserCooldown);
+            StartCoroutine(RechargeLaserCoroutine());
         }
         
         private void Update()
         {
-            float rotation = Input.GetAxis("Horizontal") * _rotationSpeed * Time.deltaTime;
-            transform.Rotate(0, 0, -rotation);
-
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                _currentSpeed += _acceleration * Time.deltaTime;
-            }
-            else
-            {
-                _currentSpeed -= _acceleration * Time.deltaTime; 
-            }
-        
-            _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxSpeed); 
-            transform.position += transform.up * (_currentSpeed * Time.deltaTime);
-            transform.position = _teleportBounds.ConfineToBounds(transform.position);
-
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Shoot();
@@ -58,14 +34,7 @@ namespace _Project.Scripts
                 ShootLaser();
             }
         }
-
-        private void OnCollisionEnter2D()
-        {
-            _gameOverPanel.SetActive(true);
-            _endScore.text = "GAME OVER. SCORE: " + _score.Count;
-            Time.timeScale = 0;
-        }
-
+        
         private void Shoot()
         {
             GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
@@ -77,13 +46,22 @@ namespace _Project.Scripts
             bulletScript.Initialize(_score);
         }
 
-        void ShootLaser()
+        private void ShootLaser()
         {
             GameObject lazer = Instantiate(_laserPrefab, _firePoint.position, _firePoint.rotation);
             Lazer lazerScript = lazer.GetComponent<Lazer>();
             _score.SubscribeToLazer(lazerScript);
             lazerScript.Initialize(_score);
             currentLaserShots--;
+        }
+        
+        private IEnumerator RechargeLaserCoroutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(laserCooldown);
+                RechargeLaser();
+            }
         }
         
         private void RechargeLaser()
