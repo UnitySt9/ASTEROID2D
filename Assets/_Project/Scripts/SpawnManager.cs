@@ -5,28 +5,39 @@ namespace _Project.Scripts
 {
     public class SpawnManager : MonoBehaviour
     {
+        private readonly int _spawnAsteroidInterval =5;
+        private readonly int _spawnUFOInterval =4;
+        
         [SerializeField] GameObject _asteroidPrefab;
         [SerializeField] UFO _ufoPrefab;
         [SerializeField] Transform _spaceShipTransform;
         
         private Camera _camera;
         private UFOFactory _factory;
-        private readonly int _spawnInterval =5;
         
         private void Start()
         {
             _factory = new UFOFactory(_ufoPrefab);
             _camera = Camera.main;
-            StartCoroutine(SpawnObjects());
+            StartCoroutine(SpawnAsteroids());
+            StartCoroutine(SpawnUFOs());
         }
         
-        private IEnumerator SpawnObjects()
+        private IEnumerator SpawnAsteroids()
         {
             while (true)
             {
                 SpawnAsteroid();
+                yield return new WaitForSeconds(_spawnAsteroidInterval);
+            }
+        }
+        
+        private IEnumerator SpawnUFOs()
+        {
+            while (true)
+            {
                 SpawnUFO();
-                yield return new WaitForSeconds(_spawnInterval);
+                yield return new WaitForSeconds(_spawnUFOInterval);
             }
         }
         
