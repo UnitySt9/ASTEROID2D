@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class UFO : MonoBehaviour, IUfo
+    public class UFO : MonoBehaviour
     {
         private Transform _spaceShipTransform;
         private TeleportBounds _teleportBounds;

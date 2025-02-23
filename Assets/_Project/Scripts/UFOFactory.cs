@@ -11,12 +11,11 @@ namespace _Project.Scripts
             _ufo = ufo;
         }
         
-        public IUfo CreateUFO(Vector2 position, Transform spaceShipTransform)
+        public void CreateUFO(Vector2 position, Transform spaceShipTransform)
         {
             UFO ufoInstance = Object.Instantiate(_ufo, position, Quaternion.identity);
             UFO ufoComponent = ufoInstance.GetComponent<UFO>();
             ufoComponent.Initialize(spaceShipTransform);
-            return ufoComponent;
         }
     }
 }
