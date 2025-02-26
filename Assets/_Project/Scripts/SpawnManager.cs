@@ -55,7 +55,7 @@ namespace _Project.Scripts
         
         Vector2 GetRandomSpawnPosition()
         {
-            Vector3 cameraBounds = _camera!.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
+            Vector3 cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
             return -cameraBounds;
         }
     }
