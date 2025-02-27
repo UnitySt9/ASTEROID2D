@@ -9,21 +9,16 @@ namespace _Project.Scripts
     {
         private readonly float _speed = 2f;
         private Transform _spaceShipTransform;
-        private TeleportBounds _teleportBounds;
         private Rigidbody2D _rigidbody2D;
-        private Vector2 _randomDirection;
         
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _teleportBounds = GetComponent<TeleportBounds>();
-            _randomDirection = Random.insideUnitCircle.normalized;
         }
 
         private void Update()
         {
             FollowTheShip();
-            transform.position = _teleportBounds.ConfineToBounds(transform.position);
         }
         
         private void OnTriggerEnter2D(Collider2D collision)
@@ -32,11 +27,8 @@ namespace _Project.Scripts
             {
                 Destroy(gameObject);
             }
-            else
-            {
-                _rigidbody2D.velocity = _randomDirection * _speed;
-            }
         }
+        
         public void Initialize(Transform spaceShipTransform)
         {
             _spaceShipTransform = spaceShipTransform;

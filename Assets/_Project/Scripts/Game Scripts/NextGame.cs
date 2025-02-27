@@ -13,7 +13,7 @@ namespace _Project.Scripts
             _restartButton.onClick.AddListener(RestartGame);
         }
 
-        public void RestartGame()
+        private void RestartGame()
         {
             Time.timeScale = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

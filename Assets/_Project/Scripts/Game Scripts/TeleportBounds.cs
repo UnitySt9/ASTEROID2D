@@ -18,12 +18,13 @@ namespace _Project.Scripts
             _cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
         }
 
-        public Vector3 ConfineToBounds(Vector3 position)
+        private void LateUpdate()
         {
-            if (_camera == null) 
-                return position;
+            if (_camera == null)
+                return;
 
-            Vector3 viewPos = position;
+            Vector3 viewPos = transform.position;
+
             if (viewPos.x > _cameraBounds.x)
                 viewPos.x = -_cameraBounds.x;
             if (viewPos.x < -_cameraBounds.x)
@@ -32,7 +33,8 @@ namespace _Project.Scripts
                 viewPos.y = -_cameraBounds.y;
             if (viewPos.y < -_cameraBounds.y)
                 viewPos.y = _cameraBounds.y;
-            return viewPos;
+
+            transform.position = viewPos;
         }
     }
 }

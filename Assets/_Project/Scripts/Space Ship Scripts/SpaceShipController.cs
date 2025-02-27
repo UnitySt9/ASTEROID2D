@@ -4,9 +4,9 @@ namespace _Project.Scripts
 {
     public class SpaceShipController : MonoBehaviour
     {
-        [SerializeField] private ShipMovement _shipMovement;
-        [SerializeField] private SpaceShipShooting _spaceShipShooting;
-        [SerializeField] private InputHandler _inputHandler;
+        [SerializeField] ShipMovement _shipMovement;
+        [SerializeField] SpaceShipShooting _spaceShipShooting;
+        [SerializeField] InputHandler _inputHandler;
 
         private void Start()
         {

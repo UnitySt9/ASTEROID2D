@@ -4,17 +4,11 @@ namespace _Project.Scripts
 {
     public class ShipMovement : MonoBehaviour
     {
-        private TeleportBounds _teleportBounds;
+        private readonly float _maxSpeed = 10f;
         private float _acceleration = 5f;
-        private float _maxSpeed = 10f;
         private float _currentSpeed;
         private float _rotationSpeed = 200f;
-
-        private void Start()
-        {
-            _teleportBounds = GetComponent<TeleportBounds>();
-        }
-
+        
         public void HandleMovement(float horizontalInput, bool isAccelerating)
         {
             float rotation = horizontalInput * _rotationSpeed * Time.deltaTime;
@@ -31,7 +25,6 @@ namespace _Project.Scripts
 
             _currentSpeed = Mathf.Clamp(_currentSpeed, 0, _maxSpeed);
             transform.position += transform.up * (_currentSpeed * Time.deltaTime);
-            transform.position = _teleportBounds.ConfineToBounds(transform.position);
         }
     }
 }

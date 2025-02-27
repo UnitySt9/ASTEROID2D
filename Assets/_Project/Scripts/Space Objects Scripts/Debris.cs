@@ -3,6 +3,7 @@ using UnityEngine;
 namespace _Project.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    
     public class Debris : MonoBehaviour
     {
         private readonly float _speed = 6f;

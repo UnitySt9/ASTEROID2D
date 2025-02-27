@@ -8,23 +8,15 @@ namespace _Project.Scripts
     public class Asteroid : MonoBehaviour
     {
         private readonly float _speed = 3f;
-        
         [SerializeField] GameObject debrisPrefab;
-        private Vector2 _randomDirection;
-        private TeleportBounds _teleportBounds;
+        private Vector2 _direction;
         private Rigidbody2D _rigidbody2D;
         
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _randomDirection = Random.insideUnitCircle.normalized;
-            _teleportBounds = GetComponent<TeleportBounds>();
-            _rigidbody2D.velocity = _randomDirection * _speed;
-        }
-
-        private void FixedUpdate()
-        {
-            transform.position = _teleportBounds.ConfineToBounds(transform.position);
+            _direction = Random.insideUnitCircle.normalized;
+            _rigidbody2D.velocity = _direction * _speed;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -35,7 +27,7 @@ namespace _Project.Scripts
             }
             else
             {
-                _rigidbody2D.velocity = _randomDirection * _speed;
+                _rigidbody2D.velocity = _direction * _speed;
             }
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 namespace _Project.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    
     public class Bullet : MonoBehaviour
     {
         public event Action<int> OnBulletHit; 
