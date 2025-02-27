@@ -12,13 +12,18 @@ namespace _Project.Scripts
         [SerializeField] UFO _ufoPrefab;
         [SerializeField] Transform _spaceShipTransform;
         
+        private WaitForSeconds _waitForAsteroidSpawn;
+        private WaitForSeconds _waitForUFOSpawn;
         private Camera _camera;
+        private Vector3 _cameraBounds;
         private UFOFactory _factory;
         
         private void Start()
         {
             _factory = new UFOFactory(_ufoPrefab);
             _camera = Camera.main;
+            _waitForAsteroidSpawn = new WaitForSeconds(_spawnAsteroidInterval);
+            _waitForUFOSpawn = new WaitForSeconds(_spawnUFOInterval);
             StartCoroutine(SpawnAsteroids());
             StartCoroutine(SpawnUFOs());
         }
@@ -28,7 +33,7 @@ namespace _Project.Scripts
             while (true)
             {
                 SpawnAsteroid();
-                yield return new WaitForSeconds(_spawnAsteroidInterval);
+                yield return _waitForAsteroidSpawn;
             }
         }
         
@@ -37,7 +42,7 @@ namespace _Project.Scripts
             while (true)
             {
                 SpawnUFO();
-                yield return new WaitForSeconds(_spawnUFOInterval);
+                yield return _waitForUFOSpawn;
             }
         }
         
@@ -55,8 +60,8 @@ namespace _Project.Scripts
         
         Vector2 GetRandomSpawnPosition()
         {
-            Vector3 cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
-            return -cameraBounds;
+            _cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
+            return -_cameraBounds;
         }
     }
 }

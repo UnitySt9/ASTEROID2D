@@ -205,7 +205,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299871505
 GameObject:
@@ -408,7 +408,51 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &405699981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405699983}
+  - component: {fileID: 405699982}
+  m_Layer: 0
+  m_Name: InputHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &405699982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405699981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fc011e0d163374ab200ab07ba5a4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &405699983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405699981}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.3255322, y: 1.843126, z: -2.1454833}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &431893372
 GameObject:
@@ -449,7 +493,7 @@ MonoBehaviour:
   laserChargesText: {fileID: 871791698}
   laserCooldownText: {fileID: 945193505}
   scoreText: {fileID: 1771404435}
-  spaceShip: {fileID: 1032300173}
+  spaceShip: {fileID: 1837922388}
   score: {fileID: 1311482879}
 --- !u!114 &431893374
 MonoBehaviour:
@@ -532,7 +576,7 @@ RectTransform:
   - {fileID: 1771404437}
   - {fileID: 1618197268}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1444,10 +1488,9 @@ GameObject:
   - component: {fileID: 1032300164}
   - component: {fileID: 1032300163}
   - component: {fileID: 1032300172}
-  - component: {fileID: 1032300173}
   - component: {fileID: 1032300174}
-  - component: {fileID: 1032300175}
   - component: {fileID: 1032300176}
+  - component: {fileID: 1032300177}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Player
@@ -1606,24 +1649,6 @@ PolygonCollider2D:
       - {x: -0.07058824, y: -0.28529412}
       - {x: 0.07058824, y: -0.29117647}
       - {x: 0.09411765, y: -0.25588235}
---- !u!114 &1032300173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1032300162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a491463737ddb6d4abf64f6fa81f334f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserCooldown: 5
-  currentLaserShots: 0
-  _bulletPrefab: {fileID: 336148340652094927, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
-  _firePoint: {fileID: 1837922387}
-  _laserPrefab: {fileID: 128466666121450198, guid: d8898fe553285c845895e23a4916d62e, type: 3}
-  _score: {fileID: 1311482879}
 --- !u!114 &1032300174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1634,18 +1659,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21dd6e4a6bd887846a2088d32e36027c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1032300175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1032300162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f40dce4b87a4b84e9901a9cd072c1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1032300176
@@ -1663,6 +1676,18 @@ MonoBehaviour:
   _gameOverPanel: {fileID: 1618197267}
   _endScore: {fileID: 931342249}
   _score: {fileID: 1311482879}
+--- !u!114 &1032300177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032300162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b447086678e88a40b720b835b2f61ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!850595691 &1197798235
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1772,6 +1797,53 @@ MonoBehaviour:
   _asteroidPrefab: {fileID: 8384720147553082200, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
   _ufoPrefab: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
   _spaceShipTransform: {fileID: 1032300164}
+--- !u!1 &1263456736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1263456738}
+  - component: {fileID: 1263456737}
+  m_Layer: 0
+  m_Name: SpaceShipController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1263456737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263456736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d50d5ca0284884aa1ae0d49062c451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipMovement: {fileID: 1032300177}
+  _spaceShipShooting: {fileID: 1837922388}
+  _inputHandler: {fileID: 405699982}
+--- !u!4 &1263456738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263456736}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.3255322, y: 1.843126, z: -2.1454833}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1311482877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,6 +2110,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1837922387}
+  - component: {fileID: 1837922388}
   m_Layer: 0
   m_Name: FirePoint
   m_TagString: Untagged
@@ -2060,6 +2133,24 @@ Transform:
   m_Father: {fileID: 1032300164}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1837922388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837922386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f24656eae3eaf45a6d6dce13d36033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserCooldown: 5
+  currentLaserShots: 0
+  _bulletPrefab: {fileID: 5545325319887222147, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
+  _firePoint: {fileID: 1837922387}
+  _laserPrefab: {fileID: 2011693668067995137, guid: d8898fe553285c845895e23a4916d62e, type: 3}
+  _score: {fileID: 1311482879}
 --- !u!1 &2043845788
 GameObject:
   m_ObjectHideFlags: 0

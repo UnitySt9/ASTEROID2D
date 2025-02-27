@@ -2,26 +2,24 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(TeleportBounds))]
+    
     public class Asteroid : MonoBehaviour
     {
-        [SerializeField] GameObject debrisPrefab;
+        private readonly float _speed = 3f;
         
-        private readonly float _speed = 4f;
+        [SerializeField] GameObject debrisPrefab;
         private Vector2 _randomDirection;
         private TeleportBounds _teleportBounds;
-        private Rigidbody2D _rb;
-
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody2D>();
-        }
-
+        private Rigidbody2D _rigidbody2D;
+        
         private void Start()
         {
+            _rigidbody2D = GetComponent<Rigidbody2D>();
             _randomDirection = Random.insideUnitCircle.normalized;
-            if (_teleportBounds == null)
-                _teleportBounds = GetComponent<TeleportBounds>();
-            _rb.velocity = _randomDirection * _speed;
+            _teleportBounds = GetComponent<TeleportBounds>();
+            _rigidbody2D.velocity = _randomDirection * _speed;
         }
 
         private void FixedUpdate()
@@ -37,7 +35,7 @@ namespace _Project.Scripts
             }
             else
             {
-                _rb.velocity = _randomDirection * _speed;
+                _rigidbody2D.velocity = _randomDirection * _speed;
             }
         }
 

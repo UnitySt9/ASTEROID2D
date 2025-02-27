@@ -2,19 +2,16 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Debris : MonoBehaviour
     {
         private readonly float _speed = 6f;
         private Vector2 _randomDirection;
-        private Rigidbody2D _rb;
-
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody2D>();
-        }
+        private Rigidbody2D _rigidbody2D;
         
         private void Start()
         {
+            _rigidbody2D = GetComponent<Rigidbody2D>();
             _randomDirection = Random.insideUnitCircle.normalized;
         }
 
@@ -33,7 +30,7 @@ namespace _Project.Scripts
         
         private void SetSpeed()
          {
-             _rb.velocity = _randomDirection * _speed;
+             _rigidbody2D.velocity = _randomDirection * _speed;
          }
     }
 }

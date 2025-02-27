@@ -2,22 +2,20 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(TeleportBounds))]
+    
     public class UFO : MonoBehaviour
     {
+        private readonly float _speed = 2f;
         private Transform _spaceShipTransform;
         private TeleportBounds _teleportBounds;
-        private Rigidbody2D _rb;
+        private Rigidbody2D _rigidbody2D;
         private Vector2 _randomDirection;
         
-        private readonly float _speed = 2f;
-
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody2D>();
-        }
-
         private void Start()
         {
+            _rigidbody2D = GetComponent<Rigidbody2D>();
             _teleportBounds = GetComponent<TeleportBounds>();
             _randomDirection = Random.insideUnitCircle.normalized;
         }
@@ -36,7 +34,7 @@ namespace _Project.Scripts
             }
             else
             {
-                _rb.velocity = _randomDirection * _speed;
+                _rigidbody2D.velocity = _randomDirection * _speed;
             }
         }
         public void Initialize(Transform spaceShipTransform)
@@ -49,7 +47,7 @@ namespace _Project.Scripts
             if (_spaceShipTransform)
             {
                 Vector2 direction = (_spaceShipTransform.position - transform.position).normalized;
-                _rb.velocity = direction * _speed;
+                _rigidbody2D.velocity = direction * _speed;
             }
         }
     }
