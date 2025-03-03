@@ -4,16 +4,16 @@ using UnityEngine.UI;
 
 namespace _Project.Scripts
 {
-    public class NextGame : MonoBehaviour
+    public class RestartGame : MonoBehaviour
     {
         [SerializeField] Button _restartButton;
 
         private void Start()
         {
-            _restartButton.onClick.AddListener(RestartGame);
+            _restartButton.onClick.AddListener(RestartLevel);
         }
 
-        private void RestartGame()
+        private void RestartLevel()
         {
             Time.timeScale = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -7,11 +7,10 @@ namespace _Project.Scripts
     {
         public float laserCooldown = 5f;
         public int currentLaserShots;
-
-        [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private Transform _firePoint;
-        [SerializeField] private Lazer _laserPrefab;
-        [SerializeField] private Score _score;
+        
+        [SerializeField] Transform _firePoint;
+        [SerializeField] BulletFactory _bulletFactory;
+        [SerializeField] LazerFactory _lazerFactory;
 
         private WaitForSeconds _waitRechargeLaser;
         private int _maxLaserShots = 3;
@@ -25,19 +24,14 @@ namespace _Project.Scripts
 
         public void Shoot()
         {
-            Bullet bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
-            bullet.GetSpeed(_firePoint);
-            bullet.Initialize(_score);
-            _score.SubscribeToBullet(bullet);
+            _bulletFactory.CreateBullet(_firePoint);
         }
-
+        
         public void ShootLaser()
         {
             if (currentLaserShots > 0)
             {
-                Lazer lazer = Instantiate(_laserPrefab, _firePoint.position, _firePoint.rotation);
-                lazer.Initialize(_score);
-                _score.SubscribeToLazer(lazer);
+                _lazerFactory.CreateLazer(_firePoint);
                 currentLaserShots--;
             }
         }

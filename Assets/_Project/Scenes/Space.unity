@@ -452,7 +452,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &431893372
 GameObject:
@@ -1780,7 +1780,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1237517952
 MonoBehaviour:
@@ -1807,6 +1807,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1263456738}
   - component: {fileID: 1263456737}
+  - component: {fileID: 1263456739}
+  - component: {fileID: 1263456740}
   m_Layer: 0
   m_Name: SpaceShipController
   m_TagString: Untagged
@@ -1842,8 +1844,36 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1263456739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263456736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d839a93be164845a5364acbb730175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletPrefab: {fileID: 5545325319887222147, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
+  _score: {fileID: 1311482879}
+--- !u!114 &1263456740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263456736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e8cc3d570882f4d95e624057400cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lazerPrefab: {fileID: 2011693668067995137, guid: d8898fe553285c845895e23a4916d62e, type: 3}
+  _score: {fileID: 1311482879}
 --- !u!1 &1311482877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2147,10 +2177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserCooldown: 5
   currentLaserShots: 0
-  _bulletPrefab: {fileID: 5545325319887222147, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
   _firePoint: {fileID: 1837922387}
-  _laserPrefab: {fileID: 2011693668067995137, guid: d8898fe553285c845895e23a4916d62e, type: 3}
-  _score: {fileID: 1311482879}
+  _bulletFactory: {fileID: 1263456739}
+  _lazerFactory: {fileID: 1263456740}
 --- !u!1 &2043845788
 GameObject:
   m_ObjectHideFlags: 0

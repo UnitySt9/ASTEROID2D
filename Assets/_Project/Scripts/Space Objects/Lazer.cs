@@ -24,11 +24,7 @@ namespace _Project.Scripts
 
         private void OnDestroy()
         {
-            if (_score != null)
-            {
-                _score.UnsubscribeFromLazer(this);
-            }
-            OnLazerHit = null;
+            _score.UnsubscribeFromLazer(this);
         }
         
         public void Initialize(Score score)
