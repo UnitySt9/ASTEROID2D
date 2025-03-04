@@ -2,12 +2,20 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class InputHandler : MonoBehaviour
+    public class InputHandler : MonoBehaviour, IGameStateListener
     {
+        [SerializeField] GameStateManager _gameStateManager;
         private ShipMovement _shipMovement;
         private SpaceShipShooting _spaceShipShooting;
+        private bool _isGameOver = false;
         private float _horizontal;
         private bool _isAccelerating;
+
+        private void Start()
+        {
+            _gameStateManager = FindObjectOfType<GameStateManager>();
+            _gameStateManager.RegisterListener(this);
+        }
 
         public void Initialize(ShipMovement shipMovement, SpaceShipShooting spaceShipShooting)
         {
@@ -17,10 +25,18 @@ namespace _Project.Scripts
 
         private void Update()
         {
-            HandleMovementInput();
-            HandleShootingInput();
+            if (!_isGameOver)
+            {
+                HandleMovementInput();
+                HandleShootingInput();
+            }
         }
 
+        public void OnGameOver()
+        {
+            _isGameOver = true;
+        }
+        
         private void HandleMovementInput()
         {
             _horizontal = Input.GetAxis("Horizontal");

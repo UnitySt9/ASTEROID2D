@@ -439,6 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc011e0d163374ab200ab07ba5a4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameStateManager: {fileID: 1833893344}
 --- !u!4 &405699983
 Transform:
   m_ObjectHideFlags: 0
@@ -1491,6 +1492,7 @@ GameObject:
   - component: {fileID: 1032300174}
   - component: {fileID: 1032300176}
   - component: {fileID: 1032300177}
+  - component: {fileID: 1032300179}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Player
@@ -1676,6 +1678,7 @@ MonoBehaviour:
   _gameOverPanel: {fileID: 1618197267}
   _endScore: {fileID: 931342249}
   _score: {fileID: 1311482879}
+  _gameStateManager: {fileID: 1833893344}
 --- !u!114 &1032300177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1688,6 +1691,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b447086678e88a40b720b835b2f61ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &1032300179
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032300162}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!850595691 &1197798235
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1760,6 +1784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1237517951}
   - component: {fileID: 1237517952}
+  - component: {fileID: 1237517954}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -1797,6 +1822,28 @@ MonoBehaviour:
   _asteroidPrefab: {fileID: 8384720147553082200, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
   _ufoPrefab: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
   _spaceShipTransform: {fileID: 1032300164}
+  _gameStateManager: {fileID: 1833893344}
+--- !u!50 &1237517954
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237517949}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1263456736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2131,6 +2178,50 @@ RectTransform:
   m_AnchoredPosition: {x: 37, y: -489}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1833893343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1833893345}
+  - component: {fileID: 1833893344}
+  m_Layer: 0
+  m_Name: GameStateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1833893344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833893343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b746b2ddd9b0f44f95c827526b67a89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1833893345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833893343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.5393333, y: -2.1741302, z: -2.129501}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1837922386
 GameObject:
   m_ObjectHideFlags: 0

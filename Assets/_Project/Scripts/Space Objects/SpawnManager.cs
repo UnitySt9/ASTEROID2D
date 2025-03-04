@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class SpawnManager : MonoBehaviour
+    public class SpawnManager : MonoBehaviour, IGameStateListener
     {
         private readonly int _spawnAsteroidInterval =5;
         private readonly int _spawnUFOInterval =4;
@@ -11,12 +11,14 @@ namespace _Project.Scripts
         [SerializeField] GameObject _asteroidPrefab;
         [SerializeField] UFO _ufoPrefab;
         [SerializeField] Transform _spaceShipTransform;
+        [SerializeField] GameStateManager _gameStateManager;
         
         private WaitForSeconds _waitForAsteroidSpawn;
         private WaitForSeconds _waitForUFOSpawn;
         private Camera _camera;
         private Vector3 _cameraBounds;
         private UFOFactory _factory;
+        private bool _isGameOver = false;
         
         private void Start()
         {
@@ -26,11 +28,22 @@ namespace _Project.Scripts
             _waitForUFOSpawn = new WaitForSeconds(_spawnUFOInterval);
             StartCoroutine(SpawnAsteroids());
             StartCoroutine(SpawnUFOs());
+            _gameStateManager.RegisterListener(this);
+        }
+        
+        private void OnDestroy()
+        {
+            _gameStateManager.UnregisterListener(this);
+        }
+        
+        public void OnGameOver()
+        {
+            _isGameOver = true;
         }
         
         private IEnumerator SpawnAsteroids()
         {
-            while (true)
+            while (!_isGameOver)
             {
                 SpawnAsteroid();
                 yield return _waitForAsteroidSpawn;
@@ -39,7 +52,7 @@ namespace _Project.Scripts
         
         private IEnumerator SpawnUFOs()
         {
-            while (true)
+            while (!_isGameOver)
             {
                 SpawnUFO();
                 yield return _waitForUFOSpawn;

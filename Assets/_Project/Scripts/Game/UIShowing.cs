@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class UIManager : MonoBehaviour
+    public class UIShowing : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI coordinatesText;
         [SerializeField] TextMeshProUGUI angleText;
