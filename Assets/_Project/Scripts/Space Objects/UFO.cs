@@ -45,6 +45,11 @@ namespace _Project.Scripts
             }
         }
         
+        private void OnDestroy()
+        {
+            _gameStateManager.UnregisterListener(this);
+        }
+        
         public void OnGameOver()
         {
             _isGameOver = true;

@@ -16,17 +16,14 @@ namespace _Project.Scripts
         
         private Vector2 _previousPosition;
         private float _speed;
-
-        private void FixedUpdate()
+        
+        private void Update()
         {
             Vector2 currentPosition = spaceShip.transform.position;
             float distanceMoved = Vector2.Distance(_previousPosition, currentPosition);
             _speed = distanceMoved / Time.deltaTime;
             _previousPosition = currentPosition;
-        }
-
-        private void Update()
-        {
+            
             coordinatesText.text = "Coordinates: " + spaceShip.transform.position;
             angleText.text = "Angle: " + spaceShip.transform.eulerAngles.z;
             speedText.text = "Speed: " + _speed;

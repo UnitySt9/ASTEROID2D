@@ -10,19 +10,22 @@ namespace _Project.Scripts
 
         private readonly int _scoreValue = 1;
         private readonly float _bulletSpeed = 10;
+        private readonly float _timeOfDeath = 2f;
         private Rigidbody2D _rigidbody2D;
         private Score _score;
 
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            Destroy(gameObject, 2f);
+            Destroy(gameObject, _timeOfDeath);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(other.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (other.gameObject.GetComponent<ShipMovement>() == null)
+            {
                 OnBulletHit?.Invoke(_scoreValue);
+            }
         }
 
         private void OnDestroy()
