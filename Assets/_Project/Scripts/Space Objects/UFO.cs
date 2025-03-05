@@ -16,7 +16,6 @@ namespace _Project.Scripts
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _gameStateManager = FindObjectOfType<GameStateManager>();
             _gameStateManager.RegisterListener(this);
         }
 
@@ -48,6 +47,11 @@ namespace _Project.Scripts
         private void OnDestroy()
         {
             _gameStateManager.UnregisterListener(this);
+        }
+        
+        public void SetDependency(GameStateManager gameStateManager)
+        {
+            _gameStateManager = gameStateManager;
         }
         
         public void OnGameOver()

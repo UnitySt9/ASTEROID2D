@@ -8,7 +8,7 @@ namespace _Project.Scripts
     {
         [SerializeField] GameObject _gameOverPanel;
         [SerializeField] TextMeshProUGUI _endScore;
-        [SerializeField] Score _score;
+        [SerializeField]Score _score;
         [SerializeField] GameStateManager _gameStateManager;
 
         private void Start()

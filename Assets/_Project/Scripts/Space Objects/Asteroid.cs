@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(TeleportBounds))]
     public class Asteroid : SpaceObject, IGameStateListener
     {
@@ -13,7 +14,6 @@ namespace _Project.Scripts
         {
             Speed = 3f;
             base.Start();
-            _gameStateManager = FindObjectOfType<GameStateManager>();
             _gameStateManager.RegisterListener(this);
         }
 
@@ -51,6 +51,11 @@ namespace _Project.Scripts
             _gameStateManager.UnregisterListener(this);
         }
 
+        public void SetDependency(GameStateManager gameStateManager)
+        {
+            _gameStateManager = gameStateManager;
+        }
+        
         public void OnGameOver()
         {
             _isGameOver = true;

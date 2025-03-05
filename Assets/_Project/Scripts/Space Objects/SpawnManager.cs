@@ -22,7 +22,7 @@ namespace _Project.Scripts
         
         private void Start()
         {
-            _factory = new UFOFactory(_ufoPrefab);
+            _factory = new UFOFactory(_ufoPrefab, _gameStateManager);
             _camera = Camera.main;
             _waitForAsteroidSpawn = new WaitForSeconds(_spawnAsteroidInterval);
             _waitForUFOSpawn = new WaitForSeconds(_spawnUFOInterval);
@@ -62,13 +62,15 @@ namespace _Project.Scripts
         private void SpawnAsteroid()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
+            var ast = Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
+            var asteroid =  ast.GetComponent<Asteroid>();
+            asteroid.SetDependency(_gameStateManager);
         }
 
         private void SpawnUFO()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            _factory.CreateUFO(spawnPosition, _spaceShipTransform);
+            _factory.CreateUFO(spawnPosition, _spaceShipTransform, _gameStateManager);
         }
         
         Vector2 GetRandomSpawnPosition()
