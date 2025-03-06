@@ -10,9 +10,10 @@ namespace _Project.Scripts
         
         [SerializeField] GameObject _asteroidPrefab;
         [SerializeField] UFO _ufoPrefab;
-        [SerializeField] Transform _spaceShipTransform;
         [SerializeField] GameStateManager _gameStateManager;
         
+        private SpaceShipShooting _spaceShip;
+        private Transform _spaceShipTransform;
         private WaitForSeconds _waitForAsteroidSpawn;
         private WaitForSeconds _waitForUFOSpawn;
         private Camera _camera;
@@ -29,6 +30,8 @@ namespace _Project.Scripts
             StartCoroutine(SpawnAsteroids());
             StartCoroutine(SpawnUFOs());
             _gameStateManager.RegisterListener(this);
+            _spaceShip = FindObjectOfType<SpaceShipShooting>();
+            _spaceShipTransform = _spaceShip.GetComponent<Transform>();
         }
         
         private void OnDestroy()

@@ -4,12 +4,13 @@ namespace _Project.Scripts
 {
     public class SpaceShipController : MonoBehaviour
     {
-        [SerializeField] ShipMovement _shipMovement;
-        [SerializeField] SpaceShipShooting _spaceShipShooting;
-        [SerializeField] InputHandler _inputHandler;
+        [SerializeField] private ShipMovement _shipMovement;
+        [SerializeField] private SpaceShipShooting _spaceShipShooting;
+        private InputHandler _inputHandler;
 
-        private void Start()
+        public void Initialize(InputHandler inputHandler)
         {
+            _inputHandler = inputHandler;
             _inputHandler.Initialize(_shipMovement, _spaceShipShooting);
         }
     }

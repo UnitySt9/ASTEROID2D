@@ -5,8 +5,8 @@ namespace _Project.Scripts
 {
     public class Lazer : MonoBehaviour
     {
-        public event Action<int> OnLazerHit; 
-        
+        public event Action<int> OnLazerHit;
+
         private readonly float _laserDuration = 0.5f;
         private readonly int _scoreValue = 1;
         private Score _score;
@@ -14,19 +14,26 @@ namespace _Project.Scripts
         private void Start()
         {
             Destroy(gameObject, _laserDuration);
+            if (_score != null)
+            {
+                _score.SubscribeToLazer(this);
+                Debug.Log("Subscribe");
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(other.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (other.gameObject.GetComponent<ShipMovement>() == null)
+            {
                 OnLazerHit?.Invoke(_scoreValue);
+            }
         }
 
         private void OnDestroy()
         {
-            _score.UnsubscribeFromLazer(this);
+            _score?.UnsubscribeFromLazer(this);
         }
-        
+
         public void Initialize(Score score)
         {
             _score = score;

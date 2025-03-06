@@ -6,7 +6,7 @@ namespace _Project.Scripts
     [RequireComponent(typeof(Rigidbody2D))]
     public class Bullet : MonoBehaviour
     {
-        public event Action<int> OnBulletHit; 
+        public event Action<int> OnBulletHit;
 
         private readonly int _scoreValue = 1;
         private readonly float _bulletSpeed = 10;
@@ -20,17 +20,31 @@ namespace _Project.Scripts
             Destroy(gameObject, _timeOfDeath);
         }
 
+        private void Start()
+        {
+            if (_score != null)
+            {
+                _score.SubscribeToBullet(this);
+                Debug.Log("Subscribe");
+            }
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.GetComponent<ShipMovement>() == null)
             {
                 OnBulletHit?.Invoke(_scoreValue);
+                Debug.Log("Hit");
             }
         }
 
         private void OnDestroy()
         {
-            _score.UnsubscribeFromBullet(this);
+            if (_score != null)
+            {
+                _score.UnsubscribeFromBullet(this);
+                Debug.Log("Unsubscribe");
+            }
         }
 
         public void Initialize(Score score)

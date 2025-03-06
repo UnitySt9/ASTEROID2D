@@ -1,21 +1,18 @@
-using UnityEngine;
-
 namespace _Project.Scripts
 {
-    public class InputHandler : MonoBehaviour, IGameStateListener
+    public class InputHandler : IGameStateListener
     {
-        [SerializeField] GameStateManager _gameStateManager;
+        private readonly GameStateManager _gameStateManager;
         private ShipMovement _shipMovement;
         private SpaceShipShooting _spaceShipShooting;
-        private IInputProvider _inputProvider;
+        private readonly IInputProvider _inputProvider;
         private bool _isGameOver = false;
-        private float _horizontal;
-        private bool _isAccelerating;
 
-        private void Start()
+        public InputHandler(GameStateManager gameStateManager)
         {
-            _gameStateManager.RegisterListener(this);
+            _gameStateManager = gameStateManager;
             _inputProvider = new KeyboardInputProvider();
+            _gameStateManager.RegisterListener(this);
         }
 
         public void Initialize(ShipMovement shipMovement, SpaceShipShooting spaceShipShooting)
@@ -24,26 +21,24 @@ namespace _Project.Scripts
             _spaceShipShooting = spaceShipShooting;
         }
 
-        private void Update()
+        public void Update()
         {
             if (!_isGameOver)
             {
                 HandleMovementInput();
                 HandleShootingInput();
             }
-            else _shipMovement.OffRigidBody();
+            else
+            {
+                _shipMovement.OffRigidBody();
+            }
         }
 
-        private void OnDestroy()
-        {
-            _gameStateManager.UnregisterListener(this);
-        }
-        
         public void OnGameOver()
         {
             _isGameOver = true;
         }
-        
+
         private void HandleMovementInput()
         {
             float horizontal = _inputProvider.GetHorizontalAxis();

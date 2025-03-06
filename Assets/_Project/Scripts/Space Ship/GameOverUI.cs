@@ -6,24 +6,32 @@ namespace _Project.Scripts
     [RequireComponent(typeof(Rigidbody2D))]
     public class GameOverUI : MonoBehaviour, IGameStateListener
     {
-        [SerializeField] GameObject _gameOverPanel;
-        [SerializeField] TextMeshProUGUI _endScore;
-        [SerializeField]Score _score;
-        [SerializeField] GameStateManager _gameStateManager;
+        private GameObject _gameOverPanel;
+        private TextMeshProUGUI _endScore;
+        private Score _score;
+        private GameStateManager _gameStateManager;
 
-        private void Start()
+        public void Initialize(GameObject gameOverPanel, TextMeshProUGUI endScore, Score score, GameStateManager gameStateManager)
         {
+            _gameOverPanel = gameOverPanel;
+            _endScore = endScore;
+            _score = score;
+            _gameStateManager = gameStateManager;
+
             _gameStateManager.RegisterListener(this);
         }
 
         private void OnDestroy()
         {
-            _gameStateManager.UnregisterListener(this);
+            if (_gameStateManager != null)
+            {
+                _gameStateManager.UnregisterListener(this);
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            _gameStateManager.GameOver();
+            _gameStateManager?.GameOver();
         }
 
         public void OnGameOver()
