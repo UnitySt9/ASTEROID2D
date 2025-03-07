@@ -15,7 +15,6 @@ namespace _Project.Scripts
 
         private void RestartLevel()
         {
-            Time.timeScale = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

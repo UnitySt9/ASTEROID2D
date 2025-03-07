@@ -17,7 +17,6 @@ namespace _Project.Scripts
             _endScore = endScore;
             _score = score;
             _gameStateManager = gameStateManager;
-
             _gameStateManager.RegisterListener(this);
         }
 

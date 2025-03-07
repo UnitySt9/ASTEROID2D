@@ -5,9 +5,8 @@ namespace _Project.Scripts
 {
     public class LazerFactory : MonoBehaviour
     {
-        [SerializeField] private Lazer _lazerPrefab;
-
         public event Action<Lazer> OnLazerCreated;
+        [SerializeField] private Lazer _lazerPrefab;
 
         public void CreateLazer(Transform firePoint)
         {

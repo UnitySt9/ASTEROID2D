@@ -900,7 +900,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 583923755}
-  - component: {fileID: 583923754}
+  - component: {fileID: 583923756}
   m_Layer: 0
   m_Name: EntryPoint
   m_TagString: Untagged
@@ -908,26 +908,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &583923754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583923753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f3859d60df24e469fa48b517d0b9b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shipPrefab: {fileID: 1994236150271174456, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
-  _shipSpawnPoint: {fileID: 1994236150271174462, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
-  _gameStateManager: {fileID: 1833893344}
-  _bulletFactory: {fileID: 1263456739}
-  _lazerFactory: {fileID: 1263456740}
-  _gameOverPanel: {fileID: 1618197267}
-  _endScore: {fileID: 931342249}
-  _uiShowing: {fileID: 431893373}
 --- !u!4 &583923755
 Transform:
   m_ObjectHideFlags: 0
@@ -943,6 +923,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &583923756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583923753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f3859d60df24e469fa48b517d0b9b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipPrefab: {fileID: 1994236150271174456, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
+  _shipSpawnPoint: {fileID: 1994236150271174462, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
+  _gameStateManager: {fileID: 1833893344}
+  _bulletFactory: {fileID: 7479949175319755574, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
+  _lazerFactory: {fileID: 7479949175319755569, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
+  _gameOverPanel: {fileID: 1618197267}
+  _endScore: {fileID: 931342249}
+  _shipIndicators: {fileID: 431893373}
 --- !u!1 &871791697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,28 +1623,6 @@ MonoBehaviour:
   _asteroidPrefab: {fileID: 8384720147553082200, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
   _ufoPrefab: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
   _gameStateManager: {fileID: 1833893344}
---- !u!114 &1263456739 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7479949175319755574, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
-  m_PrefabInstance: {fileID: 7479949174157748949}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d839a93be164845a5364acbb730175, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1263456740 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7479949175319755569, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
-  m_PrefabInstance: {fileID: 7479949174157748949}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e8cc3d570882f4d95e624057400cd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1618197267
 GameObject:
   m_ObjectHideFlags: 0

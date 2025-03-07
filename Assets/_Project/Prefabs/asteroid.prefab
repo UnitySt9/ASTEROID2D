@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfff1be7f66bdf942885b98e89f5ca19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debrisPrefab: {fileID: 6549078939086541671, guid: 69b3a82b07ca4c94ca9775a503e37efe, type: 3}
+  _debrisPrefab: {fileID: 6549078939086541671, guid: 69b3a82b07ca4c94ca9775a503e37efe, type: 3}
 --- !u!114 &-8610212160561464172
 MonoBehaviour:
   m_ObjectHideFlags: 0

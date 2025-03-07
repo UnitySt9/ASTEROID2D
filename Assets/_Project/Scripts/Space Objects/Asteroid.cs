@@ -6,7 +6,7 @@ namespace _Project.Scripts
     [RequireComponent(typeof(TeleportBounds))]
     public class Asteroid : SpaceObject, IGameStateListener
     {
-        [SerializeField] private Debris debrisPrefab;
+        [SerializeField] Debris _debrisPrefab;
         private GameStateManager _gameStateManager;
         private bool _isGameOver = false;
 
@@ -65,7 +65,7 @@ namespace _Project.Scripts
         {
             for (int i = 0; i < 5; i++)
             {
-                Instantiate(debrisPrefab, transform.position, Quaternion.identity);
+                Instantiate(_debrisPrefab, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
         }

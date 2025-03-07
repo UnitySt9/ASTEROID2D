@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class GameEntryPoint : MonoBehaviour
+    public class EntryPoint : MonoBehaviour
     {
         [SerializeField] private GameObject _shipPrefab;
         [SerializeField] private Transform _shipSpawnPoint;
@@ -12,7 +12,7 @@ namespace _Project.Scripts
         [SerializeField] private LazerFactory _lazerFactory;
         [SerializeField] private GameObject _gameOverPanel;
         [SerializeField] private TextMeshProUGUI _endScore;
-        [SerializeField] private UIShowing _uiShowing;
+        [SerializeField] private ShipIndicators _shipIndicators;
 
         private Score _score;
         private InputHandler _inputHandler;
@@ -29,9 +29,10 @@ namespace _Project.Scripts
             _inputHandler = new InputHandler(_gameStateManager);
             spaceShipController.Initialize(_inputHandler);
             gameOverUI.Initialize(_gameOverPanel, _endScore, _score, _gameStateManager);
-            _uiShowing.Initialize(spaceShipShooting, _score);
-            _bulletFactory.OnBulletCreated += bullet => bullet.Initialize(_score);
-            _lazerFactory.OnLazerCreated += lazer => lazer.Initialize(_score);
+            _shipIndicators.Initialize(spaceShipShooting, _score);
+            
+            _bulletFactory.OnBulletCreated += OnBulletCreated;
+            _lazerFactory.OnLazerCreated += OnLazerCreated;
         }
 
         private void Update()
@@ -41,9 +42,18 @@ namespace _Project.Scripts
 
         private void OnDestroy()
         {
-            // Отписка от событий
-            _bulletFactory.OnBulletCreated -= bullet => bullet.Initialize(_score);
-            _lazerFactory.OnLazerCreated -= lazer => lazer.Initialize(_score);
+            _bulletFactory.OnBulletCreated -= OnBulletCreated;
+            _lazerFactory.OnLazerCreated -= OnLazerCreated;
+        }
+        
+        private void OnBulletCreated(Bullet bullet)
+        {
+            bullet.Initialize(_score);
+        }
+        
+        private void OnLazerCreated(Lazer lazer)
+        {
+            lazer.Initialize(_score);
         }
     }
 }
