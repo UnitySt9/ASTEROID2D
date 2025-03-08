@@ -31,7 +31,7 @@ namespace _Project.Scripts
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.GetComponent<ShipMovement>() == null)
+            if (!other.TryGetComponent(out ShipMovement _))
             {
                 OnBulletHit?.Invoke(_scoreValue);
                 Debug.Log("Hit");

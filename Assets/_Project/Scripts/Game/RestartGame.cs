@@ -12,6 +12,11 @@ namespace _Project.Scripts
         {
             _restartButton.onClick.AddListener(RestartLevel);
         }
+        
+        private void OnDisable()
+        {
+            _restartButton.onClick.RemoveListener(RestartLevel);
+        }
 
         private void RestartLevel()
         {

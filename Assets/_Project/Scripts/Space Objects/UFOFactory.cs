@@ -18,11 +18,10 @@ namespace _Project.Scripts
         public void CreateUFO(Vector2 position, Transform spaceShipTransform, GameStateManager gameStateManager)
         {
             UFO ufoInstance = Object.Instantiate(_ufo, position, Quaternion.identity);
-            UFO ufoComponent = ufoInstance.GetComponent<UFO>();
-            Rigidbody2D rigidbody2D = ufoComponent.GetComponent<Rigidbody2D>();
+            Rigidbody2D rigidbody2D = ufoInstance.GetComponent<Rigidbody2D>();
             rigidbody2D.velocity = _direction * _speed;
-            ufoComponent.Initialize(spaceShipTransform);
-            ufoComponent.SetDependency(_gameStateManager);
+            ufoInstance.Initialize(spaceShipTransform);
+            ufoInstance.SetDependency(_gameStateManager);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace _Project.Scripts
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private GameObject _shipPrefab;
+        [SerializeField] private ShipMovement _shipPrefab;
         [SerializeField] private Transform _shipSpawnPoint;
         [SerializeField] private GameStateManager _gameStateManager;
         [SerializeField] private BulletFactory _bulletFactory;
@@ -21,7 +21,7 @@ namespace _Project.Scripts
         {
             Debug.Log("Initializing GameEntryPoint");
             _score = new Score();
-            GameObject shipInstance = Instantiate(_shipPrefab, _shipSpawnPoint.position, _shipSpawnPoint.rotation);
+            ShipMovement shipInstance = Instantiate(_shipPrefab, _shipSpawnPoint.position, _shipSpawnPoint.rotation);
             
             var spaceShipController = shipInstance.GetComponent<SpaceShipController>();
             var gameOverUI = shipInstance.GetComponent<GameOverUI>();

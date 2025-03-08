@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f3859d60df24e469fa48b517d0b9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shipPrefab: {fileID: 1994236150271174456, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
+  _shipPrefab: {fileID: 1994236150271174443, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
   _shipSpawnPoint: {fileID: 1994236150271174462, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
   _gameStateManager: {fileID: 1833893344}
   _bulletFactory: {fileID: 7479949175319755574, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
