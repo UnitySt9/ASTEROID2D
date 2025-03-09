@@ -8,8 +8,7 @@ namespace _Project.Scripts
         [SerializeField] private ShipMovement _shipPrefab;
         [SerializeField] private Transform _shipSpawnPoint;
         [SerializeField] private GameStateManager _gameStateManager;
-        [SerializeField] private BulletFactory _bulletFactory;
-        [SerializeField] private LazerFactory _lazerFactory;
+        [SerializeField] private UFOFactory _ufoFactory;
         [SerializeField] private GameObject _gameOverPanel;
         [SerializeField] private TextMeshProUGUI _endScore;
         [SerializeField] private ShipIndicators _shipIndicators;
@@ -19,10 +18,8 @@ namespace _Project.Scripts
 
         private void Start()
         {
-            Debug.Log("Initializing GameEntryPoint");
             _score = new Score();
             ShipMovement shipInstance = Instantiate(_shipPrefab, _shipSpawnPoint.position, _shipSpawnPoint.rotation);
-            
             var spaceShipController = shipInstance.GetComponent<SpaceShipController>();
             var gameOverUI = shipInstance.GetComponent<GameOverUI>();
             var spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
@@ -31,8 +28,7 @@ namespace _Project.Scripts
             gameOverUI.Initialize(_gameOverPanel, _endScore, _score, _gameStateManager);
             _shipIndicators.Initialize(spaceShipShooting, _score);
             
-            _bulletFactory.OnBulletCreated += OnBulletCreated;
-            _lazerFactory.OnLazerCreated += OnLazerCreated;
+            _ufoFactory.OnUFOCreated += OnUfoCreated;
         }
 
         private void Update()
@@ -42,18 +38,20 @@ namespace _Project.Scripts
 
         private void OnDestroy()
         {
-            _bulletFactory.OnBulletCreated -= OnBulletCreated;
-            _lazerFactory.OnLazerCreated -= OnLazerCreated;
+            _ufoFactory.OnUFOCreated -= OnUfoCreated;
         }
         
-        private void OnBulletCreated(Bullet bullet)
+        private void OnUfoCreated(UFO ufo)
         {
-            bullet.Initialize(_score);
+            _score.SubscribeToUfo(ufo);
+            ufo.OnUfoDestroyed += OnUfoDestroyed; 
+        }
+
+        private void OnUfoDestroyed(UFO ufo)
+        {
+            _score.UnsubscribeFromUfo(ufo); 
+            ufo.OnUfoDestroyed -= OnUfoDestroyed; 
         }
         
-        private void OnLazerCreated(Lazer lazer)
-        {
-            lazer.Initialize(_score);
-        }
     }
 }

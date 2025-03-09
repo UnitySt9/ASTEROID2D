@@ -9,7 +9,7 @@ namespace _Project.Scripts
         private readonly int _spawnUFOInterval =4;
         
         [SerializeField] GameObject _asteroidPrefab;
-        [SerializeField] UFO _ufoPrefab;
+        [SerializeField] UFOFactory _ufoFactory;
         [SerializeField] GameStateManager _gameStateManager;
         
         private SpaceShipShooting _spaceShip;
@@ -18,12 +18,10 @@ namespace _Project.Scripts
         private WaitForSeconds _waitForUFOSpawn;
         private Camera _camera;
         private Vector3 _cameraBounds;
-        private UFOFactory _factory;
         private bool _isGameOver = false;
         
         private void Start()
         {
-            _factory = new UFOFactory(_ufoPrefab, _gameStateManager);
             _camera = Camera.main;
             _waitForAsteroidSpawn = new WaitForSeconds(_spawnAsteroidInterval);
             _waitForUFOSpawn = new WaitForSeconds(_spawnUFOInterval);
@@ -73,7 +71,7 @@ namespace _Project.Scripts
         private void SpawnUFO()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            _factory.CreateUFO(spawnPosition, _spaceShipTransform, _gameStateManager);
+            _ufoFactory.CreateUFO(spawnPosition, _spaceShipTransform, _gameStateManager);
         }
         
         Vector2 GetRandomSpawnPosition()

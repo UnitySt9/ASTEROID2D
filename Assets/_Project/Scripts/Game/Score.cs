@@ -4,29 +4,19 @@ namespace _Project.Scripts
     {
         public int Count { get; private set; }
 
-        public void AddScore(int amount)
+        private void AddScore(int amount)
         {
             Count += amount;
         }
 
-        public void SubscribeToBullet(Bullet bullet)
+        public void SubscribeToUfo(UFO ufo)
         {
-            bullet.OnBulletHit += AddScore;
+            ufo.OnUFOHit += AddScore;
         }
 
-        public void UnsubscribeFromBullet(Bullet bullet)
+        public void UnsubscribeFromUfo(UFO ufo)
         {
-            bullet.OnBulletHit -= AddScore;
-        }
-
-        public void SubscribeToLazer(Lazer lazer)
-        {
-            lazer.OnLazerHit += AddScore;
-        }
-
-        public void UnsubscribeFromLazer(Lazer lazer)
-        {
-            lazer.OnLazerHit -= AddScore;
+            ufo.OnUFOHit -= AddScore;
         }
     }
 }

@@ -938,8 +938,8 @@ MonoBehaviour:
   _shipPrefab: {fileID: 1994236150271174443, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
   _shipSpawnPoint: {fileID: 1994236150271174462, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
   _gameStateManager: {fileID: 1833893344}
-  _bulletFactory: {fileID: 7479949175319755574, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
   _lazerFactory: {fileID: 7479949175319755569, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
+  _ufoFactory: {fileID: 1237517953}
   _gameOverPanel: {fileID: 1618197267}
   _endScore: {fileID: 931342249}
   _shipIndicators: {fileID: 431893373}
@@ -1586,6 +1586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1237517951}
   - component: {fileID: 1237517952}
+  - component: {fileID: 1237517953}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -1621,8 +1622,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _asteroidPrefab: {fileID: 8384720147553082200, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
-  _ufoPrefab: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
+  _ufoFactory: {fileID: 1237517953}
   _gameStateManager: {fileID: 1833893344}
+--- !u!114 &1237517953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237517949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb88c4beaa0b8c47bbce16e6252520f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ufo: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
 --- !u!1 &1618197267
 GameObject:
   m_ObjectHideFlags: 0
