@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts
 {
@@ -13,8 +12,6 @@ namespace _Project.Scripts
         [SerializeField] UFOFactory _ufoFactory;
         [SerializeField] GameStateManager _gameStateManager;
         
-        private SpaceShipShooting _spaceShip;
-        private Transform _spaceShipTransform;
         private WaitForSeconds _waitForAsteroidSpawn;
         private WaitForSeconds _waitForUFOSpawn;
         private Camera _camera;
@@ -29,8 +26,6 @@ namespace _Project.Scripts
             StartCoroutine(SpawnAsteroids());
             StartCoroutine(SpawnUFOs());
             _gameStateManager.RegisterListener(this);
-            _spaceShip = FindObjectOfType<SpaceShipShooting>();
-            _spaceShipTransform = _spaceShip.GetComponent<Transform>();
         }
         
         private void OnDestroy()
@@ -64,13 +59,13 @@ namespace _Project.Scripts
         private void SpawnAsteroid()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            _spaceObjectFactory.CreateAsteroid(spawnPosition, _gameStateManager);
+            _spaceObjectFactory.CreateAsteroid(spawnPosition);
         }
 
         private void SpawnUFO()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            _ufoFactory.CreateUFO(spawnPosition, _spaceShipTransform, _gameStateManager);
+            _ufoFactory.CreateUFO(spawnPosition);
         }
         
         Vector2 GetRandomSpawnPosition()

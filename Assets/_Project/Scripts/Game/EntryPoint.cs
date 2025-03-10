@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts
 {
@@ -21,11 +20,13 @@ namespace _Project.Scripts
         private void Start()
         {
             _score = new Score();
-            ShipMovement shipInstance = Instantiate(_shipPrefab, _shipSpawnPoint.position, _shipSpawnPoint.rotation);
+            var shipInstance = Instantiate(_shipPrefab, _shipSpawnPoint.position, _shipSpawnPoint.rotation);
+            var shipTransform = shipInstance.GetComponent<Transform>();
             var spaceShipController = shipInstance.GetComponent<SpaceShipController>();
             var gameOverUI = shipInstance.GetComponent<GameOverUI>();
             var spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
             _inputHandler = new InputHandler(_gameStateManager);
+            _ufoFactory.Initialize(shipTransform);
             spaceShipController.Initialize(_inputHandler);
             gameOverUI.Initialize(_gameOverPanel, _endScore, _score, _gameStateManager);
             _shipIndicators.Initialize(spaceShipShooting, _score);

@@ -27,8 +27,7 @@ namespace _Project.Scripts
         {
             for (int i = 0; i < 5; i++)
             {
-                var debris = Instantiate(_debrisPrefab, transform.position, Quaternion.identity);
-                debris.SetDependency(GameStateManager);
+                Instantiate(_debrisPrefab, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
         }

@@ -10,19 +10,18 @@ namespace _Project.Scripts
         public event Action<int> OnSpaceObjectHit;
         public event Action<SpaceObject> OnSpaceObjectDestroyed;
         
+        private readonly int _scoreValue = 1;
         protected float Speed;
-        protected GameStateManager GameStateManager;
-        
+        private GameStateManager _gameStateManager;
         private Rigidbody2D _rigidbody2D;
-        private bool _isGameOver = false;
         private Vector2 _direction;
-
+        private bool _isGameOver = false;
+        
         protected virtual void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _direction = Random.insideUnitCircle.normalized;
             _rigidbody2D.velocity = _direction * Speed;
-            GameStateManager.RegisterListener(this);
         }
 
         protected virtual void Update()
@@ -38,7 +37,7 @@ namespace _Project.Scripts
         {
             if (collision.TryGetComponent(out Bullet _) || collision.TryGetComponent(out Lazer _))
             {
-                OnSpaceObjectHit?.Invoke(1);
+                OnSpaceObjectHit?.Invoke(_scoreValue);
                 Destroy(gameObject);
             }
             
@@ -54,7 +53,7 @@ namespace _Project.Scripts
 
         private void OnDestroy()
         {
-            GameStateManager.UnregisterListener(this);
+            UnregisterFromGameStateManager();
             OnSpaceObjectDestroyed?.Invoke(this);
         }
         
@@ -63,9 +62,17 @@ namespace _Project.Scripts
             _isGameOver = true;
         }
         
-        public void SetDependency(GameStateManager gameStateManager)
+        public void Initialize(GameStateManager gameStateManager)
         {
-            GameStateManager = gameStateManager;
+            _gameStateManager = gameStateManager;
+        }
+        
+        private void UnregisterFromGameStateManager()
+        {
+            if (_gameStateManager != null)
+            {
+                _gameStateManager.UnregisterListener(this);
+            }
         }
     }
 }

@@ -13,14 +13,13 @@ namespace _Project.Scripts
         private readonly float _speed = 2f;
         private readonly int _scoreValue = 1;
         private Transform _spaceShipTransform;
-        private Rigidbody2D _rigidbody2D;
         private GameStateManager _gameStateManager;
+        private Rigidbody2D _rigidbody2D;
         private bool _isGameOver = false;
         
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _gameStateManager.RegisterListener(this);
         }
 
         private void Update()
@@ -49,13 +48,8 @@ namespace _Project.Scripts
         
         private void OnDestroy()
         {
-            _gameStateManager.UnregisterListener(this);
+            UnregisterFromGameStateManager();
             OnUfoDestroyed?.Invoke(this);
-        }
-        
-        public void SetDependency(GameStateManager gameStateManager)
-        {
-            _gameStateManager = gameStateManager;
         }
         
         public void OnGameOver()
@@ -63,9 +57,10 @@ namespace _Project.Scripts
             _isGameOver = true;
         }
         
-        public void Initialize(Transform spaceShipTransform)
+        public void Initialize(Transform spaceShipTransform, GameStateManager gameStateManager)
         {
             _spaceShipTransform = spaceShipTransform;
+            _gameStateManager = gameStateManager;
         }
         
         private void FollowTheShip()
@@ -74,6 +69,14 @@ namespace _Project.Scripts
             {
                 Vector2 direction = (_spaceShipTransform.position - transform.position).normalized;
                 _rigidbody2D.velocity = direction * _speed;
+            }
+        }
+        
+        private void UnregisterFromGameStateManager()
+        {
+            if (_gameStateManager != null)
+            {
+                _gameStateManager.UnregisterListener(this);
             }
         }
     }
