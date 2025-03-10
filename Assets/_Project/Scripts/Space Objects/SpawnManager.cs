@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts
 {
@@ -8,7 +9,7 @@ namespace _Project.Scripts
         private readonly int _spawnAsteroidInterval =5;
         private readonly int _spawnUFOInterval =4;
         
-        [SerializeField] GameObject _asteroidPrefab;
+        [SerializeField] SpaceObjectFactory _spaceObjectFactory;
         [SerializeField] UFOFactory _ufoFactory;
         [SerializeField] GameStateManager _gameStateManager;
         
@@ -63,9 +64,7 @@ namespace _Project.Scripts
         private void SpawnAsteroid()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            var ast = Instantiate(_asteroidPrefab, spawnPosition, Quaternion.identity);
-            var asteroid =  ast.GetComponent<Asteroid>();
-            asteroid.SetDependency(_gameStateManager);
+            _spaceObjectFactory.CreateAsteroid(spawnPosition, _gameStateManager);
         }
 
         private void SpawnUFO()

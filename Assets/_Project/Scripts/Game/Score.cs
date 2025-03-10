@@ -18,5 +18,15 @@ namespace _Project.Scripts
         {
             ufo.OnUFOHit -= AddScore;
         }
+
+        public void SubscribeToSpaceObject(SpaceObject spaceObject)
+        {
+            spaceObject.OnSpaceObjectHit += AddScore;
+        }
+
+        public void UnsubscribeFromSpaceObject(SpaceObject spaceObject)
+        {
+            spaceObject.OnSpaceObjectHit -= AddScore;
+        }
     }
 }

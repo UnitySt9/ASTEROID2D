@@ -4,27 +4,13 @@ namespace _Project.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(TeleportBounds))]
-    public class Asteroid : SpaceObject, IGameStateListener
+    public class Asteroid : SpaceObject
     {
-        [SerializeField] Debris _debrisPrefab;
-        private GameStateManager _gameStateManager;
-        private bool _isGameOver = false;
-
+        [SerializeField] private Debris _debrisPrefab;
         protected override void Start()
         {
             Speed = 3f;
             base.Start();
-            _gameStateManager.RegisterListener(this);
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            if (_isGameOver)
-            {
-                Rigidbody2D.velocity = Vector2.zero;
-                Rigidbody2D.rotation = 0;
-            }
         }
 
         protected override void OnTriggerEnter2D(Collider2D collision)
@@ -33,39 +19,16 @@ namespace _Project.Scripts
 
             if (collision.TryGetComponent(out Bullet _) || collision.TryGetComponent(out Lazer _))
             {
-                Shatter(); 
+                Shatter();
             }
-
-            if (collision.TryGetComponent(out ShipMovement _))
-            {
-                Rigidbody2D.velocity = Vector2.zero;
-            }
-            else
-            {
-                Rigidbody2D.velocity = Direction * Speed;
-            }
-        }
-
-        private void OnDestroy()
-        {
-            _gameStateManager.UnregisterListener(this);
-        }
-
-        public void SetDependency(GameStateManager gameStateManager)
-        {
-            _gameStateManager = gameStateManager;
         }
         
-        public void OnGameOver()
-        {
-            _isGameOver = true;
-        }
-
         private void Shatter()
         {
             for (int i = 0; i < 5; i++)
             {
-                Instantiate(_debrisPrefab, transform.position, Quaternion.identity);
+                var debris = Instantiate(_debrisPrefab, transform.position, Quaternion.identity);
+                debris.SetDependency(GameStateManager);
             }
             Destroy(gameObject);
         }

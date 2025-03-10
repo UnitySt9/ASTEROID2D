@@ -6,7 +6,7 @@ namespace _Project.Scripts
 
         protected override void Start()
         {
-            Speed = 10f;
+            Speed = 15f;
             base.Start();
             Destroy(gameObject, _timeOfDeath);
         }

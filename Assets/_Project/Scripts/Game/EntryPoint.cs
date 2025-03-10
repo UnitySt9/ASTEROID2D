@@ -1,17 +1,19 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private ShipMovement _shipPrefab;
-        [SerializeField] private Transform _shipSpawnPoint;
-        [SerializeField] private GameStateManager _gameStateManager;
-        [SerializeField] private UFOFactory _ufoFactory;
-        [SerializeField] private GameObject _gameOverPanel;
-        [SerializeField] private TextMeshProUGUI _endScore;
-        [SerializeField] private ShipIndicators _shipIndicators;
+        [SerializeField] ShipMovement _shipPrefab;
+        [SerializeField] Transform _shipSpawnPoint;
+        [SerializeField] GameStateManager _gameStateManager;
+        [SerializeField] UFOFactory _ufoFactory;
+        [SerializeField] SpaceObjectFactory _spaceObjectFactory;
+        [SerializeField] GameObject _gameOverPanel;
+        [SerializeField] TextMeshProUGUI _endScore;
+        [SerializeField] ShipIndicators _shipIndicators;
 
         private Score _score;
         private InputHandler _inputHandler;
@@ -29,6 +31,7 @@ namespace _Project.Scripts
             _shipIndicators.Initialize(spaceShipShooting, _score);
             
             _ufoFactory.OnUFOCreated += OnUfoCreated;
+            _spaceObjectFactory.OnSpaceObjectCreated += OnSpaceObjectCrated;
         }
 
         private void Update()
@@ -39,6 +42,7 @@ namespace _Project.Scripts
         private void OnDestroy()
         {
             _ufoFactory.OnUFOCreated -= OnUfoCreated;
+            _spaceObjectFactory.OnSpaceObjectCreated -= OnSpaceObjectCrated;
         }
         
         private void OnUfoCreated(UFO ufo)
@@ -47,10 +51,22 @@ namespace _Project.Scripts
             ufo.OnUfoDestroyed += OnUfoDestroyed; 
         }
 
+        private void OnSpaceObjectCrated(SpaceObject spaceObject)
+        {
+            _score.SubscribeToSpaceObject(spaceObject);
+            spaceObject.OnSpaceObjectDestroyed += OnSpaceObjectDestroyed;
+        }
+
         private void OnUfoDestroyed(UFO ufo)
         {
             _score.UnsubscribeFromUfo(ufo); 
             ufo.OnUfoDestroyed -= OnUfoDestroyed; 
+        }
+
+        private void OnSpaceObjectDestroyed(SpaceObject spaceObject)
+        {
+            _score.UnsubscribeFromSpaceObject(spaceObject);
+            spaceObject.OnSpaceObjectDestroyed -= OnSpaceObjectDestroyed;
         }
         
     }

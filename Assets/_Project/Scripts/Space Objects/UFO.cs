@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace _Project.Scripts
 {
@@ -16,13 +15,11 @@ namespace _Project.Scripts
         private Transform _spaceShipTransform;
         private Rigidbody2D _rigidbody2D;
         private GameStateManager _gameStateManager;
-        private Vector2 _direction;
         private bool _isGameOver = false;
         
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _direction = Random.insideUnitCircle.normalized;
             _gameStateManager.RegisterListener(this);
         }
 
