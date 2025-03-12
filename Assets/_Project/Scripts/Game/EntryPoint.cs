@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 namespace _Project.Scripts

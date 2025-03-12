@@ -15,6 +15,7 @@ namespace _Project.Scripts
         private Transform _spaceShipTransform;
         private GameStateManager _gameStateManager;
         private Rigidbody2D _rigidbody2D;
+        private Vector2 _direction;
         private bool _isGameOver = false;
         
         private void Start()
@@ -41,8 +42,10 @@ namespace _Project.Scripts
                 OnUFOHit?.Invoke(_scoreValue);
                 Destroy(gameObject);
             }
-            if (collision.TryGetComponent(out ShipMovement _))
-                _rigidbody2D.velocity = Vector2.zero;
+            else
+            {
+                _rigidbody2D.velocity = _direction * _speed;
+            }
         }
         
         private void OnDestroy()
