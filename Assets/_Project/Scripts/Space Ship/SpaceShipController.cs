@@ -1,24 +1,17 @@
-using UnityEngine;
-
 namespace _Project.Scripts
 {
-    public class SpaceShipController : MonoBehaviour
+    public class SpaceShipController
     {
-        [SerializeField] ShipMovement _shipMovement;
-        [SerializeField] SpaceShipShooting _spaceShipShooting;
-        private GameStateManager _gameStateManager;
+        private ShipMovement _shipMovement;
+        private SpaceShipShooting _spaceShipShooting;
         private InputHandler _inputHandler;
 
-        public void Initialize(InputHandler inputHandler, GameStateManager gameStateManager)
+        public SpaceShipController(ShipMovement shipMovement, SpaceShipShooting spaceShipShooting, InputHandler inputHandler)
         {
-            _gameStateManager = gameStateManager;
+            _shipMovement = shipMovement;
+            _spaceShipShooting = spaceShipShooting;
             _inputHandler = inputHandler;
             _inputHandler.Initialize(_shipMovement, _spaceShipShooting);
-        }
-        
-        private void OnCollisionEnter2D()
-        {
-            _gameStateManager?.GameOver();
         }
     }
 }

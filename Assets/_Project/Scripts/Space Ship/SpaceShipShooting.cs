@@ -8,15 +8,18 @@ namespace _Project.Scripts
         public float laserCooldown = 5f;
         public int currentLaserShots;
         
-        [SerializeField] Transform _firePoint;
-        [SerializeField] BulletFactory _bulletFactory;
-        [SerializeField] LazerFactory _lazerFactory;
+        [SerializeField] private Transform _firePoint;
+        private BulletFactory _bulletFactory;
+        private LazerFactory _lazerFactory;
 
         private WaitForSeconds _waitRechargeLaser;
         private int _maxLaserShots = 3;
-
-        private void Start()
+        
+        public void Initialize(BulletFactory bulletFactory, LazerFactory lazerFactory)
         {
+            _bulletFactory = bulletFactory;
+            _lazerFactory = lazerFactory;
+
             currentLaserShots = _maxLaserShots;
             _waitRechargeLaser = new WaitForSeconds(laserCooldown);
             StartCoroutine(RechargeLaserCoroutine());

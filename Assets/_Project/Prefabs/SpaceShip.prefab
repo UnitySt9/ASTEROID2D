@@ -42,11 +42,10 @@ GameObject:
   - component: {fileID: 1994236150271174462}
   - component: {fileID: 1994236150271174457}
   - component: {fileID: 1994236150271174454}
-  - component: {fileID: 1994236150271174452}
-  - component: {fileID: -2855471629067033863}
-  - component: {fileID: 1994236150271174443}
-  - component: {fileID: -2846096763663322199}
   - component: {fileID: 1994236150271174441}
+  - component: {fileID: 1994236150271174452}
+  - component: {fileID: 1994236150271174443}
+  - component: {fileID: -2855471629067033863}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Player
@@ -205,61 +204,6 @@ PolygonCollider2D:
       - {x: -0.07058824, y: -0.28529412}
       - {x: 0.07058824, y: -0.29117647}
       - {x: 0.09411765, y: -0.25588235}
---- !u!114 &1994236150271174452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994236150271174456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21dd6e4a6bd887846a2088d32e36027c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-2855471629067033863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994236150271174456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9f24656eae3eaf45a6d6dce13d36033, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserCooldown: 5
-  currentLaserShots: 0
-  _firePoint: {fileID: 1994236150271174462}
-  _bulletFactory: {fileID: 7479949175319755574, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
-  _lazerFactory: {fileID: 7479949175319755569, guid: 440e01522a4f7c3439fb300941268fb7, type: 3}
---- !u!114 &1994236150271174443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994236150271174456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b447086678e88a40b720b835b2f61ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-2846096763663322199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994236150271174456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6d50d5ca0284884aa1ae0d49062c451, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shipMovement: {fileID: 1994236150271174443}
-  _spaceShipShooting: {fileID: -2855471629067033863}
 --- !u!50 &1994236150271174441
 Rigidbody2D:
   serializedVersion: 4
@@ -281,3 +225,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1994236150271174452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994236150271174456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21dd6e4a6bd887846a2088d32e36027c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1994236150271174443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994236150271174456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b447086678e88a40b720b835b2f61ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2855471629067033863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994236150271174456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f24656eae3eaf45a6d6dce13d36033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserCooldown: 5
+  currentLaserShots: 0
+  _firePoint: {fileID: 1994236150271174462}

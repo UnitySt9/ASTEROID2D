@@ -2,7 +2,7 @@ namespace _Project.Scripts
 {
     public class InputHandler : IGameStateListener
     {
-        private readonly GameStateManager _gameStateManager;
+        private GameStateManager _gameStateManager;
         private ShipMovement _shipMovement;
         private SpaceShipShooting _spaceShipShooting;
         private readonly IInputProvider _inputProvider;

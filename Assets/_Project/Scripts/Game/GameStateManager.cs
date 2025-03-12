@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class GameStateManager : MonoBehaviour
+    public class GameStateManager
     {
         private List<IGameStateListener> _listeners = new();
 

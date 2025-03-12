@@ -2,13 +2,18 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class LazerFactory : MonoBehaviour
+    public class LazerFactory
     {
-        [SerializeField] private Lazer _lazerPrefab;
+        private Lazer _lazerPrefab;
+
+        public LazerFactory(Lazer lazerPrefab)
+        {
+            _lazerPrefab = lazerPrefab;
+        }
 
         public void CreateLazer(Transform firePoint)
         {
-            Instantiate(_lazerPrefab, firePoint.position, firePoint.rotation);
+            Object.Instantiate(_lazerPrefab, firePoint.position, firePoint.rotation);
         }
     }
 }
