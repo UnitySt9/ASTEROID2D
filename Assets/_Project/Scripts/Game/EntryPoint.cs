@@ -10,10 +10,10 @@ namespace _Project.Scripts
         [SerializeField] GameStateManager _gameStateManager;
         [SerializeField] UFOFactory _ufoFactory;
         [SerializeField] SpaceObjectFactory _spaceObjectFactory;
-        [SerializeField] GameObject _gameOverPanel;
-        [SerializeField] TextMeshProUGUI _endScore;
+        [SerializeField] GameOverView _gameOverView;
         [SerializeField] ShipIndicators _shipIndicators;
-
+        [SerializeField] GameOverUIController _gameOverUIController;
+        
         private Score _score;
         private InputHandler _inputHandler;
 
@@ -21,16 +21,15 @@ namespace _Project.Scripts
         {
             _score = new Score();
             var shipInstance = Instantiate(_shipPrefab, _shipSpawnPoint.position, _shipSpawnPoint.rotation);
-            var shipTransform = shipInstance.GetComponent<Transform>();
+            var shipTransform = shipInstance.transform;
             var spaceShipController = shipInstance.GetComponent<SpaceShipController>();
-            var gameOverUI = shipInstance.GetComponent<GameOverUI>();
             var spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
             _inputHandler = new InputHandler(_gameStateManager);
             _ufoFactory.Initialize(shipTransform);
-            spaceShipController.Initialize(_inputHandler);
-            gameOverUI.Initialize(_gameOverPanel, _endScore, _score, _gameStateManager);
+            spaceShipController.Initialize(_inputHandler, _gameStateManager);
+            _gameOverUIController.Initialize(_gameOverView, _score, _gameStateManager);
             _shipIndicators.Initialize(spaceShipShooting, _score);
-            
+
             _ufoFactory.OnUFOCreated += OnUfoCreated;
             _spaceObjectFactory.OnSpaceObjectCreated += OnSpaceObjectCrated;
         }
@@ -45,11 +44,11 @@ namespace _Project.Scripts
             _ufoFactory.OnUFOCreated -= OnUfoCreated;
             _spaceObjectFactory.OnSpaceObjectCreated -= OnSpaceObjectCrated;
         }
-        
+
         private void OnUfoCreated(UFO ufo)
         {
             _score.SubscribeToUfo(ufo);
-            ufo.OnUfoDestroyed += OnUfoDestroyed; 
+            ufo.OnUfoDestroyed += OnUfoDestroyed;
         }
 
         private void OnSpaceObjectCrated(SpaceObject spaceObject)
@@ -60,8 +59,8 @@ namespace _Project.Scripts
 
         private void OnUfoDestroyed(UFO ufo)
         {
-            _score.UnsubscribeFromUfo(ufo); 
-            ufo.OnUfoDestroyed -= OnUfoDestroyed; 
+            _score.UnsubscribeFromUfo(ufo);
+            ufo.OnUfoDestroyed -= OnUfoDestroyed;
         }
 
         private void OnSpaceObjectDestroyed(SpaceObject spaceObject)
@@ -69,6 +68,5 @@ namespace _Project.Scripts
             _score.UnsubscribeFromSpaceObject(spaceObject);
             spaceObject.OnSpaceObjectDestroyed -= OnSpaceObjectDestroyed;
         }
-        
     }
 }

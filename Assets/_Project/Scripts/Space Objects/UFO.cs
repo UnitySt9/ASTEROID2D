@@ -30,8 +30,7 @@ namespace _Project.Scripts
             }
             else
             {
-                _rigidbody2D.velocity = Vector2.zero;
-                _rigidbody2D.rotation = 0;
+                _rigidbody2D.simulated = false;
             }
         }
         

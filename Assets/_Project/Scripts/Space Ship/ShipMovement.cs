@@ -35,8 +35,7 @@ namespace _Project.Scripts
 
         public void OffRigidBody()
         {
-            _rigidbody2D.velocity = Vector2.zero;
-            _rigidbody2D.rotation = 0;
+            _rigidbody2D.simulated = false;
         }
     }
 }

@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: -2855471629067033863}
   - component: {fileID: 1994236150271174443}
   - component: {fileID: -2846096763663322199}
-  - component: {fileID: 1994236150271174442}
   - component: {fileID: 1994236150271174441}
   m_Layer: 0
   m_Name: SpaceShip
@@ -261,18 +260,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shipMovement: {fileID: 1994236150271174443}
   _spaceShipShooting: {fileID: -2855471629067033863}
---- !u!114 &1994236150271174442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994236150271174456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62709447223e0664cac599d310eafa63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1994236150271174441
 Rigidbody2D:
   serializedVersion: 4

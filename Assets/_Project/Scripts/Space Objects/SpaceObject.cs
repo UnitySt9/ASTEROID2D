@@ -28,8 +28,7 @@ namespace _Project.Scripts
         {
             if (_isGameOver)
             {
-                _rigidbody2D.velocity = Vector2.zero;
-                _rigidbody2D.rotation = 0;
+                _rigidbody2D.simulated = false;
             }
         }
 
