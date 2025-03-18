@@ -5,8 +5,8 @@ namespace _Project.Scripts
         private ShipMovement _shipMovement;
         private SpaceShipShooting _spaceShipShooting;
         private InputHandler _inputHandler;
-
-        public SpaceShipController(ShipMovement shipMovement, SpaceShipShooting spaceShipShooting, InputHandler inputHandler)
+        
+        public void Initialize(ShipMovement shipMovement, SpaceShipShooting spaceShipShooting, InputHandler inputHandler)
         {
             _shipMovement = shipMovement;
             _spaceShipShooting = spaceShipShooting;

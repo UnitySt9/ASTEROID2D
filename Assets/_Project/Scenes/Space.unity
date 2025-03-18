@@ -207,6 +207,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &138681353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 138681355}
+  - component: {fileID: 138681354}
+  m_Layer: 0
+  m_Name: GameInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &138681354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138681353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406afe11e5c54384ba92e164e4750a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipPrefab: {fileID: 1994236150271174443, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
+  _shipSpawnPoint: {fileID: 947432544}
+  _gameOverView: {fileID: 431893379}
+  _shipIndicators: {fileID: 431893373}
+  _gameOverUIController: {fileID: 431893380}
+  _bulletPrefab: {fileID: 5545325319887222147, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
+  _lazerPrefab: {fileID: 2011693668067995137, guid: d8898fe553285c845895e23a4916d62e, type: 3}
+  _ufoPrefab: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
+  _asteroidPrefab: {fileID: 3474097796740721436, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
+--- !u!4 &138681355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138681353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1743740331}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299871505
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,18 +1014,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 583923753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f3859d60df24e469fa48b517d0b9b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 48afe9bbc9d9c874a949142e64fdec3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shipPrefab: {fileID: 1994236150271174443, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
-  _shipSpawnPoint: {fileID: 1994236150271174462, guid: e28d8b675714ddf43941715abddcd9be, type: 3}
-  _gameOverView: {fileID: 431893379}
-  _shipIndicators: {fileID: 431893373}
-  _gameOverUIController: {fileID: 431893380}
-  _bulletPrefab: {fileID: 5545325319887222147, guid: 97d546e94b23b5c41b13d559d056fc5b, type: 3}
-  _lazerPrefab: {fileID: 2011693668067995137, guid: d8898fe553285c845895e23a4916d62e, type: 3}
-  _ufoPrefab: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
-  _asteroidPrefab: {fileID: 3474097796740721436, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
 --- !u!1 &756972851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,6 +1986,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618197267}
   m_CullTransparentMesh: 1
+--- !u!1 &1743740329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1743740331}
+  - component: {fileID: 1743740330}
+  m_Layer: 0
+  m_Name: SceneContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1743740330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743740329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 138681354}
+  _installerPrefabs: []
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
+--- !u!4 &1743740331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743740329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 138681355}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1771404434
 GameObject:
   m_ObjectHideFlags: 0

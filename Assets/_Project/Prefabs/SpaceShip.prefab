@@ -45,7 +45,9 @@ GameObject:
   - component: {fileID: 1994236150271174441}
   - component: {fileID: 1994236150271174452}
   - component: {fileID: 1994236150271174443}
-  - component: {fileID: -2855471629067033863}
+  - component: {fileID: 5797441236426508300}
+  - component: {fileID: -4947052771053528065}
+  - component: {fileID: -2164664611405664258}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Player
@@ -249,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b447086678e88a40b720b835b2f61ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2855471629067033863
+--- !u!114 &5797441236426508300
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,3 +266,32 @@ MonoBehaviour:
   laserCooldown: 5
   currentLaserShots: 0
   _firePoint: {fileID: 1994236150271174462}
+--- !u!114 &-4947052771053528065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994236150271174456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers: []
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &-2164664611405664258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994236150271174456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acde70e8c231acb4ead2c79d7dbc2735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

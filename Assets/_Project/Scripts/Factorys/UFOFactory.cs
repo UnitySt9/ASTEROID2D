@@ -12,13 +12,16 @@ namespace _Project.Scripts
         private GameStateManager _gameStateManager;
         private Transform _spaceShipTransform;
 
-        public UFOFactory(UFO ufoPrefab, GameStateManager gameStateManager, Transform spaceShipTransform)
+        public UFOFactory(UFO ufoPrefab, GameStateManager gameStateManager)
         {
             _ufoPrefab = ufoPrefab;
             _gameStateManager = gameStateManager;
-            _spaceShipTransform = spaceShipTransform;
         }
 
+        public void Initialize(Transform spaceShipTransform)
+        {
+            _spaceShipTransform = spaceShipTransform;
+        }
         public void CreateUFO(Vector2 position)
         {
             UFO ufoInstance = Object.Instantiate(_ufoPrefab, position, Quaternion.identity);

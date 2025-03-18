@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class SpawnManager : IGameStateListener
+    public class SpawnManager : MonoBehaviour, IGameStateListener
     {
         private readonly int _spawnAsteroidInterval = 5;
         private readonly int _spawnUFOInterval = 4;
@@ -13,18 +13,17 @@ namespace _Project.Scripts
         private GameStateManager _gameStateManager;
         private WaitForSeconds _waitForAsteroidSpawn;
         private WaitForSeconds _waitForUFOSpawn;
-        private CoroutineHelper _coroutineHelper;
         private Camera _camera;
         private Vector3 _cameraBounds;
         private bool _isGameOver = false;
-        
+        private Coroutine _asteroidSpawnCoroutine;
+        private Coroutine _ufoSpawnCoroutine;
 
-        public SpawnManager(SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager, CoroutineHelper coroutineHelper)
+        public void Initialize(SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
         {
             _spaceObjectFactory = spaceObjectFactory;
             _ufoFactory = ufoFactory;
             _gameStateManager = gameStateManager;
-            _coroutineHelper = coroutineHelper;
             _camera = Camera.main;
             _waitForAsteroidSpawn = new WaitForSeconds(_spawnAsteroidInterval);
             _waitForUFOSpawn = new WaitForSeconds(_spawnUFOInterval);
@@ -35,13 +34,15 @@ namespace _Project.Scripts
 
         private void StartSpawning()
         {
-            _coroutineHelper.StartCoroutine(SpawnAsteroids());
-            _coroutineHelper.StartCoroutine(SpawnUFOs());
+            _asteroidSpawnCoroutine = StartCoroutine(SpawnAsteroids());
+            _ufoSpawnCoroutine = StartCoroutine(SpawnUFOs());
         }
 
         public void OnGameOver()
         {
             _isGameOver = true;
+            StopCoroutine(_asteroidSpawnCoroutine);
+            StopCoroutine(_ufoSpawnCoroutine);
         }
 
         private IEnumerator SpawnAsteroids()
@@ -78,6 +79,15 @@ namespace _Project.Scripts
         {
             _cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
             return -_cameraBounds;
+        }
+
+        private void OnDestroy()
+        {
+            if (_asteroidSpawnCoroutine != null)
+                StopCoroutine(_asteroidSpawnCoroutine);
+
+            if (_ufoSpawnCoroutine != null)
+                StopCoroutine(_ufoSpawnCoroutine);
         }
     }
 }

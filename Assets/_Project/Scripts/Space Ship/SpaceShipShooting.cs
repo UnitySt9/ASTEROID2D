@@ -11,7 +11,6 @@ namespace _Project.Scripts
         [SerializeField] private Transform _firePoint;
         private BulletFactory _bulletFactory;
         private LazerFactory _lazerFactory;
-
         private WaitForSeconds _waitRechargeLaser;
         private int _maxLaserShots = 3;
         

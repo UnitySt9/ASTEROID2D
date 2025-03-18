@@ -21,7 +21,7 @@ namespace _Project.Scripts
             _spaceShipShooting = spaceShipShooting;
         }
 
-        public void Update()
+        public void InputState()
         {
             if (!_isGameOver)
             {

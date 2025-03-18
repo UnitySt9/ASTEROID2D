@@ -1,69 +1,85 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
-    public class EntryPoint : MonoBehaviour
+    public class EntryPoint
     {
-        [SerializeField] private ShipMovement _shipPrefab;
-        [SerializeField] private Transform _shipSpawnPoint;
-        [SerializeField] private GameOverView _gameOverView;
-        [SerializeField] private ShipIndicators _shipIndicators;
-        [SerializeField] private GameOverUIController _gameOverUIController;
-        [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private Lazer _lazerPrefab;
-        [SerializeField] private UFO _ufoPrefab;
-        [SerializeField] private Asteroid _asteroidPrefab;
-        
-        private GameStateManager _gameStateManager;
-        private UFOFactory _ufoFactory;
-        private SpaceObjectFactory _spaceObjectFactory;
-        private Score _score;
-        private InputHandler _inputHandler;
-        private BulletFactory _bulletFactory;
-        private LazerFactory _lazerFactory;
-        private CoroutineHelper _coroutineHelper;
-        private SpaceShipController _spaceShipController;
-        private SpawnManager _spawnManager;
+        [Inject]private readonly GameStateManager _gameStateManager;
+        [Inject]private readonly ShipFactory _shipFactory;
+        [Inject]private readonly UFOFactory _ufoFactory;
+        [Inject]private readonly SpaceObjectFactory _spaceObjectFactory;
+        [Inject]private readonly BulletFactory _bulletFactory;
+        [Inject]private readonly LazerFactory _lazerFactory;
+        [Inject]private readonly Score _score;
+        [Inject]private readonly SpawnManager _spawnManager;
+        [Inject]private readonly Transform _shipSpawnPoint;
+        [Inject]private readonly InputHandler _inputHandler;
+        [Inject]private readonly SpaceShipController _spaceShipController;
+        [Inject]private readonly GameOverView _gameOverView;
+        [Inject]private readonly GameOverUIController _gameOverUIController;
+        [Inject]private readonly ShipIndicators _shipIndicators;
 
-        private void Start()
+        public EntryPoint(
+            GameStateManager gameStateManager,
+            Transform shipSpawnPoint,
+            Score score,
+            SpawnManager spawnManager,
+            ShipFactory shipFactory,
+            UFOFactory ufoFactory,
+            SpaceObjectFactory spaceObjectFactory,
+            BulletFactory bulletFactory,
+            LazerFactory lazerFactory,
+            SpaceShipController spaceShipController,
+            InputHandler inputHandler,
+            GameOverView gameOverView,
+            GameOverUIController gameOverUIController,
+            ShipIndicators shipIndicators
+            )
         {
-            _coroutineHelper = new CoroutineHelper(this);
-            var shipInstance = Instantiate(_shipPrefab, _shipSpawnPoint.position, _shipSpawnPoint.rotation);
+            _gameStateManager = gameStateManager;
+            _shipSpawnPoint = shipSpawnPoint;
+            _score = score;
+            _spawnManager = spawnManager;
+            _shipFactory = shipFactory;
+            _ufoFactory = ufoFactory;
+            _spaceObjectFactory = spaceObjectFactory;
+            _lazerFactory = lazerFactory;
+            _bulletFactory = bulletFactory;
+            _spaceShipController = spaceShipController;
+            _inputHandler = inputHandler;
+            _gameOverView = gameOverView;
+            _gameOverUIController = gameOverUIController;
+            _shipIndicators = shipIndicators;
+            SubscribeToEvents();
+        }
+
+        public void StartGame()
+        {
+            var shipInstance = _shipFactory.Create(_shipSpawnPoint);
             var shipTransform = shipInstance.transform;
-            _gameStateManager = new GameStateManager();
-            _score = new Score();
-            _ufoFactory = new UFOFactory(_ufoPrefab, _gameStateManager, shipTransform);
-            _spaceObjectFactory = new SpaceObjectFactory(_asteroidPrefab, _gameStateManager);
-            _ufoFactory.OnUFOCreated += OnUfoCreated;
-            _spaceObjectFactory.OnSpaceObjectCreated += OnSpaceObjectCrated;
-            _spawnManager = new SpawnManager(_spaceObjectFactory, _ufoFactory, _gameStateManager, _coroutineHelper);
-            var collisionHandler = shipInstance.AddComponent<CollisionHandler>();
-            collisionHandler.Initialize(_gameStateManager);
             var shipMovement = shipInstance.GetComponent<ShipMovement>();
-            
-            _bulletFactory = new BulletFactory(_bulletPrefab);
-            _lazerFactory = new LazerFactory(_lazerPrefab);
-            
             var spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
-            spaceShipShooting.Initialize(_bulletFactory, _lazerFactory);
-
-            _inputHandler = new InputHandler(_gameStateManager);
-            _spaceShipController = new SpaceShipController(shipMovement, spaceShipShooting, _inputHandler);
-
+            var collisionHandler = shipInstance.GetComponent<CollisionHandler>();
+            _spaceShipController.Initialize(shipMovement, spaceShipShooting, _inputHandler);
+            _ufoFactory.Initialize(shipTransform);
+            _spawnManager.Initialize(_spaceObjectFactory, _ufoFactory, _gameStateManager);
             _gameOverUIController.Initialize(_gameOverView, _score, _gameStateManager);
             _shipIndicators.Initialize(spaceShipShooting, _score);
+            collisionHandler.Initialize(_gameStateManager);
+            spaceShipShooting.Initialize(_bulletFactory, _lazerFactory);
         }
-
-        private void Update()
+        
+        private void SubscribeToEvents()
         {
-            _inputHandler?.Update();
+            _ufoFactory.OnUFOCreated += OnUfoCreated;
+            _spaceObjectFactory.OnSpaceObjectCreated += OnSpaceObjectCreated;
         }
 
-        private void OnDestroy()
+        private void UnsubscribeFromEvents()
         {
             _ufoFactory.OnUFOCreated -= OnUfoCreated;
-            _spaceObjectFactory.OnSpaceObjectCreated -= OnSpaceObjectCrated;
+            _spaceObjectFactory.OnSpaceObjectCreated -= OnSpaceObjectCreated;
         }
 
         private void OnUfoCreated(UFO ufo)
@@ -72,7 +88,7 @@ namespace _Project.Scripts
             ufo.OnUfoDestroyed += OnUfoDestroyed;
         }
 
-        private void OnSpaceObjectCrated(SpaceObject spaceObject)
+        private void OnSpaceObjectCreated(SpaceObject spaceObject)
         {
             _score.SubscribeToSpaceObject(spaceObject);
             spaceObject.OnSpaceObjectDestroyed += OnSpaceObjectDestroyed;
@@ -88,6 +104,11 @@ namespace _Project.Scripts
         {
             _score.UnsubscribeFromSpaceObject(spaceObject);
             spaceObject.OnSpaceObjectDestroyed -= OnSpaceObjectDestroyed;
+        }
+
+        public void Dispose()
+        {
+            UnsubscribeFromEvents();
         }
     }
 }
