@@ -5,27 +5,28 @@ namespace _Project.Scripts
 {
     public class EntryPoint
     {
-        [Inject]private readonly GameStateManager _gameStateManager;
-        [Inject]private readonly ShipFactory _shipFactory;
-        [Inject]private readonly UFOFactory _ufoFactory;
-        [Inject]private readonly SpaceObjectFactory _spaceObjectFactory;
-        [Inject]private readonly BulletFactory _bulletFactory;
-        [Inject]private readonly LazerFactory _lazerFactory;
-        [Inject]private readonly Score _score;
-        [Inject]private readonly SpawnManager _spawnManager;
-        [Inject]private readonly Transform _shipSpawnPoint;
-        [Inject]private readonly InputHandler _inputHandler;
-        [Inject]private readonly SpaceShipController _spaceShipController;
-        [Inject]private readonly GameOverView _gameOverView;
-        [Inject]private readonly GameOverUIController _gameOverUIController;
-        [Inject]private readonly ShipIndicators _shipIndicators;
+        [Inject(Id = "ShipTransform")] private readonly Transform _shipTransform;
+        [Inject] private readonly GameStateManager _gameStateManager;
+        [Inject] private readonly UFOFactory _ufoFactory;
+        [Inject] private readonly SpaceObjectFactory _spaceObjectFactory;
+        [Inject] private readonly BulletFactory _bulletFactory;
+        [Inject] private readonly LazerFactory _lazerFactory;
+        [Inject] private readonly Score _score;
+        [Inject] private readonly SpawnManager _spawnManager;
+        [Inject] private readonly InputHandler _inputHandler;
+        [Inject] private readonly SpaceShipController _spaceShipController;
+        [Inject] private readonly GameOverView _gameOverView;
+        [Inject] private readonly GameOverUIController _gameOverUIController;
+        [Inject] private readonly ShipIndicators _shipIndicators;
+        [Inject] private readonly ShipMovement _shipMovement;
+        [Inject] private readonly SpaceShipShooting _spaceShipShooting;
+        [Inject] private readonly CollisionHandler _collisionHandler;
 
         public EntryPoint(
+            [Inject(Id = "ShipTransform")] Transform shipTransform,
             GameStateManager gameStateManager,
-            Transform shipSpawnPoint,
             Score score,
             SpawnManager spawnManager,
-            ShipFactory shipFactory,
             UFOFactory ufoFactory,
             SpaceObjectFactory spaceObjectFactory,
             BulletFactory bulletFactory,
@@ -34,14 +35,16 @@ namespace _Project.Scripts
             InputHandler inputHandler,
             GameOverView gameOverView,
             GameOverUIController gameOverUIController,
-            ShipIndicators shipIndicators
+            ShipIndicators shipIndicators,
+            ShipMovement shipMovement,
+            SpaceShipShooting spaceShipShooting,
+            CollisionHandler collisionHandler
             )
         {
             _gameStateManager = gameStateManager;
-            _shipSpawnPoint = shipSpawnPoint;
+            _shipTransform = shipTransform;
             _score = score;
             _spawnManager = spawnManager;
-            _shipFactory = shipFactory;
             _ufoFactory = ufoFactory;
             _spaceObjectFactory = spaceObjectFactory;
             _lazerFactory = lazerFactory;
@@ -51,25 +54,23 @@ namespace _Project.Scripts
             _gameOverView = gameOverView;
             _gameOverUIController = gameOverUIController;
             _shipIndicators = shipIndicators;
+            _shipMovement = shipMovement;
+            _spaceShipShooting = spaceShipShooting;
+            _collisionHandler = collisionHandler;
             SubscribeToEvents();
         }
 
         public void StartGame()
         {
-            var shipInstance = _shipFactory.Create(_shipSpawnPoint);
-            var shipTransform = shipInstance.transform;
-            var shipMovement = shipInstance.GetComponent<ShipMovement>();
-            var spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
-            var collisionHandler = shipInstance.GetComponent<CollisionHandler>();
-            _spaceShipController.Initialize(shipMovement, spaceShipShooting, _inputHandler);
-            _ufoFactory.Initialize(shipTransform);
+            _spaceShipController.Initialize(_shipMovement, _spaceShipShooting, _inputHandler);
+            _ufoFactory.Initialize(_shipTransform);
             _spawnManager.Initialize(_spaceObjectFactory, _ufoFactory, _gameStateManager);
             _gameOverUIController.Initialize(_gameOverView, _score, _gameStateManager);
-            _shipIndicators.Initialize(spaceShipShooting, _score);
-            collisionHandler.Initialize(_gameStateManager);
-            spaceShipShooting.Initialize(_bulletFactory, _lazerFactory);
+            _shipIndicators.Initialize(_spaceShipShooting, _score);
+            _collisionHandler.Initialize(_gameStateManager);
+            _spaceShipShooting.Initialize(_bulletFactory, _lazerFactory);
         }
-        
+
         private void SubscribeToEvents()
         {
             _ufoFactory.OnUFOCreated += OnUfoCreated;

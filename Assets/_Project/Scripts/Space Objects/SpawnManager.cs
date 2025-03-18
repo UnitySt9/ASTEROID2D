@@ -15,9 +15,9 @@ namespace _Project.Scripts
         private WaitForSeconds _waitForUFOSpawn;
         private Camera _camera;
         private Vector3 _cameraBounds;
-        private bool _isGameOver = false;
         private Coroutine _asteroidSpawnCoroutine;
         private Coroutine _ufoSpawnCoroutine;
+        private bool _isGameOver = false;
 
         public void Initialize(SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
         {

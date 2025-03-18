@@ -17,24 +17,29 @@ namespace _Project.Scripts
 
         public override void InstallBindings()
         {
+            var shipInstance = Container.InstantiatePrefabForComponent<ShipMovement>(_shipPrefab, _shipSpawnPoint.position, Quaternion.identity, null);
+            Container.Bind<ShipMovement>().FromInstance(shipInstance).AsSingle();
+            var shipTransform = shipInstance.transform;
+            var spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
+            var collisionHandler = shipInstance.GetComponent<CollisionHandler>();
+
+            Container.Bind<Transform>().WithId("ShipTransform").FromInstance(shipTransform);
+            Container.Bind<Transform>().WithId("ShipSpawnPoint").FromInstance(_shipSpawnPoint);
+            Container.Bind<SpaceShipShooting>().FromInstance(spaceShipShooting).AsSingle();
+            Container.Bind<CollisionHandler>().FromInstance(collisionHandler).AsSingle();
+
             Container.Bind<GameStateManager>().AsSingle();
             Container.Bind<Score>().AsSingle();
-            Container.Bind<CollisionHandler>().FromSubContainerResolve().ByNewContextPrefab(_shipPrefab).AsSingle();
             Container.Bind<SpawnManager>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
             
-            Container.Bind<ShipMovement>().FromSubContainerResolve().ByNewContextPrefab(_shipPrefab).AsSingle();
             Container.Bind<InputHandler>().AsSingle();
             Container.Bind<SpaceShipController>().AsSingle();
             Container.Bind<KeyboardInputProvider>().AsSingle();
-            Container.Bind<SpaceShipShooting>().FromSubContainerResolve().ByNewContextPrefab(_shipPrefab).AsSingle();
 
             Container.Bind<BulletFactory>().AsSingle().WithArguments(_bulletPrefab);
             Container.Bind<LazerFactory>().AsSingle().WithArguments(_lazerPrefab);
             Container.Bind<UFOFactory>().AsSingle().WithArguments(_ufoPrefab);
             Container.Bind<SpaceObjectFactory>().AsSingle().WithArguments(_asteroidPrefab);
-
-            Container.Bind<ShipFactory>().AsSingle().WithArguments(_shipPrefab);
-            Container.Bind<Transform>().FromInstance(_shipSpawnPoint).WhenInjectedInto<EntryPoint>();
             
             Container.Bind<GameOverUIController>().FromInstance(_gameOverUIController).AsSingle();
             Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();
