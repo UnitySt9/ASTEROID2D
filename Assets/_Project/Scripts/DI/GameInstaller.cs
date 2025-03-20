@@ -6,7 +6,7 @@ namespace _Project.Scripts
     public class GameInstaller : MonoInstaller
     {
         [SerializeField] private ShipMovement _shipPrefab;
-        [SerializeField] private Transform _shipSpawnPoint;
+        [SerializeField] private ShipSpawnPoint _shipSpawnPoint;
         [SerializeField] private GameOverView _gameOverView;
         [SerializeField] private ShipIndicators _shipIndicators;
         [SerializeField] private GameOverUIController _gameOverUIController;
@@ -17,14 +17,14 @@ namespace _Project.Scripts
 
         public override void InstallBindings()
         {
-            var shipInstance = Container.InstantiatePrefabForComponent<ShipMovement>(_shipPrefab, _shipSpawnPoint.position, Quaternion.identity, null);
+            var shipInstance = Container.InstantiatePrefabForComponent<ShipMovement>(_shipPrefab, _shipSpawnPoint.transform.position, Quaternion.identity, null);
             Container.Bind<ShipMovement>().FromInstance(shipInstance).AsSingle();
-            var shipTransform = shipInstance.transform;
+            var shipTransform = shipInstance.GetComponent<ShipTransform>();
             var spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
             var collisionHandler = shipInstance.GetComponent<CollisionHandler>();
 
-            Container.Bind<Transform>().WithId("ShipTransform").FromInstance(shipTransform);
-            Container.Bind<Transform>().WithId("ShipSpawnPoint").FromInstance(_shipSpawnPoint);
+            Container.Bind<ShipTransform>().FromInstance(shipTransform).AsSingle();
+            Container.Bind<ShipSpawnPoint>().FromInstance(_shipSpawnPoint).AsSingle();
             Container.Bind<SpaceShipShooting>().FromInstance(spaceShipShooting).AsSingle();
             Container.Bind<CollisionHandler>().FromInstance(collisionHandler).AsSingle();
 

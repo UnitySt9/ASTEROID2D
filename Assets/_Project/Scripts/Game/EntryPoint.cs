@@ -5,7 +5,7 @@ namespace _Project.Scripts
 {
     public class EntryPoint
     {
-        [Inject(Id = "ShipTransform")] private readonly Transform _shipTransform;
+        [Inject] private readonly ShipTransform _shipTransform;
         [Inject] private readonly GameStateManager _gameStateManager;
         [Inject] private readonly UFOFactory _ufoFactory;
         [Inject] private readonly SpaceObjectFactory _spaceObjectFactory;
@@ -23,7 +23,7 @@ namespace _Project.Scripts
         [Inject] private readonly CollisionHandler _collisionHandler;
 
         public EntryPoint(
-            [Inject(Id = "ShipTransform")] Transform shipTransform,
+            ShipTransform shipTransform,
             GameStateManager gameStateManager,
             Score score,
             SpawnManager spawnManager,
@@ -63,7 +63,7 @@ namespace _Project.Scripts
         public void StartGame()
         {
             _spaceShipController.Initialize(_shipMovement, _spaceShipShooting, _inputHandler);
-            _ufoFactory.Initialize(_shipTransform);
+            _ufoFactory.Initialize(_shipTransform.transform);
             _spawnManager.Initialize(_spaceObjectFactory, _ufoFactory, _gameStateManager);
             _gameOverUIController.Initialize(_gameOverView, _score, _gameStateManager);
             _shipIndicators.Initialize(_spaceShipShooting, _score);
