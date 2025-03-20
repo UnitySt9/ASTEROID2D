@@ -3,14 +3,22 @@ using UnityEngine;
 namespace _Project.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(TeleportBounds))]
     public class Asteroid : SpaceObject
     {
         [SerializeField] private Debris _debrisPrefab;
+        private TeleportBounds _teleportBounds;
+        
         protected override void Start()
         {
             Speed = 3f;
             base.Start();
+            _teleportBounds = new TeleportBounds(transform, Camera.main);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            _teleportBounds.BoundsUpdate();
         }
 
         protected override void OnTriggerEnter2D(Collider2D collision)

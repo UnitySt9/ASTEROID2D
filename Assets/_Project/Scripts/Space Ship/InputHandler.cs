@@ -1,6 +1,8 @@
+using Zenject;
+
 namespace _Project.Scripts
 {
-    public class InputHandler : IGameStateListener
+    public class InputHandler : IGameStateListener, ITickable
     {
         private GameStateManager _gameStateManager;
         private ShipMovement _shipMovement;
@@ -21,7 +23,7 @@ namespace _Project.Scripts
             _spaceShipShooting = spaceShipShooting;
         }
 
-        public void InputState()
+        public void Tick()
         {
             if (!_isGameOver)
             {

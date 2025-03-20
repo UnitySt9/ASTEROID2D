@@ -2,28 +2,29 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class TeleportBounds : MonoBehaviour
+    public class TeleportBounds
     {
-        private Camera _camera;
+        private readonly Transform _targetTransform;
+        private readonly Camera _camera;
         private Vector3 _cameraBounds;
 
-        private void Start()
+        public TeleportBounds(Transform targetTransform, Camera camera)
         {
-            _camera = Camera.main;
-            if (_camera == null)
+            _targetTransform = targetTransform;
+            _camera = camera;
+
+            if (_camera != null)
             {
-                enabled = false;
-                return;
+                _cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
             }
-            _cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
         }
 
-        private void LateUpdate()
+        public void BoundsUpdate()
         {
             if (_camera == null)
                 return;
 
-            Vector3 viewPos = transform.position;
+            Vector3 viewPos = _targetTransform.position;
 
             if (viewPos.x > _cameraBounds.x)
                 viewPos.x = -_cameraBounds.x;
@@ -34,7 +35,7 @@ namespace _Project.Scripts
             if (viewPos.y < -_cameraBounds.y)
                 viewPos.y = _cameraBounds.y;
 
-            transform.position = viewPos;
+            _targetTransform.position = viewPos;
         }
     }
 }

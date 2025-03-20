@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4789926242536323804}
   - component: {fileID: -7241598029252003304}
   - component: {fileID: 3474097796740721436}
-  - component: {fileID: -8610212160561464172}
   m_Layer: 0
   m_Name: asteroid
   m_TagString: Asteroid
@@ -180,15 +179,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _debrisPrefab: {fileID: 6549078939086541671, guid: 69b3a82b07ca4c94ca9775a503e37efe, type: 3}
---- !u!114 &-8610212160561464172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8384720147553082200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21dd6e4a6bd887846a2088d32e36027c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

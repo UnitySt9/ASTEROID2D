@@ -9,7 +9,6 @@ namespace _Project.Scripts
         [SerializeField] private ShipSpawnPoint _shipSpawnPoint;
         [SerializeField] private GameOverView _gameOverView;
         [SerializeField] private ShipIndicators _shipIndicators;
-        [SerializeField] private GameOverUIController _gameOverUIController;
         [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Lazer _lazerPrefab;
         [SerializeField] private UFO _ufoPrefab;
@@ -30,22 +29,22 @@ namespace _Project.Scripts
 
             Container.Bind<GameStateManager>().AsSingle();
             Container.Bind<Score>().AsSingle();
-            Container.Bind<SpawnManager>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
-            
-            Container.Bind<InputHandler>().AsSingle();
             Container.Bind<SpaceShipController>().AsSingle();
             Container.Bind<KeyboardInputProvider>().AsSingle();
+            Container.Bind<TeleportBounds>().AsTransient();
+            Container.Bind<SpawnManager>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
             Container.Bind<BulletFactory>().AsSingle().WithArguments(_bulletPrefab);
             Container.Bind<LazerFactory>().AsSingle().WithArguments(_lazerPrefab);
             Container.Bind<UFOFactory>().AsSingle().WithArguments(_ufoPrefab);
             Container.Bind<SpaceObjectFactory>().AsSingle().WithArguments(_asteroidPrefab);
             
-            Container.Bind<GameOverUIController>().FromInstance(_gameOverUIController).AsSingle();
+            Container.Bind<GameOverUIController>().AsSingle();
             Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();
             Container.Bind<ShipIndicators>().FromInstance(_shipIndicators).AsSingle();
 
-            Container.Bind<EntryPoint>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
         }
     }
 }

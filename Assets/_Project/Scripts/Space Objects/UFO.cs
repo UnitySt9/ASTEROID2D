@@ -4,7 +4,6 @@ using UnityEngine;
 namespace _Project.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(TeleportBounds))]
     public class UFO : MonoBehaviour, IGameStateListener
     {
         public event Action<int> OnUFOHit;
@@ -14,13 +13,15 @@ namespace _Project.Scripts
         private readonly int _scoreValue = 1;
         private Transform _spaceShipTransform;
         private GameStateManager _gameStateManager;
+        private TeleportBounds _teleportBounds;
         private Rigidbody2D _rigidbody2D;
         private Vector2 _direction;
         private bool _isGameOver = false;
-        
+
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            _teleportBounds = new TeleportBounds(transform, Camera.main);
         }
 
         private void Update()
@@ -28,6 +29,7 @@ namespace _Project.Scripts
             if (!_isGameOver)
             {
                 FollowTheShip();
+                _teleportBounds.BoundsUpdate();
             }
             else
             {

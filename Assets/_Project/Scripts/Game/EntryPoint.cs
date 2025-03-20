@@ -1,9 +1,9 @@
-using UnityEngine;
+using System;
 using Zenject;
 
 namespace _Project.Scripts
 {
-    public class EntryPoint
+    public class EntryPoint: IInitializable, IDisposable
     {
         [Inject] private readonly ShipTransform _shipTransform;
         [Inject] private readonly GameStateManager _gameStateManager;
@@ -60,7 +60,7 @@ namespace _Project.Scripts
             SubscribeToEvents();
         }
 
-        public void StartGame()
+        public void Initialize()
         {
             _spaceShipController.Initialize(_shipMovement, _spaceShipShooting, _inputHandler);
             _ufoFactory.Initialize(_shipTransform.transform);
