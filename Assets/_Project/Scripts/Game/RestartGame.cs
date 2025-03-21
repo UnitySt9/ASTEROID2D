@@ -1,34 +1,36 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _Project.Scripts
 {
     public class RestartGame : MonoBehaviour
     {
-        [SerializeField] Button _restartButton;
-        [SerializeField] Button _menuButton;
+        [SerializeField] private Button _restartButton;
+        [SerializeField] private Button _menuButton;
+
+        private ISceneLoader _sceneLoader;
 
         private void Start()
         {
-            _restartButton.onClick.AddListener(RestartLevel);
+            _sceneLoader = new SceneLoader();
+            _restartButton.onClick.AddListener(ReloadScene);
             _menuButton.onClick.AddListener(LoadMenu);
         }
-        
+
         private void OnDisable()
         {
-            _restartButton.onClick.RemoveListener(RestartLevel);
+            _restartButton.onClick.RemoveListener(ReloadScene);
             _menuButton.onClick.RemoveListener(LoadMenu);
         }
 
-        private void RestartLevel()
+        private void ReloadScene()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            _sceneLoader.ReloadScene();
         }
 
         private void LoadMenu()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            _sceneLoader.LoadMenu();
         }
     }
 }

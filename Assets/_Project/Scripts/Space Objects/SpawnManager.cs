@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class SpawnManager : MonoBehaviour, IGameStateListener
+    public class SpawnManager : IGameStateListener, IDisposable
     {
         private readonly int _spawnAsteroidInterval = 5;
         private readonly int _spawnUFOInterval = 4;
@@ -18,6 +19,12 @@ namespace _Project.Scripts
         private Coroutine _asteroidSpawnCoroutine;
         private Coroutine _ufoSpawnCoroutine;
         private bool _isGameOver = false;
+        private MonoBehaviour _monoBehaviour;
+
+        public SpawnManager(MonoBehaviour monoBehaviour)
+        {
+            _monoBehaviour = monoBehaviour;
+        }
 
         public void Initialize(SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
         {
@@ -34,15 +41,18 @@ namespace _Project.Scripts
 
         private void StartSpawning()
         {
-            _asteroidSpawnCoroutine = StartCoroutine(SpawnAsteroids());
-            _ufoSpawnCoroutine = StartCoroutine(SpawnUFOs());
+            _asteroidSpawnCoroutine = _monoBehaviour.StartCoroutine(SpawnAsteroids());
+            _ufoSpawnCoroutine = _monoBehaviour.StartCoroutine(SpawnUFOs());
         }
 
         public void OnGameOver()
         {
             _isGameOver = true;
-            StopCoroutine(_asteroidSpawnCoroutine);
-            StopCoroutine(_ufoSpawnCoroutine);
+            if (_asteroidSpawnCoroutine != null)
+                _monoBehaviour.StopCoroutine(_asteroidSpawnCoroutine);
+
+            if (_ufoSpawnCoroutine != null)
+                _monoBehaviour.StopCoroutine(_ufoSpawnCoroutine);
         }
 
         private IEnumerator SpawnAsteroids()
@@ -81,13 +91,13 @@ namespace _Project.Scripts
             return -_cameraBounds;
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             if (_asteroidSpawnCoroutine != null)
-                StopCoroutine(_asteroidSpawnCoroutine);
+                _monoBehaviour.StopCoroutine(_asteroidSpawnCoroutine);
 
             if (_ufoSpawnCoroutine != null)
-                StopCoroutine(_ufoSpawnCoroutine);
+                _monoBehaviour.StopCoroutine(_ufoSpawnCoroutine);
         }
     }
 }
