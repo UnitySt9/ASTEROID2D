@@ -15,9 +15,6 @@ namespace _Project.Scripts
         [Inject] private readonly SpawnManager _spawnManager;
         [Inject] private readonly InputHandler _inputHandler;
         [Inject] private readonly SpaceShipController _spaceShipController;
-        [Inject] private readonly GameOverView _gameOverView;
-        [Inject] private readonly GameOverUIController _gameOverUIController;
-        //[Inject] private readonly ShipIndicatorsPresenter _shipIndicatorsPresenter;
         [Inject] private readonly ShipMovement _shipMovement;
         [Inject] private readonly SpaceShipShooting _spaceShipShooting;
         [Inject] private readonly CollisionHandler _collisionHandler;
@@ -33,9 +30,6 @@ namespace _Project.Scripts
             LazerFactory lazerFactory,
             SpaceShipController spaceShipController,
             InputHandler inputHandler,
-            GameOverView gameOverView,
-            GameOverUIController gameOverUIController,
-            //ShipIndicatorsPresenter shipIndicatorsPresenter,
             ShipMovement shipMovement,
             SpaceShipShooting spaceShipShooting,
             CollisionHandler collisionHandler
@@ -51,9 +45,6 @@ namespace _Project.Scripts
             _bulletFactory = bulletFactory;
             _spaceShipController = spaceShipController;
             _inputHandler = inputHandler;
-            _gameOverView = gameOverView;
-            _gameOverUIController = gameOverUIController;
-            //_shipIndicatorsPresenter = shipIndicatorsPresenter;
             _shipMovement = shipMovement;
             _spaceShipShooting = spaceShipShooting;
             _collisionHandler = collisionHandler;
@@ -65,8 +56,6 @@ namespace _Project.Scripts
             _spaceShipController.Initialize(_shipMovement, _spaceShipShooting, _inputHandler);
             _ufoFactory.Initialize(_shipTransform.transform);
             _spawnManager.Initialize(_spaceObjectFactory, _ufoFactory, _gameStateManager);
-            _gameOverUIController.Initialize(_gameOverView, _score, _gameStateManager);
-            //_shipIndicatorsPresenter.Initialize(_spaceShipShooting, _score);
             _collisionHandler.Initialize(_gameStateManager);
             _spaceShipShooting.Initialize(_bulletFactory, _lazerFactory);
         }

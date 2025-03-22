@@ -4,7 +4,7 @@ namespace _Project.Scripts
 {
     public class GameStateManager
     {
-        private List<IGameStateListener> _listeners = new();
+        private readonly List<IGameStateListener> _listeners = new();
 
         public void RegisterListener(IGameStateListener listener)
         {

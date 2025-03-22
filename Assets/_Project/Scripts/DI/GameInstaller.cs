@@ -39,11 +39,12 @@ namespace _Project.Scripts
             Container.Bind<UFOFactory>().AsSingle().WithArguments(_ufoPrefab);
             Container.Bind<SpaceObjectFactory>().AsSingle().WithArguments(_asteroidPrefab);
             
-            Container.Bind<GameOverUIController>().AsSingle();
+            Container.Bind<GameOverModel>().AsSingle();
             Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();
+            Container.BindInterfacesAndSelfTo<GameOverPresenter>().AsSingle().NonLazy();
             
-            Container.Bind<ShipIndicatorsView>().FromInstance(_shipIndicatorsView).AsSingle();
             Container.Bind<ShipIndicatorsModel>().AsSingle();
+            Container.Bind<ShipIndicatorsView>().FromInstance(_shipIndicatorsView).AsSingle();
             Container.BindInterfacesAndSelfTo<ShipIndicatorsPresenter>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
