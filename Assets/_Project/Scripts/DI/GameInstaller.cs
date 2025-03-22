@@ -8,7 +8,7 @@ namespace _Project.Scripts
         [SerializeField] private ShipMovement _shipPrefab;
         [SerializeField] private ShipSpawnPoint _shipSpawnPoint;
         [SerializeField] private GameOverView _gameOverView;
-        [SerializeField] private ShipIndicators _shipIndicators;
+        [SerializeField] private ShipIndicatorsView _shipIndicatorsView;
         [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Lazer _lazerPrefab;
         [SerializeField] private UFO _ufoPrefab;
@@ -41,7 +41,10 @@ namespace _Project.Scripts
             
             Container.Bind<GameOverUIController>().AsSingle();
             Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();
-            Container.Bind<ShipIndicators>().FromInstance(_shipIndicators).AsSingle();
+            
+            Container.Bind<ShipIndicatorsView>().FromInstance(_shipIndicatorsView).AsSingle();
+            Container.Bind<ShipIndicatorsModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ShipIndicatorsPresenter>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
