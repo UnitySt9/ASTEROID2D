@@ -21,7 +21,7 @@ namespace _Project.Scripts
             Container.Bind<SpaceShipController>().AsSingle();
             Container.Bind<KeyboardInputProvider>().AsSingle();
             Container.Bind<TeleportBounds>().AsTransient();
-            Container.Bind<SpawnManager>().AsSingle().WithArguments(this).NonLazy();
+            Container.Bind<SpawnManager>().AsSingle().NonLazy();
             
             Container.Bind<BulletFactory>().AsSingle().WithArguments(_bulletPrefab);
             Container.Bind<LazerFactory>().AsSingle().WithArguments(_lazerPrefab);

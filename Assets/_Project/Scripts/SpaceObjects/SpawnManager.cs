@@ -1,6 +1,7 @@
 using System;
-using System.Collections;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace _Project.Scripts
 {
@@ -9,21 +10,16 @@ namespace _Project.Scripts
         private readonly int _spawnAsteroidInterval = 5;
         private readonly int _spawnUFOInterval = 4;
 
+        private CancellationTokenSource _cancellationTokenSource;
         private SpaceObjectFactory _spaceObjectFactory;
         private UFOFactory _ufoFactory;
         private GameStateManager _gameStateManager;
-        private WaitForSeconds _waitForAsteroidSpawn;
-        private WaitForSeconds _waitForUFOSpawn;
         private Camera _camera;
         private Vector3 _cameraBounds;
-        private Coroutine _asteroidSpawnCoroutine;
-        private Coroutine _ufoSpawnCoroutine;
         private bool _isGameOver = false;
-        private MonoBehaviour _monoBehaviour;
 
-        public SpawnManager(MonoBehaviour monoBehaviour, SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
+        public SpawnManager(SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
         {
-            _monoBehaviour = monoBehaviour;
             _spaceObjectFactory = spaceObjectFactory;
             _ufoFactory = ufoFactory;
             _gameStateManager = gameStateManager;
@@ -32,43 +28,38 @@ namespace _Project.Scripts
         public void Initialize()
         {
             _camera = Camera.main;
-            _waitForAsteroidSpawn = new WaitForSeconds(_spawnAsteroidInterval);
-            _waitForUFOSpawn = new WaitForSeconds(_spawnUFOInterval);
+            _cancellationTokenSource = new CancellationTokenSource();
             StartSpawning();
             _gameStateManager.RegisterListener(this);
         }
 
         private void StartSpawning()
         {
-            _asteroidSpawnCoroutine = _monoBehaviour.StartCoroutine(SpawnAsteroids());
-            _ufoSpawnCoroutine = _monoBehaviour.StartCoroutine(SpawnUFOs());
+            SpawnAsteroidsAsync(_cancellationTokenSource.Token).Forget();
+            SpawnUFOsAsync(_cancellationTokenSource.Token).Forget();
         }
 
         public void OnGameOver()
         {
             _isGameOver = true;
-            if (_asteroidSpawnCoroutine != null)
-                _monoBehaviour.StopCoroutine(_asteroidSpawnCoroutine);
-
-            if (_ufoSpawnCoroutine != null)
-                _monoBehaviour.StopCoroutine(_ufoSpawnCoroutine);
+            _cancellationTokenSource?.Cancel();
         }
 
-        private IEnumerator SpawnAsteroids()
+        private async UniTaskVoid SpawnAsteroidsAsync(CancellationToken cancellationToken)
         {
-            while (!_isGameOver)
+            while (!_isGameOver && !cancellationToken.IsCancellationRequested)
             {
                 SpawnAsteroid();
-                yield return _waitForAsteroidSpawn;
+                await UniTask.Delay(TimeSpan.FromSeconds(_spawnAsteroidInterval), cancellationToken: cancellationToken);
             }
         }
 
-        private IEnumerator SpawnUFOs()
+        private async UniTaskVoid SpawnUFOsAsync(CancellationToken cancellationToken)
         {
-            while (!_isGameOver)
+            while (!_isGameOver && !cancellationToken.IsCancellationRequested)
             {
                 SpawnUFO();
-                yield return _waitForUFOSpawn;
+                await UniTask.Delay(TimeSpan.FromSeconds(_spawnUFOInterval), cancellationToken: cancellationToken);
             }
         }
 
@@ -92,11 +83,9 @@ namespace _Project.Scripts
 
         public void Dispose()
         {
-            if (_asteroidSpawnCoroutine != null)
-                _monoBehaviour.StopCoroutine(_asteroidSpawnCoroutine);
-
-            if (_ufoSpawnCoroutine != null)
-                _monoBehaviour.StopCoroutine(_ufoSpawnCoroutine);
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
         }
     }
 }
