@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
@@ -7,6 +8,12 @@ namespace _Project.Scripts
         private GameStateManager _gameStateManager;
         private TeleportBounds _teleportBounds;
 
+        [Inject]
+        private void Construct(GameStateManager gameStateManager)
+        {
+            _gameStateManager = gameStateManager;
+        }
+        
         private void Start()
         {
             _teleportBounds = new TeleportBounds(transform, Camera.main);
@@ -20,11 +27,6 @@ namespace _Project.Scripts
         private void OnCollisionEnter2D()
         {
             _gameStateManager?.GameOver();
-        }
-        
-        public void Initialize(GameStateManager gameStateManager)
-        {
-            _gameStateManager = gameStateManager;
         }
     }
 }

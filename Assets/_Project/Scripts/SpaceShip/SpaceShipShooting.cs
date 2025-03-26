@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
@@ -14,11 +16,15 @@ namespace _Project.Scripts
         private WaitForSeconds _waitRechargeLaser;
         private int _maxLaserShots = 3;
         
-        public void Initialize(BulletFactory bulletFactory, LazerFactory lazerFactory)
+        [Inject]
+        private void Construct(BulletFactory bulletFactory, LazerFactory lazerFactory)
         {
             _bulletFactory = bulletFactory;
             _lazerFactory = lazerFactory;
+        }
 
+        private void Start()
+        {
             currentLaserShots = _maxLaserShots;
             _waitRechargeLaser = new WaitForSeconds(laserCooldown);
             StartCoroutine(RechargeLaserCoroutine());

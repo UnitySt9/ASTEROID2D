@@ -8,7 +8,7 @@ namespace _Project.Scripts
         [SerializeField] private GameObject _gameOverPanel;
         [SerializeField] private TextMeshProUGUI _endScore;
 
-        public void ShowGameOverPanel(int score)
+        public void ShowPanel(int score)
         {
             _gameOverPanel.SetActive(true);
             _endScore.text = $"GAME OVER. SCORE: {score}";

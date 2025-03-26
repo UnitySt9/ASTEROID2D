@@ -21,20 +21,19 @@ namespace _Project.Scripts
         private bool _isGameOver = false;
         private MonoBehaviour _monoBehaviour;
 
-        public SpawnManager(MonoBehaviour monoBehaviour)
+        public SpawnManager(MonoBehaviour monoBehaviour, SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
         {
             _monoBehaviour = monoBehaviour;
-        }
-
-        public void Initialize(SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
-        {
             _spaceObjectFactory = spaceObjectFactory;
             _ufoFactory = ufoFactory;
             _gameStateManager = gameStateManager;
+        }
+
+        public void Initialize()
+        {
             _camera = Camera.main;
             _waitForAsteroidSpawn = new WaitForSeconds(_spawnAsteroidInterval);
             _waitForUFOSpawn = new WaitForSeconds(_spawnUFOInterval);
-
             StartSpawning();
             _gameStateManager.RegisterListener(this);
         }

@@ -16,6 +16,18 @@ namespace _Project.Scripts
 
         public override void InstallBindings()
         {
+            Container.Bind<GameStateManager>().AsSingle();
+            Container.Bind<Score>().AsSingle();
+            Container.Bind<SpaceShipController>().AsSingle();
+            Container.Bind<KeyboardInputProvider>().AsSingle();
+            Container.Bind<TeleportBounds>().AsTransient();
+            Container.Bind<SpawnManager>().AsSingle().WithArguments(this).NonLazy();
+            
+            Container.Bind<BulletFactory>().AsSingle().WithArguments(_bulletPrefab);
+            Container.Bind<LazerFactory>().AsSingle().WithArguments(_lazerPrefab);
+            Container.Bind<UFOFactory>().AsSingle().WithArguments(_ufoPrefab);
+            Container.Bind<SpaceObjectFactory>().AsSingle().WithArguments(_asteroidPrefab);
+            
             var shipInstance = Container.InstantiatePrefabForComponent<ShipMovement>(_shipPrefab, _shipSpawnPoint.transform.position, Quaternion.identity, null);
             Container.Bind<ShipMovement>().FromInstance(shipInstance).AsSingle();
             var shipTransform = shipInstance.GetComponent<ShipTransform>();
@@ -26,18 +38,6 @@ namespace _Project.Scripts
             Container.Bind<ShipSpawnPoint>().FromInstance(_shipSpawnPoint).AsSingle();
             Container.Bind<SpaceShipShooting>().FromInstance(spaceShipShooting).AsSingle();
             Container.Bind<CollisionHandler>().FromInstance(collisionHandler).AsSingle();
-
-            Container.Bind<GameStateManager>().AsSingle();
-            Container.Bind<Score>().AsSingle();
-            Container.Bind<SpaceShipController>().AsSingle();
-            Container.Bind<KeyboardInputProvider>().AsSingle();
-            Container.Bind<TeleportBounds>().AsTransient();
-            Container.Bind<SpawnManager>().AsSingle().WithArguments(this).NonLazy();
-
-            Container.Bind<BulletFactory>().AsSingle().WithArguments(_bulletPrefab);
-            Container.Bind<LazerFactory>().AsSingle().WithArguments(_lazerPrefab);
-            Container.Bind<UFOFactory>().AsSingle().WithArguments(_ufoPrefab);
-            Container.Bind<SpaceObjectFactory>().AsSingle().WithArguments(_asteroidPrefab);
             
             Container.Bind<GameOverModel>().AsSingle();
             Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();

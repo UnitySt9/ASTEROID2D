@@ -22,7 +22,7 @@ namespace _Project.Scripts
         {
             _model.Score = _score.Count;
             _model.IsGameOver = true;
-            _view.ShowGameOverPanel(_model.Score);
+            _view.ShowPanel(_model.Score);
         }
 
         public void Dispose()

@@ -11,16 +11,18 @@ namespace _Project.Scripts
         private UFO _ufoPrefab;
         private GameStateManager _gameStateManager;
         private Transform _spaceShipTransform;
+        private ShipTransform _shipTransform;
 
-        public UFOFactory(UFO ufoPrefab, GameStateManager gameStateManager)
+        public UFOFactory(UFO ufoPrefab, GameStateManager gameStateManager, ShipTransform shipTransform)
         {
             _ufoPrefab = ufoPrefab;
             _gameStateManager = gameStateManager;
+            _shipTransform = shipTransform;
         }
 
-        public void Initialize(Transform spaceShipTransform)
+        public void Initialize()
         {
-            _spaceShipTransform = spaceShipTransform;
+            _spaceShipTransform = _shipTransform.transform;
         }
         public void CreateUFO(Vector2 position)
         {
