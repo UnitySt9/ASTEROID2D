@@ -7,16 +7,18 @@ namespace _Project.Scripts
     {
         private GameStateManager _gameStateManager;
         private TeleportBounds _teleportBounds;
+        private Camera _cameraMain;
 
         [Inject]
-        private void Construct(GameStateManager gameStateManager)
+        private void Construct(GameStateManager gameStateManager, Camera mainCamera)
         {
             _gameStateManager = gameStateManager;
+            _cameraMain = mainCamera;
         }
         
         private void Start()
         {
-            _teleportBounds = new TeleportBounds(transform, Camera.main);
+            _teleportBounds = new TeleportBounds(transform, _cameraMain);
         }
 
         private void Update()

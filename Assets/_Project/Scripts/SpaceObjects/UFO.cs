@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
@@ -16,12 +17,19 @@ namespace _Project.Scripts
         private TeleportBounds _teleportBounds;
         private Rigidbody2D _rigidbody2D;
         private Vector2 _direction;
+        private Camera _cameraMain;
         private bool _isGameOver = false;
 
+        [Inject]
+        public void Construct(Camera cameraMain)
+        {
+            _cameraMain = cameraMain;
+        }
+        
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _teleportBounds = new TeleportBounds(transform, Camera.main);
+            _teleportBounds = new TeleportBounds(transform, _cameraMain);
         }
 
         private void Update()

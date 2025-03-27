@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
@@ -7,12 +8,18 @@ namespace _Project.Scripts
     {
         [SerializeField] private Debris _debrisPrefab;
         private TeleportBounds _teleportBounds;
-        
+        private Camera _cameraMain;
+    
+        [Inject]
+        public void Construct(Camera cameraMain)
+        {
+            _cameraMain = cameraMain;
+        }
         protected override void Start()
         {
             Speed = 3f;
             base.Start();
-            _teleportBounds = new TeleportBounds(transform, Camera.main);
+            _teleportBounds = new TeleportBounds(transform, _cameraMain);
         }
 
         protected override void Update()

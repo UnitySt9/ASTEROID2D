@@ -23,9 +23,7 @@ namespace _Project.Scripts
         {
             if (_camera == null)
                 return;
-
             Vector3 viewPos = _targetTransform.position;
-
             if (viewPos.x > _cameraBounds.x)
                 viewPos.x = -_cameraBounds.x;
             if (viewPos.x < -_cameraBounds.x)
@@ -34,7 +32,6 @@ namespace _Project.Scripts
                 viewPos.y = -_cameraBounds.y;
             if (viewPos.y < -_cameraBounds.y)
                 viewPos.y = _cameraBounds.y;
-
             _targetTransform.position = viewPos;
         }
     }

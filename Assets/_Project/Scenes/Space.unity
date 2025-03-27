@@ -244,6 +244,7 @@ MonoBehaviour:
   _lazerPrefab: {fileID: 2011693668067995137, guid: d8898fe553285c845895e23a4916d62e, type: 3}
   _ufoPrefab: {fileID: 3742095259326335347, guid: 3bbbedbcc07d5c843a3adf25e8f89d84, type: 3}
   _asteroidPrefab: {fileID: 3474097796740721436, guid: e55f95c6b24b3e945ad70f51dc8702ce, type: 3}
+  _cameraMain: {fileID: 519420031}
 --- !u!4 &138681355
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using Zenject;
 
 namespace _Project.Scripts
 {
@@ -12,12 +12,14 @@ namespace _Project.Scripts
         private GameStateManager _gameStateManager;
         private Transform _spaceShipTransform;
         private ShipTransform _shipTransform;
+        private DiContainer _container;
 
-        public UFOFactory(UFO ufoPrefab, GameStateManager gameStateManager, ShipTransform shipTransform)
+        public UFOFactory(UFO ufoPrefab, GameStateManager gameStateManager, ShipTransform shipTransform, DiContainer container)
         {
             _ufoPrefab = ufoPrefab;
             _gameStateManager = gameStateManager;
             _shipTransform = shipTransform;
+            _container = container;
         }
 
         public void Initialize()
@@ -26,7 +28,7 @@ namespace _Project.Scripts
         }
         public void CreateUFO(Vector2 position)
         {
-            UFO ufoInstance = Object.Instantiate(_ufoPrefab, position, Quaternion.identity);
+            UFO ufoInstance = _container.InstantiatePrefabForComponent<UFO>(_ufoPrefab, position, Quaternion.identity, null);
             ufoInstance.Initialize(_spaceShipTransform, _gameStateManager);
             _gameStateManager.RegisterListener(ufoInstance);
             OnUFOCreated?.Invoke(ufoInstance);

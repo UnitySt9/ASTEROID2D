@@ -11,23 +11,27 @@ namespace _Project.Scripts
         private readonly int _spawnUFOInterval = 4;
 
         private CancellationTokenSource _cancellationTokenSource;
-        private SpaceObjectFactory _spaceObjectFactory;
-        private UFOFactory _ufoFactory;
-        private GameStateManager _gameStateManager;
-        private Camera _camera;
+        private readonly SpaceObjectFactory _spaceObjectFactory;
+        private readonly UFOFactory _ufoFactory;
+        private readonly GameStateManager _gameStateManager;
+        private readonly Camera _mainCamera;
         private Vector3 _cameraBounds;
         private bool _isGameOver = false;
 
-        public SpawnManager(SpaceObjectFactory spaceObjectFactory, UFOFactory ufoFactory, GameStateManager gameStateManager)
+        public SpawnManager(
+            SpaceObjectFactory spaceObjectFactory, 
+            UFOFactory ufoFactory, 
+            GameStateManager gameStateManager,
+            Camera mainCamera)
         {
             _spaceObjectFactory = spaceObjectFactory;
             _ufoFactory = ufoFactory;
             _gameStateManager = gameStateManager;
+            _mainCamera = mainCamera;
         }
 
         public void Initialize()
         {
-            _camera = Camera.main;
             _cancellationTokenSource = new CancellationTokenSource();
             StartSpawning();
             _gameStateManager.RegisterListener(this);
@@ -77,7 +81,7 @@ namespace _Project.Scripts
 
         private Vector2 GetRandomSpawnPosition()
         {
-            _cameraBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
+            _cameraBounds = _mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _mainCamera.transform.position.z));
             return -_cameraBounds;
         }
 

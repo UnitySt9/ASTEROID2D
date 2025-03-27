@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using Zenject;
 
 namespace _Project.Scripts
 {
@@ -10,16 +10,19 @@ namespace _Project.Scripts
 
         private Asteroid _asteroidPrefab;
         private GameStateManager _gameStateManager;
+        private DiContainer _container;
 
-        public SpaceObjectFactory(Asteroid asteroidPrefab, GameStateManager gameStateManager)
+        [Inject]
+        public SpaceObjectFactory(Asteroid asteroidPrefab, GameStateManager gameStateManager, DiContainer container)
         {
             _asteroidPrefab = asteroidPrefab;
             _gameStateManager = gameStateManager;
+            _container = container;
         }
 
         public void CreateAsteroid(Vector2 position)
         {
-            Asteroid asteroid = Object.Instantiate(_asteroidPrefab, position, Quaternion.identity);
+            Asteroid asteroid = _container.InstantiatePrefabForComponent<Asteroid>(_asteroidPrefab, position, Quaternion.identity, null);
             asteroid.Initialize(_gameStateManager);
             _gameStateManager.RegisterListener(asteroid);
             OnSpaceObjectCreated?.Invoke(asteroid);
