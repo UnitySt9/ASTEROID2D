@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class ShipIndicatorsView : MonoBehaviour
+    public class ShipIndicatorsView : MonoBehaviour, IShipIndicatorsView
     {
         [SerializeField] private TextMeshProUGUI coordinatesText;
         [SerializeField] private TextMeshProUGUI angleText;
@@ -12,14 +12,34 @@ namespace _Project.Scripts
         [SerializeField] private TextMeshProUGUI laserCooldownText;
         [SerializeField] private TextMeshProUGUI scoreText;
 
-        public void UpdateView(ShipIndicatorsModel model)
+        public void UpdateCoordinates(Vector2 position)
         {
-            coordinatesText.text = "Coordinates: " + model.Position;
-            angleText.text = "Angle: " + model.Angle;
-            speedText.text = "Speed: " + model.Speed;
-            laserChargesText.text = "Laser Charges: " + model.LaserCharges;
-            laserCooldownText.text = "Laser Cooldown: " + model.LaserCooldown;
-            scoreText.text = "Score: " + model.Score;
+            coordinatesText.text = "Coordinates: " + position;
+        }
+
+        public void UpdateAngle(float angle)
+        {
+            angleText.text = "Angle: " + angle;
+        }
+
+        public void UpdateSpeed(float speed)
+        {
+            speedText.text = "Speed: " + speed;
+        }
+
+        public void UpdateLaserCharges(int charges)
+        {
+            laserChargesText.text = "Laser Charges: " + charges;
+        }
+
+        public void UpdateLaserCooldown(float cooldown)
+        {
+            laserCooldownText.text = "Laser Cooldown: " + cooldown;
+        }
+
+        public void UpdateScore(int score)
+        {
+            scoreText.text = "Score: " + score;
         }
     }
 }

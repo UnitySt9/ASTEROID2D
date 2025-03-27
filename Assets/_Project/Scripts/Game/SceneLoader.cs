@@ -15,5 +15,10 @@ namespace _Project.Scripts
         {
             SceneManager.LoadScene(MENU_INDEX);
         }
+
+        public void LoadNextScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }

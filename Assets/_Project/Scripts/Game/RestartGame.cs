@@ -7,7 +7,6 @@ namespace _Project.Scripts
     {
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _menuButton;
-
         private ISceneLoader _sceneLoader;
 
         private void Start()

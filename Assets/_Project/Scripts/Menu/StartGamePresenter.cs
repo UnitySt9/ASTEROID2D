@@ -1,15 +1,18 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace _Project.Scripts
 {
-    public class StartGame : MonoBehaviour
+    public class StartGamePresenter : MonoBehaviour
     {
-        [SerializeField] Button _startButton;
+        [SerializeField] private Button _startButton;
+        private ISceneLoader _sceneLoader;
 
-        private void Start()
+        [Inject]
+        public void Construct(ISceneLoader sceneLoader)
         {
+            _sceneLoader = sceneLoader;
             _startButton.onClick.AddListener(StartLevel);
         }
         
@@ -20,7 +23,7 @@ namespace _Project.Scripts
 
         private void StartLevel()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            _sceneLoader.LoadNextScene();
         }
     }
 }

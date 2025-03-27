@@ -43,9 +43,9 @@ namespace _Project.Scripts
             Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();
             Container.BindInterfacesAndSelfTo<GameOverPresenter>().AsSingle().NonLazy();
             
-            Container.Bind<ShipIndicatorsModel>().AsSingle();
-            Container.Bind<ShipIndicatorsView>().FromInstance(_shipIndicatorsView).AsSingle();
+            Container.Bind<IShipIndicatorsView>().FromInstance(_shipIndicatorsView).AsSingle();
             Container.BindInterfacesAndSelfTo<ShipIndicatorsPresenter>().AsSingle().NonLazy();
+
 
             Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();

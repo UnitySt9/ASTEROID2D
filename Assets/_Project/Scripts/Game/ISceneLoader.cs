@@ -4,5 +4,6 @@ namespace _Project.Scripts
     {
         void ReloadScene();
         void LoadMenu();
+        void LoadNextScene();
     }
 }
