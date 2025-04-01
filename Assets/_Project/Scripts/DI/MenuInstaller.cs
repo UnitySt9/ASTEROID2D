@@ -9,7 +9,6 @@ namespace _Project.Scripts
         
         public override void InstallBindings()
         {
-            Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
             Container.BindInterfacesAndSelfTo<StartGamePresenter>().FromInstance(_startGamePresenter).AsSingle();
         }
     }

@@ -28,12 +28,17 @@ namespace _Project.Scripts
             _speed = distanceMoved / Time.deltaTime;
             _previousPosition = currentPosition;
 
-            _view.UpdateCoordinates(_spaceShip.transform.position);
-            _view.UpdateAngle(_spaceShip.transform.eulerAngles.z);
-            _view.UpdateSpeed(_speed);
-            _view.UpdateLaserCharges(_spaceShip.currentLaserShots);
-            _view.UpdateLaserCooldown(_spaceShip.laserCooldown);
-            _view.UpdateScore(_score.Count);
+            var message = new ShipIndicatorsMessage
+            {
+                Position = _spaceShip.transform.position,
+                Angle = _spaceShip.transform.eulerAngles.z,
+                Speed = _speed,
+                LaserCharges = _spaceShip.currentLaserShots,
+                LaserCooldown = _spaceShip.laserCooldown,
+                Score = _score.Count
+            };
+
+            _view.UpdateIndicators(message);
         }
     }
 }

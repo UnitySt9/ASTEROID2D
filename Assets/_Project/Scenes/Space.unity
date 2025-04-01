@@ -615,12 +615,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480aba28b866d23408ab041cce17ce49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinatesText: {fileID: 487877257}
-  angleText: {fileID: 299871506}
-  speedText: {fileID: 2043845789}
-  laserChargesText: {fileID: 871791698}
-  laserCooldownText: {fileID: 945193505}
-  scoreText: {fileID: 1771404435}
+  _coordinatesText: {fileID: 487877257}
+  _angleText: {fileID: 299871506}
+  _speedText: {fileID: 2043845789}
+  _laserChargesText: {fileID: 871791698}
+  _laserCooldownText: {fileID: 945193505}
+  _scoreText: {fileID: 1771404435}
 --- !u!1 &487877256
 GameObject:
   m_ObjectHideFlags: 0

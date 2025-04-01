@@ -5,41 +5,21 @@ namespace _Project.Scripts
 {
     public class ShipIndicatorsView : MonoBehaviour, IShipIndicatorsView
     {
-        [SerializeField] private TextMeshProUGUI coordinatesText;
-        [SerializeField] private TextMeshProUGUI angleText;
-        [SerializeField] private TextMeshProUGUI speedText;
-        [SerializeField] private TextMeshProUGUI laserChargesText;
-        [SerializeField] private TextMeshProUGUI laserCooldownText;
-        [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI _coordinatesText;
+        [SerializeField] private TextMeshProUGUI _angleText;
+        [SerializeField] private TextMeshProUGUI _speedText;
+        [SerializeField] private TextMeshProUGUI _laserChargesText;
+        [SerializeField] private TextMeshProUGUI _laserCooldownText;
+        [SerializeField] private TextMeshProUGUI _scoreText;
 
-        public void UpdateCoordinates(Vector2 position)
+        public void UpdateIndicators(ShipIndicatorsMessage message)
         {
-            coordinatesText.text = "Coordinates: " + position;
-        }
-
-        public void UpdateAngle(float angle)
-        {
-            angleText.text = "Angle: " + angle;
-        }
-
-        public void UpdateSpeed(float speed)
-        {
-            speedText.text = "Speed: " + speed;
-        }
-
-        public void UpdateLaserCharges(int charges)
-        {
-            laserChargesText.text = "Laser Charges: " + charges;
-        }
-
-        public void UpdateLaserCooldown(float cooldown)
-        {
-            laserCooldownText.text = "Laser Cooldown: " + cooldown;
-        }
-
-        public void UpdateScore(int score)
-        {
-            scoreText.text = "Score: " + score;
+            _coordinatesText.text = $"Coordinates: {message.Position}";
+            _angleText.text = $"Angle: {message.Angle}";
+            _speedText.text = $"Speed: {message.Speed}";
+            _laserChargesText.text = $"Laser Charges: {message.LaserCharges}";
+            _laserCooldownText.text = $"Laser Cooldown: {message.LaserCooldown}";
+            _scoreText.text = $"Score: {message.Score}";
         }
     }
 }
