@@ -29,11 +29,11 @@ namespace _Project.Scripts
             _ufoFactory = ufoFactory;
             _spaceObjectFactory = spaceObjectFactory;
             _spaceShipController = spaceShipController;
-            SubscribeToEvents();
         }
 
         public void Initialize()
         {
+            SubscribeToEvents();
             _spaceShipController.Initialize();
             _ufoFactory.Initialize();
             _spawnManager.Initialize();
