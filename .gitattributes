@@ -1,0 +1,12 @@
+*.a          filter=lfs diff=lfs merge=lfs -text
+*.bin        filter=lfs diff=lfs merge=lfs -text
+*.zip        filter=lfs diff=lfs merge=lfs -text
+*.tar.gz     filter=lfs diff=lfs merge=lfs -text
+*.so         filter=lfs diff=lfs merge=lfs -text
+*.dll        filter=lfs diff=lfs merge=lfs -text
+*.jar        filter=lfs diff=lfs merge=lfs -text
+*.dat        filter=lfs diff=lfs merge=lfs -text
+*.pb         filter=lfs diff=lfs merge=lfs -text
+*.onnx       filter=lfs diff=lfs merge=lfs -text
+*.h5         filter=lfs diff=lfs merge=lfs -text
+*.tflite     filter=lfs diff=lfs merge=lfs -text
