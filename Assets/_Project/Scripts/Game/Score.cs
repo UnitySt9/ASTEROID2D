@@ -3,10 +3,12 @@ namespace _Project.Scripts
     public class Score
     {
         public int Count { get; private set; }
+        public int ObjectsDestroyed { get; private set; }
 
         private void AddScore(int amount)
         {
             Count += amount;
+            ObjectsDestroyed++;
         }
 
         public void SubscribeToUfo(UFO ufo)

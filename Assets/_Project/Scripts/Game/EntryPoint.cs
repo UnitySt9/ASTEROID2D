@@ -10,6 +10,8 @@ namespace _Project.Scripts
         private Score _score;
         private SpawnManager _spawnManager;
         private SpaceShipController _spaceShipController;
+        private SpaceShipShooting _spaceShipShooting;
+        private GameStateManager _gameStateManager;
 
         [Inject]
         public void Construct(
@@ -24,11 +26,13 @@ namespace _Project.Scripts
             SpaceShipShooting spaceShipShooting,
             CollisionHandler collisionHandler)
         {
+            _gameStateManager = gameStateManager;
             _score = score;
             _spawnManager = spawnManager;
             _ufoFactory = ufoFactory;
             _spaceObjectFactory = spaceObjectFactory;
             _spaceShipController = spaceShipController;
+            _spaceShipShooting = spaceShipShooting;
         }
 
         public void Initialize()
@@ -37,7 +41,9 @@ namespace _Project.Scripts
             _spaceShipController.Initialize();
             _ufoFactory.Initialize();
             _spawnManager.Initialize();
+            _gameStateManager.GameStart();
         }
+
 
         private void SubscribeToEvents()
         {
@@ -78,6 +84,11 @@ namespace _Project.Scripts
         public void Dispose()
         {
             UnsubscribeFromEvents();
+            _gameStateManager.GameOverStats(
+                _spaceShipShooting.ShotsFired,
+                _spaceShipShooting.LasersUsed,
+                _score.ObjectsDestroyed
+            );
         }
     }
 }

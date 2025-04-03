@@ -7,6 +7,7 @@ namespace _Project.Scripts
         public override void InstallBindings()
         {
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
+            Container.Bind<IAnalyticsService>().To<FirebaseAnalyticsService>().AsSingle();
         }
     }
 }

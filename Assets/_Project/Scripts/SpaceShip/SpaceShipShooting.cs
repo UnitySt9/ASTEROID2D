@@ -6,20 +6,26 @@ namespace _Project.Scripts
 {
     public class SpaceShipShooting : MonoBehaviour
     {
+        public int ShotsFired { get; private set; }
+        public int LasersUsed { get; private set; }
+        
         public float laserCooldown = 5f;
         public int currentLaserShots;
         
         [SerializeField] private Transform _firePoint;
         private BulletFactory _bulletFactory;
         private LazerFactory _lazerFactory;
+        private IAnalyticsService _analyticsService;
         private WaitForSeconds _waitRechargeLaser;
         private int _maxLaserShots = 3;
-        
+
         [Inject]
-        private void Construct(BulletFactory bulletFactory, LazerFactory lazerFactory)
+        private void Construct(
+            BulletFactory bulletFactory, LazerFactory lazerFactory, IAnalyticsService analyticsService)
         {
             _bulletFactory = bulletFactory;
             _lazerFactory = lazerFactory;
+            _analyticsService = analyticsService;
         }
 
         private void Start()
@@ -32,6 +38,7 @@ namespace _Project.Scripts
         public void Shoot()
         {
             _bulletFactory.CreateBullet(_firePoint);
+            ShotsFired++;
         }
         
         public void ShootLaser()
@@ -40,6 +47,8 @@ namespace _Project.Scripts
             {
                 _lazerFactory.CreateLazer(_firePoint);
                 currentLaserShots--;
+                LasersUsed++;
+                _analyticsService.TrackLaserUsed();
             }
         }
 
