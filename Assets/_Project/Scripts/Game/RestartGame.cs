@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace _Project.Scripts
 {
@@ -9,9 +10,13 @@ namespace _Project.Scripts
         [SerializeField] private Button _menuButton;
         private ISceneLoader _sceneLoader;
 
+        [Inject]
+        private void Construct(ISceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
         private void Start()
         {
-            _sceneLoader = new SceneLoader();
             _restartButton.onClick.AddListener(ReloadScene);
             _menuButton.onClick.AddListener(LoadMenu);
         }
