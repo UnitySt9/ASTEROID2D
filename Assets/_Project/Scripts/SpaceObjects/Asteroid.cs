@@ -9,12 +9,16 @@ namespace _Project.Scripts
         [SerializeField] private Debris _debrisPrefab;
         private TeleportBounds _teleportBounds;
         private Camera _cameraMain;
+        private IAddressablesLoader _addressablesLoader;
+        private GameObject _loadedPrefab;
     
         [Inject]
-        public void Construct(Camera cameraMain)
+        public void Construct(Camera cameraMain, IAddressablesLoader addressablesLoader)
         {
             _cameraMain = cameraMain;
+            _addressablesLoader = addressablesLoader;
         }
+        
         protected override void Start()
         {
             Speed = 3f;
@@ -36,6 +40,17 @@ namespace _Project.Scripts
             {
                 Shatter();
             }
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            _addressablesLoader.ReleaseAsset(_loadedPrefab);
+        }
+        
+        public void SetLoadedPrefab(GameObject prefab)
+        {
+            _loadedPrefab = prefab;
         }
         
         private void Shatter()

@@ -9,10 +9,6 @@ namespace _Project.Scripts
         [SerializeField] private ShipSpawnPoint _shipSpawnPoint;
         [SerializeField] private GameOverView _gameOverView;
         [SerializeField] private ShipIndicatorsView _shipIndicatorsView;
-        [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private Lazer _lazerPrefab;
-        [SerializeField] private UFO _ufoPrefab;
-        [SerializeField] private Asteroid _asteroidPrefab;
         [SerializeField] private Camera _cameraMain;
 
         public override void InstallBindings()
@@ -25,10 +21,10 @@ namespace _Project.Scripts
             Container.Bind<SpawnManager>().AsSingle().NonLazy();
             Container.Bind<Camera>().FromInstance(_cameraMain).AsSingle();
             
-            Container.Bind<BulletFactory>().AsSingle().WithArguments(_bulletPrefab);
-            Container.Bind<LazerFactory>().AsSingle().WithArguments(_lazerPrefab);
-            Container.Bind<UFOFactory>().AsSingle().WithArguments(_ufoPrefab);
-            Container.Bind<SpaceObjectFactory>().AsSingle().WithArguments(_asteroidPrefab);
+            Container.Bind<BulletFactory>().AsSingle();
+            Container.Bind<LazerFactory>().AsSingle();
+            Container.Bind<UFOFactory>().AsSingle();
+            Container.Bind<SpaceObjectFactory>().AsSingle();
             
             var shipInstance = Container.InstantiatePrefabForComponent<ShipMovement>(_shipPrefab, _shipSpawnPoint.transform.position, Quaternion.identity, null);
             Container.Bind<ShipMovement>().FromInstance(shipInstance).AsSingle();

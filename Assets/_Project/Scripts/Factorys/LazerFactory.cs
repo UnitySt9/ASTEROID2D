@@ -1,19 +1,27 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
     public class LazerFactory
     {
-        private Lazer _lazerPrefab;
+        private const string LAZER_PREFAB_KEY = "lazer_prefab";
+        private DiContainer _container;
+        private IAddressablesLoader _addressablesLoader;
 
-        public LazerFactory(Lazer lazerPrefab)
+        [Inject]
+        public LazerFactory(DiContainer container, IAddressablesLoader addressablesLoader)
         {
-            _lazerPrefab = lazerPrefab;
+            _container = container;
+            _addressablesLoader = addressablesLoader;
         }
 
-        public void CreateLazer(Transform firePoint)
+        public async UniTask CreateLazer(Transform firePoint)
         {
-            Object.Instantiate(_lazerPrefab, firePoint.position, firePoint.rotation);
+            var lazerPrefab = await _addressablesLoader.LoadPrefabAsync(LAZER_PREFAB_KEY);
+            var lazer = _container.InstantiatePrefabForComponent<Lazer>(lazerPrefab, firePoint.position, firePoint.rotation, null);
+            lazer.SetLoadedPrefab(lazerPrefab);
         }
     }
 }

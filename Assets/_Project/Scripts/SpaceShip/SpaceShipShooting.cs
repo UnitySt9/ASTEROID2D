@@ -1,4 +1,5 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -20,8 +21,7 @@ namespace _Project.Scripts
         private int _maxLaserShots = 3;
 
         [Inject]
-        private void Construct(
-            BulletFactory bulletFactory, LazerFactory lazerFactory, IAnalyticsService analyticsService)
+        private void Construct(BulletFactory bulletFactory, LazerFactory lazerFactory, IAnalyticsService analyticsService)
         {
             _bulletFactory = bulletFactory;
             _lazerFactory = lazerFactory;
@@ -35,17 +35,17 @@ namespace _Project.Scripts
             StartCoroutine(RechargeLaserCoroutine());
         }
 
-        public void Shoot()
+        public async UniTaskVoid Shoot()
         {
-            _bulletFactory.CreateBullet(_firePoint);
+            await _bulletFactory.CreateBullet(_firePoint);
             ShotsFired++;
         }
         
-        public void ShootLaser()
+        public async UniTaskVoid ShootLaser()
         {
             if (currentLaserShots > 0)
             {
-                _lazerFactory.CreateLazer(_firePoint);
+                await _lazerFactory.CreateLazer(_firePoint);
                 currentLaserShots--;
                 LasersUsed++;
                 _analyticsService.TrackLaserUsed();

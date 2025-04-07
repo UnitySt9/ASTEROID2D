@@ -1,19 +1,27 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
     public class BulletFactory
     {
-        private Bullet _bulletPrefab;
+        private const string BULLET_PREFAB_KEY = "bullet_prefab";
+        private DiContainer _container;
+        private IAddressablesLoader _addressablesLoader;
 
-        public BulletFactory(Bullet bulletPrefab)
+        [Inject]
+        public BulletFactory(DiContainer container, IAddressablesLoader addressablesLoader)
         {
-            _bulletPrefab = bulletPrefab;
+            _container = container;
+            _addressablesLoader = addressablesLoader;
         }
 
-        public void CreateBullet(Transform firePoint)
+        public async UniTask CreateBullet(Transform firePoint)
         {
-            Bullet bullet = Object.Instantiate(_bulletPrefab, firePoint.position, firePoint.rotation);
+            var bulletPrefab = await _addressablesLoader.LoadPrefabAsync(BULLET_PREFAB_KEY);
+            Bullet bullet = _container.InstantiatePrefabForComponent<Bullet>(bulletPrefab, firePoint.position, firePoint.rotation, null);
+            bullet.SetLoadedPrefab(bulletPrefab);
             bullet.GetSpeed(firePoint);
         }
     }

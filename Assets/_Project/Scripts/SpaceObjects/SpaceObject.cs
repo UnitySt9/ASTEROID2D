@@ -45,7 +45,7 @@ namespace _Project.Scripts
             }
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             UnregisterFromGameStateManager();
             OnSpaceObjectDestroyed?.Invoke(this);

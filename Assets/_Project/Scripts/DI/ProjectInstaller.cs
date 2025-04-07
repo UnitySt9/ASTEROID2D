@@ -8,6 +8,7 @@ namespace _Project.Scripts
         {
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
             Container.Bind<IAnalyticsService>().To<FirebaseAnalyticsService>().AsSingle();
+            Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
         }
     }
 }

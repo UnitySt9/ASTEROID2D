@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefabs Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Prefabs Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 105cbf912a9e30847ab7f4505b67019b
+  m_SerializeEntries:
+  - m_GUID: 3bbbedbcc07d5c843a3adf25e8f89d84
+    m_Address: ufo_prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e55f95c6b24b3e945ad70f51dc8702ce
+    m_Address: asteroid_prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 97d546e94b23b5c41b13d559d056fc5b
+    m_Address: bullet_prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d8898fe553285c845895e23a4916d62e
+    m_Address: lazer_prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 27173b5b9ad880f46a3dbe0d4a9bfef0, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: af5c90807a401014aa0e1a5aa8e4bb65, type: 2}
+    - {fileID: 11400000, guid: b2318962b5cf5604c9d4490a5050396c, type: 2}

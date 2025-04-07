@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -8,30 +9,39 @@ namespace _Project.Scripts
     {
         public event Action<UFO> OnUFOCreated;
 
-        private UFO _ufoPrefab;
+        private const string UFO_PREFAB_KEY = "ufo_prefab";
         private GameStateManager _gameStateManager;
         private Transform _spaceShipTransform;
         private ShipTransform _shipTransform;
         private DiContainer _container;
+        private IAddressablesLoader _addressablesLoader;
 
-        public UFOFactory(UFO ufoPrefab, GameStateManager gameStateManager, ShipTransform shipTransform, DiContainer container)
+        public UFOFactory(
+            GameStateManager gameStateManager, 
+            ShipTransform shipTransform, 
+            DiContainer container,
+            IAddressablesLoader addressablesLoader)
         {
-            _ufoPrefab = ufoPrefab;
             _gameStateManager = gameStateManager;
             _shipTransform = shipTransform;
             _container = container;
+            _addressablesLoader = addressablesLoader;
         }
 
         public void Initialize()
         {
             _spaceShipTransform = _shipTransform.transform;
         }
-        public void CreateUFO(Vector2 position)
+
+        public async UniTask CreateUFO(Vector2 position)
         {
-            UFO ufoInstance = _container.InstantiatePrefabForComponent<UFO>(_ufoPrefab, position, Quaternion.identity, null);
-            ufoInstance.Initialize(_spaceShipTransform, _gameStateManager);
-            _gameStateManager.RegisterListener(ufoInstance);
-            OnUFOCreated?.Invoke(ufoInstance);
+            var ufoGameObject = await _addressablesLoader.LoadPrefabAsync(UFO_PREFAB_KEY);
+            var ufoInstance = _container.InstantiatePrefab(ufoGameObject, position, Quaternion.identity, null);
+            UFO ufoComponent = ufoInstance.GetComponent<UFO>();
+            ufoComponent.SetLoadedPrefab(ufoGameObject);
+            ufoComponent.Initialize(_spaceShipTransform, _gameStateManager);
+            _gameStateManager.RegisterListener(ufoComponent);
+            OnUFOCreated?.Invoke(ufoComponent);
         }
     }
 }
