@@ -33,6 +33,10 @@ MonoBehaviour:
     m_Address: lazer_prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: e28d8b675714ddf43941715abddcd9be
+    m_Address: ship_prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 27173b5b9ad880f46a3dbe0d4a9bfef0, type: 2}
   m_SchemaSet:

@@ -12,6 +12,11 @@ namespace _Project.Scripts
         private SpaceShipController _spaceShipController;
         private SpaceShipShooting _spaceShipShooting;
         private GameStateManager _gameStateManager;
+        private ShipFactory _shipFactory;
+        private DiContainer _container;
+        private InputHandler _inputHandler;
+        private ShipIndicatorsPresenter _shipIndicatorsPresenter;
+        private IShipIndicatorsView _shipIndicatorsView; 
 
         [Inject]
         public void Construct(
@@ -20,11 +25,12 @@ namespace _Project.Scripts
             SpawnManager spawnManager,
             UFOFactory ufoFactory,
             SpaceObjectFactory spaceObjectFactory,
-            BulletFactory bulletFactory,
-            LazerFactory lazerFactory,
             SpaceShipController spaceShipController,
-            SpaceShipShooting spaceShipShooting,
-            CollisionHandler collisionHandler)
+            ShipFactory shipFactory,
+            DiContainer container,
+            InputHandler inputHandler,
+            ShipIndicatorsPresenter shipIndicatorsPresenter,
+            IShipIndicatorsView shipIndicatorsView)
         {
             _gameStateManager = gameStateManager;
             _score = score;
@@ -32,18 +38,33 @@ namespace _Project.Scripts
             _ufoFactory = ufoFactory;
             _spaceObjectFactory = spaceObjectFactory;
             _spaceShipController = spaceShipController;
-            _spaceShipShooting = spaceShipShooting;
+            _shipFactory = shipFactory;
+            _container = container;
+            _inputHandler = inputHandler;
+            _shipIndicatorsPresenter = shipIndicatorsPresenter;
+            _shipIndicatorsView = shipIndicatorsView;
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
+            var shipInstance = await _shipFactory.CreateShip();
+            _container.Bind<ShipMovement>().FromInstance(shipInstance).AsSingle();
+            var shipTransform = shipInstance.GetComponent<ShipTransform>();
+            _spaceShipShooting = shipInstance.GetComponent<SpaceShipShooting>();
+            var collisionHandler = shipInstance.GetComponent<CollisionHandler>();
+            _container.Bind<ShipMovement>().FromInstance(shipInstance).AsTransient();
+            _container.Bind<ShipTransform>().FromInstance(shipTransform).AsSingle();
+            _container.Bind<CollisionHandler>().FromInstance(collisionHandler).AsSingle();
+            _container.Bind<SpaceShipShooting>().FromInstance(_spaceShipShooting).AsSingle();
+
             SubscribeToEvents();
-            _spaceShipController.Initialize();
-            _ufoFactory.Initialize();
+            
+            _spaceShipController.Initialize(shipInstance, _spaceShipShooting, _inputHandler);
+            _ufoFactory.Initialize(shipTransform);
             _spawnManager.Initialize();
+            _shipIndicatorsPresenter.Initialize(_shipIndicatorsView, _spaceShipShooting, _score);
             _gameStateManager.GameStart();
         }
-
 
         private void SubscribeToEvents()
         {

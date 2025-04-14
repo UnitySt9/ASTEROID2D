@@ -18,19 +18,17 @@ namespace _Project.Scripts
 
         public UFOFactory(
             GameStateManager gameStateManager, 
-            ShipTransform shipTransform, 
             DiContainer container,
             IAddressablesLoader addressablesLoader)
         {
             _gameStateManager = gameStateManager;
-            _shipTransform = shipTransform;
             _container = container;
             _addressablesLoader = addressablesLoader;
         }
 
-        public void Initialize()
+        public void Initialize (ShipTransform shipTransform)
         {
-            _spaceShipTransform = _shipTransform.transform;
+            _spaceShipTransform = shipTransform.transform;
         }
 
         public async UniTask CreateUFO(Vector2 position)

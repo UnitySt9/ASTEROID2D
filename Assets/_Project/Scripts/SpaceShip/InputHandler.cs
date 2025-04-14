@@ -27,6 +27,9 @@ namespace _Project.Scripts
         {
             if (!_isGameOver)
             {
+                if (_shipMovement == null || _spaceShipShooting == null)
+                    return;
+    
                 HandleMovementInput();
                 HandleShootingInput();
             }

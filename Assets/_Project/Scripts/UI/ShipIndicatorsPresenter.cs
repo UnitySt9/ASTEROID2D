@@ -5,19 +5,19 @@ namespace _Project.Scripts
 {
     public class ShipIndicatorsPresenter : ITickable
     {
-        private readonly IShipIndicatorsView _view;
-        private readonly SpaceShipShooting _spaceShip;
-        private readonly Score _score;
+        private IShipIndicatorsView _view;
+        private SpaceShipShooting _spaceShip;
+        private Score _score;
         private Vector2 _previousPosition;
         private float _speed;
 
-        public ShipIndicatorsPresenter(IShipIndicatorsView view, SpaceShipShooting spaceShip, Score score)
+        public void Initialize(IShipIndicatorsView view, SpaceShipShooting spaceShip, Score score)
         {
             _view = view;
             _spaceShip = spaceShip;
             _score = score;
         }
-
+        
         public void Tick()
         {
             if (_spaceShip == null || _score == null)
