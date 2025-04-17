@@ -78,6 +78,12 @@ namespace _Project.Scripts
         {
             _isGameOver = true;
         }
+
+        public void OnGameContinue()
+        {
+            _isGameOver = false;
+            _rigidbody2D.simulated = true;
+        }
         
         public void Initialize(Transform spaceShipTransform, GameStateManager gameStateManager)
         {

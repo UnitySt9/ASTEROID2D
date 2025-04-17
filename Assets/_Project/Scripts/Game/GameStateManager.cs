@@ -30,6 +30,15 @@ namespace _Project.Scripts
             }
         }
         
+        public void ContinueGame()
+        {
+            foreach (var listener in _listeners)
+            {
+                listener.OnGameContinue();
+            }
+            _gameStarted = true;
+        }
+        
         public void GameOverStats(int shotsFired, int lasersUsed, int objectsDestroyed)
         {
             _analyticsService.TrackGameEnd(shotsFired, lasersUsed, objectsDestroyed);

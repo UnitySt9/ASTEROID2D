@@ -26,9 +26,10 @@ namespace _Project.Scripts
             _teleportBounds.BoundsUpdate();
         }
 
-        private void OnCollisionEnter2D()
+        private void OnCollisionEnter2D(Collision2D collision)
         {
             _gameStateManager?.GameOver();
+            Destroy(collision.gameObject);
         }
     }
 }

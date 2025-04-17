@@ -44,6 +44,12 @@ namespace _Project.Scripts
             _isGameOver = true;
         }
 
+        public void OnGameContinue()
+        {
+            _isGameOver = false;
+            _shipMovement.OnRigidBody();
+        }
+
         private void HandleMovementInput()
         {
             float horizontal = _inputProvider.GetHorizontalAxis();

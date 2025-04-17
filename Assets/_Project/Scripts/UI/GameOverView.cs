@@ -17,5 +17,10 @@ namespace _Project.Scripts
             _highScore.text = $"BEST SCORE: {highScore}";
             _newRecordLabel.SetActive(isNewRecord);
         }
+        
+        public void HidePanel()
+        {
+            _gameOverPanel.SetActive(false);
+        }
     }
 }

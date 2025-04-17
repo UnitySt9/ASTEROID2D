@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts
 {
@@ -46,23 +47,33 @@ namespace _Project.Scripts
         public void OnGameOver()
         {
             _isGameOver = true;
-            _cancellationTokenSource?.Cancel();
+        }
+
+        public void OnGameContinue()
+        {
+            _isGameOver = false;
         }
 
         private async UniTaskVoid SpawnAsteroidsAsync(CancellationToken cancellationToken)
         {
-            while (!_isGameOver && !cancellationToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                SpawnAsteroid();
+                if (!_isGameOver)
+                {
+                    SpawnAsteroid();
+                }
                 await UniTask.Delay(TimeSpan.FromSeconds(_spawnAsteroidInterval), cancellationToken: cancellationToken);
             }
         }
 
         private async UniTaskVoid SpawnUFOsAsync(CancellationToken cancellationToken)
         {
-            while (!_isGameOver && !cancellationToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                SpawnUFO();
+                if (!_isGameOver)
+                {
+                    SpawnUFO();
+                }
                 await UniTask.Delay(TimeSpan.FromSeconds(_spawnUFOInterval), cancellationToken: cancellationToken);
             }
         }
@@ -81,8 +92,34 @@ namespace _Project.Scripts
 
         private Vector2 GetRandomSpawnPosition()
         {
-            _cameraBounds = _mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _mainCamera.transform.position.z));
-            return -_cameraBounds;
+            float cameraHeight = 2f * _mainCamera.orthographicSize;
+            float cameraWidth = cameraHeight * _mainCamera.aspect;
+            float spawnX, spawnY;
+            int side = Random.Range(0, 4);
+            switch (side)
+            {
+                case 0:
+                    spawnX = Random.Range(-cameraWidth / 2, cameraWidth / 2);
+                    spawnY = cameraHeight / 2 + 1f;
+                    break;
+                case 1:
+                    spawnX = cameraWidth / 2 + 1f;
+                    spawnY = Random.Range(-cameraHeight / 2, cameraHeight / 2);
+                    break;
+                case 2:
+                    spawnX = Random.Range(-cameraWidth / 2, cameraWidth / 2);
+                    spawnY = -cameraHeight / 2 - 1f;
+                    break;
+                case 3:
+                    spawnX = -cameraWidth / 2 - 1f;
+                    spawnY = Random.Range(-cameraHeight / 2, cameraHeight / 2);
+                    break;
+                default:
+                    spawnX = 0;
+                    spawnY = 0;
+                    break;
+            }
+            return new Vector2(spawnX, spawnY);
         }
 
         public void Dispose()

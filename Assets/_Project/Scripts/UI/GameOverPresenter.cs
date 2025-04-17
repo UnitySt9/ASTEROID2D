@@ -42,6 +42,12 @@ namespace _Project.Scripts
             _view.ShowPanel(_model.Score, _model.HighScore, _model.IsNewRecord);
         }
 
+        public void OnGameContinue()
+        {
+            _model.IsGameOver = false;
+            _view.HidePanel();
+        }
+
         public void Dispose()
         {
             _gameStateManager.UnregisterListener(this);
