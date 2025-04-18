@@ -78,16 +78,16 @@ namespace _Project.Scripts
             }
         }
 
-        private async UniTask SpawnAsteroid()
+        private void SpawnAsteroid()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            await _spaceObjectFactory.CreateAsteroid(spawnPosition);
+            _spaceObjectFactory.CreateAsteroid(spawnPosition);
         }
 
-        private async UniTask SpawnUFO()
+        private void SpawnUFO()
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            await _ufoFactory.CreateUFO(spawnPosition);
+            _ufoFactory.CreateUFO(spawnPosition);
         }
 
         private Vector2 GetRandomSpawnPosition()

@@ -60,7 +60,8 @@ namespace _Project.Scripts
             SubscribeToEvents();
             
             _spaceShipController.Initialize(shipInstance, _spaceShipShooting, _inputHandler);
-            _ufoFactory.Initialize(shipTransform);
+            await _ufoFactory.Initialize(shipTransform);
+            await _spaceObjectFactory.Initialize();
             _spawnManager.Initialize();
             _shipIndicatorsPresenter.Initialize(_shipIndicatorsView, _spaceShipShooting, _score);
             _gameStateManager.GameStart();
