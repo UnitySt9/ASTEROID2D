@@ -6,7 +6,6 @@ namespace _Project.Scripts
 {
     public class LazerFactory
     {
-        private const string LAZER_PREFAB_KEY = "lazer_prefab";
         private DiContainer _container;
         private IAddressablesLoader _addressablesLoader;
 
@@ -19,7 +18,7 @@ namespace _Project.Scripts
 
         public async UniTask CreateLazer(Transform firePoint)
         {
-            var lazerPrefab = await _addressablesLoader.LoadPrefabAsync(LAZER_PREFAB_KEY);
+            var lazerPrefab = await _addressablesLoader.LoadLazerPrefab();
             var lazer = _container.InstantiatePrefabForComponent<Lazer>(lazerPrefab, firePoint.position, firePoint.rotation, null);
             lazer.SetLoadedPrefab(lazerPrefab);
         }

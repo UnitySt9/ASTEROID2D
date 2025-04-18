@@ -8,8 +8,7 @@ namespace _Project.Scripts
     public class SpaceObjectFactory
     {
         public event Action<SpaceObject> OnSpaceObjectCreated;
-
-        private const string ASTEROID_PREFAB_KEY = "asteroid_prefab";
+        
         private GameStateManager _gameStateManager;
         private DiContainer _container;
         private IAddressablesLoader _addressablesLoader;
@@ -27,7 +26,7 @@ namespace _Project.Scripts
 
         public async UniTask CreateAsteroid(Vector2 position)
         {
-            var asteroidPrefab = await _addressablesLoader.LoadPrefabAsync(ASTEROID_PREFAB_KEY);
+            var asteroidPrefab = await _addressablesLoader.LoadAsteroidPrefab();
             Asteroid asteroid = _container.InstantiatePrefabForComponent<Asteroid>(asteroidPrefab, position, Quaternion.identity, null);
             asteroid.SetLoadedPrefab(asteroidPrefab);
             asteroid.Initialize(_gameStateManager);

@@ -6,7 +6,6 @@ namespace _Project.Scripts
 {
     public class ShipFactory
     {
-        private const string SHIP_PREFAB_KEY = "ship_prefab";
         private readonly DiContainer _container;
         private readonly ShipSpawnPoint _spawnPoint;
         private readonly IAddressablesLoader _addressablesLoader;
@@ -23,7 +22,7 @@ namespace _Project.Scripts
 
         public async UniTask<ShipMovement> CreateShip()
         {
-            var shipPrefab = await _addressablesLoader.LoadPrefabAsync(SHIP_PREFAB_KEY);
+            var shipPrefab = await _addressablesLoader.LoadShipPrefab();
             var shipInstance = _container.InstantiatePrefabForComponent<ShipMovement>(shipPrefab, _spawnPoint.transform.position, Quaternion.identity, null);
             return shipInstance;
         }

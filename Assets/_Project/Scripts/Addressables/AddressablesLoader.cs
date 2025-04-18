@@ -7,20 +7,46 @@ namespace _Project.Scripts
 {
     public class AddressablesLoader : IAddressablesLoader
     {
-        public async UniTask<GameObject> LoadPrefabAsync(string key)
+        private const string SHIP_PREFAB_KEY = "ship_prefab";
+        private const string ASTEROID_PREFAB_KEY = "asteroid_prefab";
+        private const string UFO_PREFAB_KEY = "ufo_prefab";
+        private const string BULLET_PREFAB_KEY = "bullet_prefab";
+        private const string LAZER_PREFAB_KEY = "lazer_prefab";
+
+        public async UniTask<GameObject> LoadShipPrefab()
         {
-            return await LoadAssetAsync<GameObject>(key);
+            return await LoadPrefabAsync(SHIP_PREFAB_KEY);
         }
 
-        public async UniTask<T> LoadAssetAsync<T>(string key) where T : Object
+        public async UniTask<GameObject> LoadAsteroidPrefab()
         {
-            AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(key);
+            return await LoadPrefabAsync(ASTEROID_PREFAB_KEY);
+        }
+
+        public async UniTask<GameObject> LoadUFOPrefab()
+        {
+            return await LoadPrefabAsync(UFO_PREFAB_KEY);
+        }
+
+        public async UniTask<GameObject> LoadBulletPrefab()
+        {
+            return await LoadPrefabAsync(BULLET_PREFAB_KEY);
+        }
+
+        public async UniTask<GameObject> LoadLazerPrefab()
+        {
+            return await LoadPrefabAsync(LAZER_PREFAB_KEY);
+        }
+
+        private async UniTask<GameObject> LoadPrefabAsync(string key)
+        {
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(key);
             await handle.ToUniTask();
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 return handle.Result;
             }
-            Debug.LogError($"Failed to load asset with key: {key}");
+            Debug.LogError($"Failed to load prefab with key: {key}");
             return null;
         }
 

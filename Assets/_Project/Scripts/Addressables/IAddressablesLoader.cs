@@ -5,8 +5,11 @@ namespace _Project.Scripts
 {
     public interface IAddressablesLoader
     {
-        UniTask<GameObject> LoadPrefabAsync(string key);
-        UniTask<T> LoadAssetAsync<T>(string key) where T : Object;
+        UniTask<GameObject> LoadShipPrefab();
+        UniTask<GameObject> LoadAsteroidPrefab();
+        UniTask<GameObject> LoadUFOPrefab();
+        UniTask<GameObject> LoadBulletPrefab();
+        UniTask<GameObject> LoadLazerPrefab();
         void ReleaseAsset(Object asset);
     }
 }

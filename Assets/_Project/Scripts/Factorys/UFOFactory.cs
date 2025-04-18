@@ -8,8 +8,7 @@ namespace _Project.Scripts
     public class UFOFactory
     {
         public event Action<UFO> OnUFOCreated;
-
-        private const string UFO_PREFAB_KEY = "ufo_prefab";
+        
         private GameStateManager _gameStateManager;
         private Transform _spaceShipTransform;
         private ShipTransform _shipTransform;
@@ -33,7 +32,7 @@ namespace _Project.Scripts
 
         public async UniTask CreateUFO(Vector2 position)
         {
-            var ufoGameObject = await _addressablesLoader.LoadPrefabAsync(UFO_PREFAB_KEY);
+            var ufoGameObject = await _addressablesLoader.LoadUFOPrefab();
             var ufoInstance = _container.InstantiatePrefab(ufoGameObject, position, Quaternion.identity, null);
             UFO ufoComponent = ufoInstance.GetComponent<UFO>();
             ufoComponent.SetLoadedPrefab(ufoGameObject);
