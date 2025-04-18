@@ -5,11 +5,12 @@ namespace _Project.Scripts
 {
     public class MenuInstaller : MonoInstaller
     {
-        [SerializeField] private StartGamePresenter _startGamePresenter;
+        [SerializeField] private StartGameView _startGameView;
         
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<StartGamePresenter>().FromInstance(_startGamePresenter).AsSingle();
+            Container.Bind<StartGameView>().FromInstance(_startGameView).AsSingle();
+            Container.BindInterfacesAndSelfTo<StartGamePresenter>().AsSingle().NonLazy();
         }
     }
 }

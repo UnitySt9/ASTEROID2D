@@ -1,29 +1,27 @@
-using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
+using System;
 
 namespace _Project.Scripts
 {
-    public class StartGamePresenter : MonoBehaviour
+    public class StartGamePresenter : IDisposable
     {
-        [SerializeField] private Button _startButton;
-        private ISceneLoader _sceneLoader;
+        private readonly ISceneLoader _sceneLoader;
+        private readonly StartGameView _view;
 
-        [Inject]
-        public void Construct(ISceneLoader sceneLoader)
+        public StartGamePresenter(ISceneLoader sceneLoader, StartGameView view)
         {
             _sceneLoader = sceneLoader;
-            _startButton.onClick.AddListener(StartLevel);
-        }
-        
-        private void OnDisable()
-        {
-            _startButton.onClick.RemoveListener(StartLevel);
+            _view = view;
+            _view.StartButton.onClick.AddListener(StartLevel);
         }
 
         private void StartLevel()
         {
             _sceneLoader.LoadNextScene();
+        }
+
+        public void Dispose()
+        {
+            _view.StartButton.onClick.RemoveListener(StartLevel);
         }
     }
 }

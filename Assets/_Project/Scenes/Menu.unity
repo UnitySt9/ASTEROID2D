@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987c37f351ed8c54482f38c7ed1e9b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startGamePresenter: {fileID: 1661981924}
+  _startGameView: {fileID: 1661981924}
 --- !u!4 &360591414
 Transform:
   m_ObjectHideFlags: 0
@@ -825,7 +825,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1661981919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804184059170da448a0bacab7fd6f55f, type: 3}
+  m_Script: {fileID: 11500000, guid: d4e335f14cfa81d4e9c7f9ea27a13e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _startButton: {fileID: 462624401}
