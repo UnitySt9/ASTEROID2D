@@ -15,38 +15,61 @@ namespace _Project.Scripts
 
         public async UniTask<GameObject> LoadShipPrefab()
         {
-            return await LoadPrefabAsync(SHIP_PREFAB_KEY);
-        }
-
-        public async UniTask<GameObject> LoadAsteroidPrefab()
-        {
-            return await LoadPrefabAsync(ASTEROID_PREFAB_KEY);
-        }
-
-        public async UniTask<GameObject> LoadUFOPrefab()
-        {
-            return await LoadPrefabAsync(UFO_PREFAB_KEY);
-        }
-
-        public async UniTask<GameObject> LoadBulletPrefab()
-        {
-            return await LoadPrefabAsync(BULLET_PREFAB_KEY);
-        }
-
-        public async UniTask<GameObject> LoadLazerPrefab()
-        {
-            return await LoadPrefabAsync(LAZER_PREFAB_KEY);
-        }
-
-        private async UniTask<GameObject> LoadPrefabAsync(string key)
-        {
-            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(key);
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(SHIP_PREFAB_KEY);
             await handle.ToUniTask();
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 return handle.Result;
             }
-            Debug.LogError($"Failed to load prefab with key: {key}");
+            Debug.LogError($"Failed to load ship prefab");
+            return null;
+        }
+
+        public async UniTask<GameObject> LoadAsteroidPrefab()
+        {
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(ASTEROID_PREFAB_KEY);
+            await handle.ToUniTask();
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                return handle.Result;
+            }
+            Debug.LogError($"Failed to load asteroid prefab");
+            return null;
+        }
+
+        public async UniTask<GameObject> LoadUFOPrefab()
+        {
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(UFO_PREFAB_KEY);
+            await handle.ToUniTask();
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                return handle.Result;
+            }
+            Debug.LogError($"Failed to load UFO prefab");
+            return null;
+        }
+
+        public async UniTask<GameObject> LoadBulletPrefab()
+        {
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(BULLET_PREFAB_KEY);
+            await handle.ToUniTask();
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                return handle.Result;
+            }
+            Debug.LogError($"Failed to load bullet prefab");
+            return null;
+        }
+
+        public async UniTask<GameObject> LoadLazerPrefab()
+        {
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(LAZER_PREFAB_KEY);
+            await handle.ToUniTask();
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                return handle.Result;
+            }
+            Debug.LogError($"Failed to load lazer prefab");
             return null;
         }
 
