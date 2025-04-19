@@ -39,11 +39,10 @@ namespace _Project.Scripts
 
         public void CreateUFO(Vector2 position)
         {
-            var ufoInstance = _container.InstantiatePrefab(_ufoPrefab, position, Quaternion.identity, null);
-            UFO ufoComponent = ufoInstance.GetComponent<UFO>();
-            ufoComponent.Initialize(_spaceShipTransform, _gameStateManager);
-            _gameStateManager.RegisterListener(ufoComponent);
-            OnUFOCreated?.Invoke(ufoComponent);
+            var ufoInstance = _container.InstantiatePrefabForComponent<UFO>(_ufoPrefab, position, Quaternion.identity, null);
+            ufoInstance.Initialize(_spaceShipTransform, _gameStateManager);
+            _gameStateManager.RegisterListener(ufoInstance);
+            OnUFOCreated?.Invoke(ufoInstance);
         }
 
         public void Dispose()

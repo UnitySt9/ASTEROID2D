@@ -35,17 +35,17 @@ namespace _Project.Scripts
             StartCoroutine(RechargeLaserCoroutine());
         }
 
-        public async UniTaskVoid Shoot()
+        public void Shoot()
         {
-            await _bulletFactory.CreateBullet(_firePoint);
+            _bulletFactory.CreateBullet(_firePoint);
             ShotsFired++;
         }
         
-        public async UniTaskVoid ShootLaser()
+        public void ShootLaser()
         {
             if (currentLaserShots > 0)
             {
-                await _lazerFactory.CreateLazer(_firePoint);
+                _lazerFactory.CreateLazer(_firePoint);
                 currentLaserShots--;
                 LasersUsed++;
                 _analyticsService.TrackLaserUsed();

@@ -35,7 +35,7 @@ namespace _Project.Scripts
         
         public void CreateAsteroid(Vector2 position)
         {
-            Asteroid asteroid = _container.InstantiatePrefabForComponent<Asteroid>(_asteroidPrefab, position, Quaternion.identity, null);
+            var asteroid = _container.InstantiatePrefabForComponent<Asteroid>(_asteroidPrefab, position, Quaternion.identity, null);
             asteroid.Initialize(_gameStateManager);
             _gameStateManager.RegisterListener(asteroid);
             OnSpaceObjectCreated?.Invoke(asteroid);

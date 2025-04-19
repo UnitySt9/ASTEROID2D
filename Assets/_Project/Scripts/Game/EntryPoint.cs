@@ -7,6 +7,8 @@ namespace _Project.Scripts
     {
         private UFOFactory _ufoFactory;
         private SpaceObjectFactory _spaceObjectFactory;
+        private BulletFactory _bulletFactory;
+        private LazerFactory _lazerFactory;
         private Score _score;
         private SpawnManager _spawnManager;
         private SpaceShipController _spaceShipController;
@@ -26,6 +28,8 @@ namespace _Project.Scripts
             UFOFactory ufoFactory,
             SpaceObjectFactory spaceObjectFactory,
             SpaceShipController spaceShipController,
+            BulletFactory bulletFactory,
+            LazerFactory lazerFactory,
             ShipFactory shipFactory,
             DiContainer container,
             InputHandler inputHandler,
@@ -37,6 +41,8 @@ namespace _Project.Scripts
             _spawnManager = spawnManager;
             _ufoFactory = ufoFactory;
             _spaceObjectFactory = spaceObjectFactory;
+            _bulletFactory = bulletFactory;
+            _lazerFactory = lazerFactory;
             _spaceShipController = spaceShipController;
             _shipFactory = shipFactory;
             _container = container;
@@ -58,7 +64,8 @@ namespace _Project.Scripts
             _container.Bind<SpaceShipShooting>().FromInstance(_spaceShipShooting).AsSingle();
 
             SubscribeToEvents();
-            
+            await _bulletFactory.Initialize();
+            await _lazerFactory.Initialize();
             _spaceShipController.Initialize(shipInstance, _spaceShipShooting, _inputHandler);
             await _ufoFactory.Initialize(shipTransform);
             await _spaceObjectFactory.Initialize();

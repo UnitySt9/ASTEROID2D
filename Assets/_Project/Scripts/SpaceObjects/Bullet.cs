@@ -9,14 +9,6 @@ namespace _Project.Scripts
         private readonly float _bulletSpeed = 10;
         private readonly float _timeOfDeath = 2f;
         private Rigidbody2D _rigidbody2D;
-        private IAddressablesLoader _addressablesLoader;
-        private GameObject _loadedPrefab;
-
-        [Inject]
-        public void Construct(IAddressablesLoader addressablesLoader)
-        {
-            _addressablesLoader = addressablesLoader;
-        }
 
         private void Awake()
         {
@@ -30,16 +22,6 @@ namespace _Project.Scripts
             {
                 Destroy(gameObject);
             }
-        }
-
-        private void OnDestroy()
-        {
-            _addressablesLoader.ReleaseAsset(_loadedPrefab);
-        }
-
-        public void SetLoadedPrefab(GameObject prefab)
-        {
-            _loadedPrefab = prefab;
         }
 
         public void GetSpeed(Transform firePoint)
