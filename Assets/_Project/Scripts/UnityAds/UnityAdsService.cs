@@ -52,7 +52,7 @@ namespace _Project.Scripts
             Advertisement.Load(INTERSTITIAL_AD_ID, this);
         }
 
-        public void ShowRewardedAd(System.Action onRewarded)
+        public void ShowRewardedAd(Action onRewarded)
         {
             if (!_isInitialized)
             {
