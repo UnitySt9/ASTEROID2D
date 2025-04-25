@@ -1,20 +1,38 @@
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts
 {
     public class ShipMovement : MonoBehaviour
     {
-        private readonly float _maxSpeed = 10f;
         private Rigidbody2D _rigidbody2D;
-        private float _acceleration = 5f;
+        private IConfigService _configService;
+        private float _maxSpeed;
+        private float _acceleration;
         private float _currentSpeed;
-        private float _rotationSpeed = 200f;
+        private float _rotationSpeed;
         private float _rotationInput;
         private bool _isAccelerating;
+
+        [Inject]
+        public void Construct(IConfigService configService)
+        {
+            _configService = configService;
+            UpdateConfigValues();
+            _configService.OnConfigUpdated += UpdateConfigValues;
+        }
 
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+        }
+
+        private void OnDestroy()
+        {
+            if (_configService != null)
+            {
+                _configService.OnConfigUpdated -= UpdateConfigValues;
+            }
         }
 
         private void FixedUpdate()
@@ -61,6 +79,13 @@ namespace _Project.Scripts
                 _rotationInput = 0f;
                 _isAccelerating = false;
             }
+        }
+        
+        private void UpdateConfigValues()
+        {
+            _maxSpeed = _configService.Config.ship.maxSpeed;
+            _acceleration = _configService.Config.ship.acceleration;
+            _rotationSpeed = _configService.Config.ship.rotationSpeed;
         }
     }
 }

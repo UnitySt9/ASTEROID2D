@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da29a9ee43949c442a01a9a779fdc1ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firebaseInitializerPrefab: {fileID: 4209809433613222651, guid: 1746cd612ba12b54ba36e2e934dca438, type: 3}
+  _gameConfigManager: {fileID: 5786504451370420254, guid: 0736051be0b2869499a492344975950c, type: 3}

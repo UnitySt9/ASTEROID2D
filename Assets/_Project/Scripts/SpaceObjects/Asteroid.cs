@@ -10,16 +10,19 @@ namespace _Project.Scripts
         private TeleportBounds _teleportBounds;
         private Camera _cameraMain;
         private GameObject _loadedPrefab;
+        private IConfigService _configService;
     
         [Inject]
-        public void Construct(Camera cameraMain)
+        public void Construct(Camera cameraMain, IConfigService configService)
         {
             _cameraMain = cameraMain;
+            _configService = configService;
+            UpdateConfigValues();
+            _configService.OnConfigUpdated += UpdateConfigValues;
         }
-        
+
         protected override void Start()
         {
-            Speed = 3f;
             base.Start();
             _teleportBounds = new TeleportBounds(transform, _cameraMain);
         }
@@ -39,12 +42,20 @@ namespace _Project.Scripts
                 Shatter();
             }
         }
-
-        // protected override void OnDestroy()
-        // {
-        //     base.OnDestroy();
-        //     _addressablesLoader.ReleaseAsset(_loadedPrefab);
-        // }
+        
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (_configService != null)
+            {
+                _configService.OnConfigUpdated -= UpdateConfigValues;
+            }
+        }
+        
+        private void UpdateConfigValues()
+        {
+            Speed = _configService.Config.spaceObjects.asteroidSpeed;
+        }
         
         private void Shatter()
         {

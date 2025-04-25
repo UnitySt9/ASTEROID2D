@@ -10,7 +10,6 @@ namespace _Project.Scripts
         public event Action<int> OnUFOHit;
         public event Action<UFO> OnUfoDestroyed;
         
-        private readonly float _speed = 2f;
         private readonly int _scoreValue = 1;
         private Transform _spaceShipTransform;
         private GameStateManager _gameStateManager;
@@ -18,12 +17,18 @@ namespace _Project.Scripts
         private Rigidbody2D _rigidbody2D;
         private Vector2 _direction;
         private Camera _cameraMain;
+        private IConfigService _configService;
         private bool _isGameOver = false;
+        private float _speed;
 
         [Inject]
-        public void Construct(Camera cameraMain, IAddressablesLoader addressablesLoader)
+        public void Construct(
+            Camera cameraMain, IAddressablesLoader addressablesLoader, IConfigService configService)
         {
             _cameraMain = cameraMain;
+            _configService = configService;
+            UpdateConfigValues();
+            _configService.OnConfigUpdated += UpdateConfigValues;
         }
         
         private void Start()
@@ -62,6 +67,11 @@ namespace _Project.Scripts
         {
             UnregisterFromGameStateManager();
             OnUfoDestroyed?.Invoke(this);
+            
+            if (_configService != null)
+            {
+                _configService.OnConfigUpdated -= UpdateConfigValues;
+            }
         }
         
         public void Initialize(Transform spaceShipTransform, GameStateManager gameStateManager)
@@ -79,6 +89,11 @@ namespace _Project.Scripts
         {
             _isGameOver = false;
             _rigidbody2D.simulated = true;
+        }
+        
+        private void UpdateConfigValues()
+        {
+            _speed = _configService.Config.spaceObjects.ufoSpeed;
         }
         
         private void FollowTheShip()

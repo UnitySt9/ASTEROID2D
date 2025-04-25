@@ -1,5 +1,4 @@
 using System.Collections;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -10,29 +9,55 @@ namespace _Project.Scripts
         public int ShotsFired { get; private set; }
         public int LasersUsed { get; private set; }
         
-        public float laserCooldown = 5f;
+        public float laserCooldown;
         public int currentLaserShots;
         
         [SerializeField] private Transform _firePoint;
         private BulletFactory _bulletFactory;
         private LazerFactory _lazerFactory;
         private IAnalyticsService _analyticsService;
+        private IConfigService _configService;
         private WaitForSeconds _waitRechargeLaser;
-        private int _maxLaserShots = 3;
+        private int _maxLaserShots;
 
         [Inject]
-        private void Construct(BulletFactory bulletFactory, LazerFactory lazerFactory, IAnalyticsService analyticsService)
+        private void Construct(
+            BulletFactory bulletFactory, 
+            LazerFactory lazerFactory, 
+            IAnalyticsService analyticsService,
+            IConfigService configService)
         {
             _bulletFactory = bulletFactory;
             _lazerFactory = lazerFactory;
             _analyticsService = analyticsService;
+            _configService = configService;
+            UpdateConfigValues();
+            _configService.OnConfigUpdated += UpdateConfigValues;
+        }
+
+        private void UpdateConfigValues()
+        {
+            laserCooldown = _configService.Config.weapons.laserCooldown;
+            _maxLaserShots = _configService.Config.weapons.maxLaserShots;
+            _waitRechargeLaser = new WaitForSeconds(laserCooldown);
+            if (currentLaserShots > _maxLaserShots)
+            {
+                currentLaserShots = _maxLaserShots;
+            }
         }
 
         private void Start()
         {
             currentLaserShots = _maxLaserShots;
-            _waitRechargeLaser = new WaitForSeconds(laserCooldown);
             StartCoroutine(RechargeLaserCoroutine());
+        }
+
+        private void OnDestroy()
+        {
+            if (_configService != null)
+            {
+                _configService.OnConfigUpdated -= UpdateConfigValues;
+            }
         }
 
         public void Shoot()
