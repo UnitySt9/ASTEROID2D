@@ -18,3 +18,5 @@ Firebase/*.dll filter=lfs diff=lfs merge=lfs -text
 *.dll filter=lfs diff=lfs merge=lfs -text
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_8_0.bundle filter=lfs diff=lfs merge=lfs -text
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_8_0.so filter=lfs diff=lfs merge=lfs -text
+Assets\Firebase\Plugins\x86_64\FirebaseCppApp-12_5_0.bundle filter=lfs diff=lfs merge=lfs -text
+Assets\Firebase\Plugins\x86_64\FirebaseCppApp-12_5_0.so filter=lfs diff=lfs merge=lfs -text
