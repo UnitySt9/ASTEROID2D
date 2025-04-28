@@ -15,12 +15,17 @@ namespace _Project.Scripts
         private const string IOS_GAME_ID = "5834876";
         private const string REWARD_AD_ID = "Rewarded_Android";
         private const string INTERSTITIAL_AD_ID = "Interstitial_Android";
+        private readonly ISaveService _saveService;
         private bool _isInitialized;
         public bool IsRewardedAdReady { get; private set; }
         public bool IsInterstitialAdReady { get; private set; }
 
-        public UnityAdsService()
+        public UnityAdsService(ISaveService saveService)
         {
+            _saveService = saveService;
+    
+            if (_saveService.Load().AdsDisabled) return;
+    
             string gameId = Application.platform == RuntimePlatform.IPhonePlayer ? IOS_GAME_ID : ANDROID_GAME_ID;
             Advertisement.Initialize(gameId, true, this);
         }
@@ -54,7 +59,7 @@ namespace _Project.Scripts
 
         public void ShowRewardedAd(Action onRewarded)
         {
-            if (!_isInitialized)
+            if (_saveService.Load().AdsDisabled)
             {
                 onRewarded?.Invoke();
                 return;
@@ -75,7 +80,7 @@ namespace _Project.Scripts
 
         public void ShowInterstitialAd(Action onCompleted)
         {
-            if (!_isInitialized)
+            if (_saveService.Load().AdsDisabled)
             {
                 onCompleted?.Invoke();
                 return;

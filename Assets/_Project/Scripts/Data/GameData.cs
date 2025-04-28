@@ -6,5 +6,6 @@ namespace _Project.Scripts
     public class GameData
     {
         public int HighScore;
+        public bool AdsDisabled;
     }
 }

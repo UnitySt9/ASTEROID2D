@@ -34,9 +34,6 @@ namespace _Project.Scripts
             Container.Bind<IShipIndicatorsView>().FromInstance(_shipIndicatorsView).AsSingle();
             Container.BindInterfacesAndSelfTo<ShipIndicatorsPresenter>().AsSingle();
             
-            Container.Bind<ISaveService>().To<PlayerPrefsSaveService>().AsSingle();
-            Container.Bind<GameData>().FromNew().AsTransient();
-            
             Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
         }
