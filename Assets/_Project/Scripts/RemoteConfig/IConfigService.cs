@@ -6,6 +6,5 @@ namespace _Project.Scripts
     {
         GameConfig Config { get; }
         event Action OnConfigUpdated;
-        void FetchConfigs(Action<bool> callback = null);
     }
 }

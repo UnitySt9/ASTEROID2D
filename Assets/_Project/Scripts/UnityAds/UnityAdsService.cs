@@ -52,7 +52,8 @@ namespace _Project.Scripts
 
         private void LoadInterstitialAd()
         {
-            if (!_isInitialized) return;
+            if (!_isInitialized) 
+                return;
             IsInterstitialAdReady = false;
             Advertisement.Load(INTERSTITIAL_AD_ID, this);
         }

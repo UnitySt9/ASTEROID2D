@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
+using Zenject;
 
 namespace _Project.Scripts
 {
-    public class UnityIAPService : IIAPService, IDetailedStoreListener
+    public class UnityIAPService : IIAPService, IDetailedStoreListener, IInitializable
     {
         private const string NO_ADS_PRODUCT_ID = "no_ads";
         private IStoreController _storeController;
@@ -15,7 +16,6 @@ namespace _Project.Scripts
         public UnityIAPService(ISaveService saveService)
         {
             _saveService = saveService;
-            Initialize();
         }
 
         public void Initialize()

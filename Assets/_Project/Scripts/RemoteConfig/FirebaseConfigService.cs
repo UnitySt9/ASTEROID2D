@@ -41,12 +41,7 @@ namespace _Project.Scripts
             };
         }
 
-        public void FetchConfigs(Action<bool> callback = null)
-        {
-            _ = FetchConfigAsync(callback);
-        }
-
-        private async Task FetchConfigAsync(Action<bool> callback)
+        public async void FetchConfigs(Action<bool> callback = null)
         {
             try
             {
