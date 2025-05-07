@@ -12,6 +12,7 @@ namespace _Project.Scripts
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
             Container.Bind<IAdsService>().To<UnityAdsService>().AsSingle();
             Container.Bind<ISaveService>().To<PlayerPrefsSaveService>().AsSingle();
+            Container.Bind<ICloudSaveService>().To<UnityCloudSaveService>().AsSingle();
             Container.Bind<IIAPService>().To<UnityIAPService>().AsSingle();
             Container.Bind<GameData>().FromNew().AsTransient();
         }

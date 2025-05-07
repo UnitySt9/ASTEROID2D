@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts
@@ -10,6 +11,7 @@ namespace _Project.Scripts
         private readonly GameStateManager _gameStateManager;
         private readonly Score _score;
         private readonly ISaveService _saveService;
+        private readonly ICloudSaveService _cloudSaveService;
 
         [Inject]
         public GameOverPresenter(
@@ -17,17 +19,33 @@ namespace _Project.Scripts
             GameOverView view,
             GameStateManager gameStateManager,
             Score score,
-            ISaveService saveService)
+            ISaveService saveService,
+            ICloudSaveService cloudSaveService)
         {
             _model = model;
             _view = view;
             _score = score;
             _gameStateManager = gameStateManager;
             _saveService = saveService;
+            _cloudSaveService = cloudSaveService;
             _gameStateManager.RegisterListener(this);
+            InitializeCloudSave();
         }
 
-        public void OnGameOver()
+        private async void InitializeCloudSave()
+        {
+            try
+            {
+                await _cloudSaveService.InitializeAsync();
+                await _cloudSaveService.SynchronizeAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Cloud save initialization error: {e.Message}");
+            }
+        }
+
+        public async void OnGameOver()
         {
             var gameData = _saveService.Load();
             _model.Score = _score.Count;
@@ -36,7 +54,16 @@ namespace _Project.Scripts
             if (_model.IsNewRecord)
             {
                 gameData.HighScore = _model.Score;
-                _saveService.Save(gameData); 
+                gameData.SaveDateTime = DateTime.UtcNow;
+                _saveService.Save(gameData);
+                try
+                {
+                    await _cloudSaveService.SaveAsync(gameData);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Failed to save to cloud: {e.Message}");
+                }
             }
             _model.HighScore = gameData.HighScore;
             _view.ShowPanel(_model.Score, _model.HighScore, _model.IsNewRecord);

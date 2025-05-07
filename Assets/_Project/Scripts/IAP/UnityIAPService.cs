@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
@@ -11,16 +12,21 @@ namespace _Project.Scripts
         private IStoreController _storeController;
         private IExtensionProvider _extensions;
         private ISaveService _saveService;
+        private ICloudSaveService _cloudSaveService;
+        
         public bool AreAdsDisabled => _saveService.Load().AdsDisabled;
 
-        public UnityIAPService(ISaveService saveService)
+        [Inject]
+        public UnityIAPService(ISaveService saveService, ICloudSaveService cloudSaveService)
         {
             _saveService = saveService;
+            _cloudSaveService = cloudSaveService;
         }
 
         public void Initialize()
         {
-            if (_storeController != null) return;
+            if (_storeController != null) 
+                return;
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct(NO_ADS_PRODUCT_ID, ProductType.NonConsumable);
             UnityPurchasing.Initialize(this, builder);
@@ -28,7 +34,8 @@ namespace _Project.Scripts
 
         public void PurchaseNoAds()
         {
-            if (_storeController == null || AreAdsDisabled) return;
+            if (_storeController == null || AreAdsDisabled) 
+                return;
             _storeController.InitiatePurchase(NO_ADS_PRODUCT_ID);
         }
 
@@ -36,45 +43,50 @@ namespace _Project.Scripts
         {
             _storeController = controller;
             _extensions = extensions;
+            
             var product = _storeController.products.WithID(NO_ADS_PRODUCT_ID);
             if (product != null && product.hasReceipt)
             {
-                var gameData = _saveService.Load();
-                gameData.AdsDisabled = true;
-                _saveService.Save(gameData);
+                UpdateAdsDisabledStatus(true);
             }
-        }
-
-        public void OnInitializeFailed(InitializationFailureReason error)
-        {
-            Debug.LogError($"IAP initialization failed: {error}");
-        }
-
-        public void OnInitializeFailed(InitializationFailureReason error, string message)
-        {
-            Debug.LogError($"IAP initialization failed: {error} - {message}");
         }
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
             if (purchaseEvent.purchasedProduct.definition.id == NO_ADS_PRODUCT_ID)
             {
-                var gameData = _saveService.Load();
-                gameData.AdsDisabled = true;
-                _saveService.Save(gameData);
+                UpdateAdsDisabledStatus(true);
             }
-            
             return PurchaseProcessingResult.Complete;
         }
 
-        public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
+        private async void UpdateAdsDisabledStatus(bool disabled)
         {
-            Debug.LogError($"Purchase failed: {product.definition.id}, {failureReason}");
+            var gameData = _saveService.Load();
+            gameData.AdsDisabled = disabled;
+            gameData.SaveDateTime = DateTime.UtcNow;
+            _saveService.Save(gameData);
+            try
+            {
+                await _cloudSaveService.InitializeAsync();
+                await _cloudSaveService.SaveAsync(gameData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to sync no-ads purchase to cloud: {e.Message}");
+            }
         }
+        
+        public void OnInitializeFailed(InitializationFailureReason error) =>
+            Debug.LogError($"IAP initialization failed: {error}");
 
-        public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
-        {
+        public void OnInitializeFailed(InitializationFailureReason error, string message) =>
+            Debug.LogError($"IAP initialization failed: {error} - {message}");
+
+        public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) =>
+            Debug.LogError($"Purchase failed: {product.definition.id}, {failureReason}");
+
+        public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription) =>
             Debug.LogError($"Purchase failed: {product.definition.id}, {failureDescription}");
-        }
     }
 }

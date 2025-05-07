@@ -7,5 +7,11 @@ namespace _Project.Scripts
     {
         public int HighScore;
         public bool AdsDisabled;
+        public DateTime SaveDateTime;
+        
+        public GameData()
+        {
+            SaveDateTime = DateTime.MinValue;
+        }
     }
 }
