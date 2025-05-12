@@ -18,7 +18,8 @@ namespace _Project.Scripts
         private DiContainer _container;
         private InputHandler _inputHandler;
         private ShipIndicatorsPresenter _shipIndicatorsPresenter;
-        private IShipIndicatorsView _shipIndicatorsView; 
+        private IShipIndicatorsView _shipIndicatorsView;
+        private ICloudSaveService _cloudSaveService;
 
         [Inject]
         public void Construct(
@@ -34,7 +35,8 @@ namespace _Project.Scripts
             DiContainer container,
             InputHandler inputHandler,
             ShipIndicatorsPresenter shipIndicatorsPresenter,
-            IShipIndicatorsView shipIndicatorsView)
+            IShipIndicatorsView shipIndicatorsView,
+            ICloudSaveService cloudSaveService)
         {
             _gameStateManager = gameStateManager;
             _score = score;
@@ -49,6 +51,7 @@ namespace _Project.Scripts
             _inputHandler = inputHandler;
             _shipIndicatorsPresenter = shipIndicatorsPresenter;
             _shipIndicatorsView = shipIndicatorsView;
+            _cloudSaveService = cloudSaveService;
         }
 
         public async void Initialize()
@@ -62,7 +65,8 @@ namespace _Project.Scripts
             _container.Bind<ShipTransform>().FromInstance(shipTransform).AsSingle();
             _container.Bind<CollisionHandler>().FromInstance(collisionHandler).AsSingle();
             _container.Bind<SpaceShipShooting>().FromInstance(_spaceShipShooting).AsSingle();
-
+            await _cloudSaveService.InitializeAsync();
+            await _cloudSaveService.SynchronizeAsync();
             SubscribeToEvents();
             await _bulletFactory.Initialize();
             await _lazerFactory.Initialize();

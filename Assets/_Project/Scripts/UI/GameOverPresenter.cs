@@ -29,20 +29,6 @@ namespace _Project.Scripts
             _saveService = saveService;
             _cloudSaveService = cloudSaveService;
             _gameStateManager.RegisterListener(this);
-            InitializeCloudSave();
-        }
-
-        private async void InitializeCloudSave()
-        {
-            try
-            {
-                await _cloudSaveService.InitializeAsync();
-                await _cloudSaveService.SynchronizeAsync();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Cloud save initialization error: {e.Message}");
-            }
         }
 
         public async void OnGameOver()
