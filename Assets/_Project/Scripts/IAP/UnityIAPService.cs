@@ -13,14 +13,16 @@ namespace _Project.Scripts
         private IExtensionProvider _extensions;
         private ISaveService _saveService;
         private ICloudSaveService _cloudSaveService;
-        
-        public bool AreAdsDisabled => _saveService.Load().AdsDisabled;
+        private GameData _gameData;
+    
+        public bool AreAdsDisabled => _gameData.AdsDisabled;
 
         [Inject]
         public UnityIAPService(ISaveService saveService, ICloudSaveService cloudSaveService)
         {
             _saveService = saveService;
             _cloudSaveService = cloudSaveService;
+            _gameData = _saveService.Load();
         }
 
         public void Initialize()
@@ -62,14 +64,13 @@ namespace _Project.Scripts
 
         private async void UpdateAdsDisabledStatus(bool disabled)
         {
-            var gameData = _saveService.Load();
-            gameData.AdsDisabled = disabled;
-            gameData.SaveDateTime = DateTime.UtcNow;
-            _saveService.Save(gameData);
+            _gameData.AdsDisabled = disabled;
+            _gameData.SaveDateTime = DateTime.UtcNow;
+            _saveService.Save(_gameData);
             try
             {
                 await _cloudSaveService.InitializeAsync();
-                await _cloudSaveService.SaveAsync(gameData);
+                await _cloudSaveService.SaveAsync(_gameData);
             }
             catch (Exception e)
             {
