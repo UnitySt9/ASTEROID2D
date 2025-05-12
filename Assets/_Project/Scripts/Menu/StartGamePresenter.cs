@@ -1,8 +1,9 @@
 using System;
+using Zenject;
 
 namespace _Project.Scripts
 {
-    public class StartGamePresenter : IDisposable
+    public class StartGamePresenter : IDisposable, IInitializable
     {
         private readonly ISceneLoader _sceneLoader;
         private readonly IIAPService _iapService;
@@ -13,10 +14,9 @@ namespace _Project.Scripts
             _sceneLoader = sceneLoader;
             _iapService = iapService;
             _view = view;
-            Initialize();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             _view.StartButton.onClick.AddListener(StartLevel);
             UpdateNoAdsUI();
