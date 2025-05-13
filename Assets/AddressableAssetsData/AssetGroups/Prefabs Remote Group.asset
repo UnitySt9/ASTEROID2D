@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: Prefabs Remote Group
   m_EditorClassIdentifier: 
-  m_GroupName: Prefabs Local Group
+  m_GroupName: Prefabs Remote Group
   m_Data:
     m_SerializedData: []
   m_GUID: 105cbf912a9e30847ab7f4505b67019b
