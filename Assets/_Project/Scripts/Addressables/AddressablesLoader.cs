@@ -12,6 +12,8 @@ namespace _Project.Scripts
         private const string UFO_PREFAB_KEY = "ufo_prefab";
         private const string BULLET_PREFAB_KEY = "bullet_prefab";
         private const string LAZER_PREFAB_KEY = "lazer_prefab";
+        private const string GAME_OVER_VIEW_KEY = "game_over_view";
+        private const string SHIP_INDICATORS_VIEW_KEY = "ship_indicators_view";
 
         public AddressablesLoader()
         {
@@ -41,6 +43,16 @@ namespace _Project.Scripts
         public async UniTask<GameObject> LoadLazerPrefab()
         {
             return await LoadPrefab(LAZER_PREFAB_KEY);
+        }
+        
+        public async UniTask<GameObject> LoadGameOverViewPrefab()
+        {
+            return await LoadPrefab(GAME_OVER_VIEW_KEY);
+        }
+
+        public async UniTask<GameObject> LoadShipIndicatorsViewPrefab()
+        {
+            return await LoadPrefab(SHIP_INDICATORS_VIEW_KEY);
         }
 
         private async UniTask<GameObject> LoadPrefab(string key)

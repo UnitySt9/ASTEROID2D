@@ -10,6 +10,8 @@ namespace _Project.Scripts
         UniTask<GameObject> LoadUFOPrefab();
         UniTask<GameObject> LoadBulletPrefab();
         UniTask<GameObject> LoadLazerPrefab();
+        UniTask<GameObject> LoadGameOverViewPrefab();
+        UniTask<GameObject> LoadShipIndicatorsViewPrefab();
         void ReleaseAsset(Object asset);
     }
 }

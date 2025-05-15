@@ -17,11 +17,10 @@ namespace _Project.Scripts
         [Inject]
         private void Construct(ISceneLoader sceneLoader, IAdsService adsService, GameStateManager gameStateManager)
         {
+            _gameStateManager = gameStateManager;
             _sceneLoader = sceneLoader;
             _adsService = adsService;
-            _gameStateManager = gameStateManager;
         }
-
         private void Start()
         {
             _restartButton.onClick.AddListener(OnRestartClicked);  
@@ -32,35 +31,28 @@ namespace _Project.Scripts
             {  
                 unityAdsService.OnAdReadyChanged += UpdateAdsButton;  
             }  
-            UpdateAdsButton();  
+            UpdateAdsButton();
         }
-        
+
         private void UpdateAdsButton()
         {
             _adsButton.gameObject.SetActive(_adsService.IsRewardedAdReady);
         }
 
-        private void OnRestartClicked()
+        private void OnRestartClicked() => _adsService.ShowInterstitialAd(() => _sceneLoader.ReloadScene());
+        
+        private void OnAdsClicked() => _adsService.ShowRewardedAd(() => 
         {
-            _adsService.ShowInterstitialAd(() => { _sceneLoader.ReloadScene(); });
-        }
-
-        private void OnAdsClicked()
-        {
-            _adsService.ShowRewardedAd(() => { _gameStateManager.ContinueGame(); gameObject.SetActive(false); });
-        }
-
-        private void LoadMenu()
-        {
-            _sceneLoader.LoadMenu();
-        }
+            _gameStateManager.ContinueGame(); 
+            gameObject.SetActive(false);
+        });
+        private void LoadMenu() => _sceneLoader.LoadMenu();
 
         private void OnDestroy()
         {
             if (_adsService is UnityAdsService unityAdsService)  
-            {  
                 unityAdsService.OnAdReadyChanged -= UpdateAdsButton;  
-            }  
+            
             _restartButton.onClick.RemoveAllListeners();
             _menuButton.onClick.RemoveAllListeners();
             _adsButton.onClick.RemoveAllListeners();

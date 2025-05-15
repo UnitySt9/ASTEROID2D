@@ -37,6 +37,14 @@ MonoBehaviour:
     m_Address: ship_prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 27ec267a87ce79c4eacd7ac0a5b62b2d
+    m_Address: game_over_view
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 52b2d2ba712a0bd45bc99f68a9e044a4
+    m_Address: ship_indicators_view
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 27173b5b9ad880f46a3dbe0d4a9bfef0, type: 2}
   m_SchemaSet:

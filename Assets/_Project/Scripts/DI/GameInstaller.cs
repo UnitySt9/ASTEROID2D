@@ -6,8 +6,6 @@ namespace _Project.Scripts
     public class GameInstaller : MonoInstaller
     {
         [SerializeField] private ShipSpawnPoint _shipSpawnPoint;
-        [SerializeField] private GameOverView _gameOverView;
-        [SerializeField] private ShipIndicatorsView _shipIndicatorsView;
         [SerializeField] private Camera _cameraMain;
 
         public override void InstallBindings()
@@ -27,11 +25,9 @@ namespace _Project.Scripts
             Container.Bind<SpaceObjectFactory>().AsSingle();
             Container.Bind<ShipFactory>().AsSingle();
             
+            Container.Bind<Canvas>().FromComponentInHierarchy().AsSingle();
             Container.Bind<GameOverModel>().AsSingle();
-            Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();
             Container.BindInterfacesAndSelfTo<GameOverPresenter>().AsSingle();
-            
-            Container.Bind<IShipIndicatorsView>().FromInstance(_shipIndicatorsView).AsSingle();
             Container.BindInterfacesAndSelfTo<ShipIndicatorsPresenter>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();

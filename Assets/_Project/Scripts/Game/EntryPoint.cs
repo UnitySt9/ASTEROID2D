@@ -1,5 +1,7 @@
 using System;
+using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace _Project.Scripts
 {
@@ -18,8 +20,10 @@ namespace _Project.Scripts
         private DiContainer _container;
         private InputHandler _inputHandler;
         private ShipIndicatorsPresenter _shipIndicatorsPresenter;
-        private IShipIndicatorsView _shipIndicatorsView;
+        private GameOverPresenter _gameOverPresenter;
+        private IAddressablesLoader _addressablesLoader;
         private ICloudSaveService _cloudSaveService;
+        private Canvas _mainCanvas;
 
         [Inject]
         public void Construct(
@@ -35,8 +39,10 @@ namespace _Project.Scripts
             DiContainer container,
             InputHandler inputHandler,
             ShipIndicatorsPresenter shipIndicatorsPresenter,
-            IShipIndicatorsView shipIndicatorsView,
-            ICloudSaveService cloudSaveService)
+            GameOverPresenter gameOverPresenter,
+            IAddressablesLoader addressablesLoader,
+            ICloudSaveService cloudSaveService,
+            Canvas mainCanvas)
         {
             _gameStateManager = gameStateManager;
             _score = score;
@@ -50,12 +56,27 @@ namespace _Project.Scripts
             _container = container;
             _inputHandler = inputHandler;
             _shipIndicatorsPresenter = shipIndicatorsPresenter;
-            _shipIndicatorsView = shipIndicatorsView;
+            _gameOverPresenter = gameOverPresenter;
+            _addressablesLoader = addressablesLoader;
             _cloudSaveService = cloudSaveService;
+            _mainCanvas = mainCanvas;
         }
 
         public async void Initialize()
         {
+            var gameOverViewPrefab = await _addressablesLoader.LoadGameOverViewPrefab();
+            var gameOverViewInstance = Object.Instantiate(gameOverViewPrefab, _mainCanvas.transform);
+            var gameOverView = gameOverViewInstance.GetComponent<GameOverView>();
+            _container.Bind<GameOverView>().FromInstance(gameOverView).AsSingle();
+            var restartGame = gameOverViewInstance.GetComponent<RestartGame>();
+            _container.Inject(restartGame);
+            
+            var shipIndicatorsViewPrefab = await _addressablesLoader.LoadShipIndicatorsViewPrefab();
+            var shipIndicatorsViewInstance = Object.Instantiate(shipIndicatorsViewPrefab, _mainCanvas.transform);
+            var shipIndicatorsView = shipIndicatorsViewInstance.GetComponent<ShipIndicatorsView>();
+            _container.Bind<IShipIndicatorsView>().FromInstance(shipIndicatorsView).AsSingle();
+            _gameOverPresenter.Initialize(gameOverView);
+            
             var shipInstance = await _shipFactory.CreateShip();
             _container.Bind<ShipMovement>().FromInstance(shipInstance).AsSingle();
             var shipTransform = shipInstance.GetComponent<ShipTransform>();
@@ -65,6 +86,7 @@ namespace _Project.Scripts
             _container.Bind<ShipTransform>().FromInstance(shipTransform).AsSingle();
             _container.Bind<CollisionHandler>().FromInstance(collisionHandler).AsSingle();
             _container.Bind<SpaceShipShooting>().FromInstance(_spaceShipShooting).AsSingle();
+            
             await _cloudSaveService.InitializeAsync();
             await _cloudSaveService.SynchronizeAsync();
             SubscribeToEvents();
@@ -74,10 +96,10 @@ namespace _Project.Scripts
             await _ufoFactory.Initialize(shipTransform);
             await _spaceObjectFactory.Initialize();
             _spawnManager.Initialize();
-            _shipIndicatorsPresenter.Initialize(_shipIndicatorsView, _spaceShipShooting, _score);
+            _shipIndicatorsPresenter.Initialize(shipIndicatorsView, _spaceShipShooting, _score);
             _gameStateManager.GameStart();
         }
-
+        
         private void SubscribeToEvents()
         {
             _ufoFactory.OnUFOCreated += OnUfoCreated;
