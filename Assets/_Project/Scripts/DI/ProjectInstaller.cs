@@ -1,4 +1,5 @@
 using Zenject;
+using UnityEngine;
 
 namespace _Project.Scripts
 {
@@ -14,7 +15,10 @@ namespace _Project.Scripts
             Container.Bind<ISaveService>().To<PlayerPrefsSaveService>().AsSingle();
             Container.Bind<ICloudSaveService>().To<UnityCloudSaveService>().AsSingle();
             Container.Bind<IIAPService>().To<UnityIAPService>().AsSingle();
-            Container.Bind<GameData>().FromNew().AsTransient();
+            
+            var saveService = Container.Resolve<ISaveService>();
+            var gameData = saveService.Load();
+            Container.Bind<GameData>().FromInstance(gameData).AsSingle();
         }
     }
 }

@@ -46,6 +46,7 @@ namespace _Project.Scripts
             _gameStateManager.ContinueGame(); 
             gameObject.SetActive(false);
         });
+        
         private void LoadMenu() => _sceneLoader.LoadMenu();
 
         private void OnDestroy()

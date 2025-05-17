@@ -6,26 +6,24 @@ namespace _Project.Scripts
 {
     public class UnityAdsService : IAdsService, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
     {
-        public event Action OnAdReadyChanged;
-        
-        private Action _onRewardedCallback;
-        private Action _onInterstitialCompleted;
-        
         private const string ANDROID_GAME_ID = "5834877";
         private const string IOS_GAME_ID = "5834876";
         private const string REWARD_AD_ID = "Rewarded_Android";
         private const string INTERSTITIAL_AD_ID = "Interstitial_Android";
-        private readonly ISaveService _saveService;
+        public event Action OnAdReadyChanged;
+        
+        private Action _onRewardedCallback;
+        private Action _onInterstitialCompleted;
+        private readonly GameData _gameData;
         private bool _isInitialized;
         public bool IsRewardedAdReady { get; private set; }
         public bool IsInterstitialAdReady { get; private set; }
 
-        public UnityAdsService(ISaveService saveService)
+        public UnityAdsService(GameData gameData)
         {
-            _saveService = saveService;
-    
-            if (_saveService.Load().AdsDisabled) return;
-    
+            _gameData = gameData;
+            if (_gameData.AdsDisabled) 
+                return;
             string gameId = Application.platform == RuntimePlatform.IPhonePlayer ? IOS_GAME_ID : ANDROID_GAME_ID;
             Advertisement.Initialize(gameId, true, this);
         }
@@ -44,8 +42,8 @@ namespace _Project.Scripts
 
         private void LoadRewardedAd()
         {
-            if (!_isInitialized) return;
-            
+            if (!_isInitialized) 
+                return;
             IsRewardedAdReady = false;
             Advertisement.Load(REWARD_AD_ID, this);
         }
@@ -60,7 +58,7 @@ namespace _Project.Scripts
 
         public void ShowRewardedAd(Action onRewarded)
         {
-            if (_saveService.Load().AdsDisabled)
+            if (_gameData.AdsDisabled)
             {
                 onRewarded?.Invoke();
                 return;
@@ -81,7 +79,7 @@ namespace _Project.Scripts
 
         public void ShowInterstitialAd(Action onCompleted)
         {
-            if (_saveService.Load().AdsDisabled)
+            if (_gameData.AdsDisabled)
             {
                 onCompleted?.Invoke();
                 return;
@@ -125,8 +123,16 @@ namespace _Project.Scripts
             Debug.LogError($"Failed to show ad {placementId}: {error} - {message}");
         }
 
-        public void OnUnityAdsShowStart(string placementId) { }
-        public void OnUnityAdsShowClick(string placementId) { }
+        public void OnUnityAdsShowStart(string placementId)
+        {
+            Debug.Log($"Showing ad {placementId}");
+        }
+
+        public void OnUnityAdsShowClick(string placementId)
+        {
+            Debug.Log($"Showing ad {placementId}");
+        }
+        
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
         {
             if (placementId == REWARD_AD_ID && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
@@ -139,8 +145,10 @@ namespace _Project.Scripts
                 _onInterstitialCompleted?.Invoke();
             }
             
-            if (placementId == REWARD_AD_ID) LoadRewardedAd();
-            if (placementId == INTERSTITIAL_AD_ID) LoadInterstitialAd();
+            if (placementId == REWARD_AD_ID) 
+                LoadRewardedAd();
+            if (placementId == INTERSTITIAL_AD_ID) 
+                LoadInterstitialAd();
         }
     }
 }

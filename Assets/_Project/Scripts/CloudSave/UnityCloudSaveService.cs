@@ -11,12 +11,12 @@ namespace _Project.Scripts
     public class UnityCloudSaveService : ICloudSaveService
     {
         private const string SAVE_KEY = "GameSaveData";
+        private readonly GameData _gameData;
         private bool _isInitialized = false;
-        private ISaveService _localSaveService;
 
-        public UnityCloudSaveService(ISaveService localSaveService)
+        public UnityCloudSaveService(GameData gameData)
         {
-            _localSaveService = localSaveService;
+            _gameData = gameData;
         }
 
         public async Task InitializeAsync()
@@ -84,20 +84,21 @@ namespace _Project.Scripts
                 return false;
             try
             {
-                var localData = _localSaveService.Load();
                 var cloudData = await LoadAsync();
                 if (cloudData == null)
                 {
-                    await SaveAsync(localData);
+                    await SaveAsync(_gameData);
                     return true;
                 }
-                if (localData.SaveDateTime > cloudData.SaveDateTime)
+                
+                if (_gameData.SaveDateTime < cloudData.SaveDateTime)
                 {
-                    await SaveAsync(localData);
+                    JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(cloudData), _gameData);
                 }
-                else if (localData.SaveDateTime < cloudData.SaveDateTime)
+                
+                else if (_gameData.SaveDateTime > cloudData.SaveDateTime)
                 {
-                    _localSaveService.Save(cloudData);
+                    await SaveAsync(_gameData);
                 }
                 return true;
             }

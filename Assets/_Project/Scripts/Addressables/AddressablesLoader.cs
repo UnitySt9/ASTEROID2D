@@ -61,12 +61,10 @@ namespace _Project.Scripts
             {
                 var handle = Addressables.LoadAssetAsync<GameObject>(key);
                 await handle.ToUniTask();
-                
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
                     return handle.Result;
                 }
-                
                 Debug.LogError($"Failed to load prefab: {key}");
                 return null;
             }
