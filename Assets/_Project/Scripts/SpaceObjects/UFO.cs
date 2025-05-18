@@ -18,15 +18,17 @@ namespace _Project.Scripts
         private Vector2 _direction;
         private Camera _cameraMain;
         private IConfigService _configService;
+        private IAudioService _audioService;
         private bool _isGameOver = false;
         private float _speed;
 
         [Inject]
         public void Construct(
-            Camera cameraMain, IAddressablesLoader addressablesLoader, IConfigService configService)
+            Camera cameraMain, IAddressablesLoader addressablesLoader, IConfigService configService, IAudioService audioService)
         {
             _cameraMain = cameraMain;
             _configService = configService;
+            _audioService = audioService;
             UpdateConfigValues();
             _configService.OnConfigUpdated += UpdateConfigValues;
         }
@@ -54,6 +56,7 @@ namespace _Project.Scripts
         {
             if (collision.TryGetComponent(out Bullet _) || collision.TryGetComponent(out Lazer _))
             {
+                _audioService.PlayObjectExplosionSound();
                 OnUFOHit?.Invoke(_scoreValue);
                 Destroy(gameObject);
             }

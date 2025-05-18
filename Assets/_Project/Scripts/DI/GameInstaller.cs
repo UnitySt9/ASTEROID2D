@@ -7,6 +7,7 @@ namespace _Project.Scripts
     {
         [SerializeField] private ShipSpawnPoint _shipSpawnPoint;
         [SerializeField] private Camera _cameraMain;
+        [SerializeField] private AudioConfig _audioConfig;
 
         public override void InstallBindings()
         {
@@ -32,6 +33,9 @@ namespace _Project.Scripts
             
             Container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
+            
+            Container.Bind<AudioConfig>().FromInstance(_audioConfig).AsSingle();
+            Container.BindInterfacesAndSelfTo<AudioService>().AsSingle();
         }
     }
 }

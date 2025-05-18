@@ -6,11 +6,13 @@ namespace _Project.Scripts
     {
         private readonly List<IGameStateListener> _listeners = new();
         private readonly IAnalyticsService _analyticsService;
+        private IAudioService _audioService;
         private bool _gameStarted = false;
 
-        public GameStateManager(IAnalyticsService analyticsService)
+        public GameStateManager(IAnalyticsService analyticsService, IAudioService audioService)
         {
             _analyticsService = analyticsService;
+            _audioService = audioService;
         }
 
         public void GameStart()
@@ -18,12 +20,14 @@ namespace _Project.Scripts
             if (!_gameStarted)
             {
                 _gameStarted = true;
+                _audioService.PlayBackgroundMusic();
                 _analyticsService.TrackGameStart();
             }
         }
 
         public void GameOver()
         {
+            _audioService.StopBackgroundMusic();
             foreach (var listener in _listeners)
             {
                 listener.OnGameOver();
@@ -32,6 +36,7 @@ namespace _Project.Scripts
         
         public void ContinueGame()
         {
+            _audioService.PlayBackgroundMusic();
             foreach (var listener in _listeners)
             {
                 listener.OnGameContinue();

@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shipSpawnPoint: {fileID: 947432545}
   _cameraMain: {fileID: 519420031}
-  _uiCanvas: {fileID: 431893376}
+  _audioConfig: {fileID: 11400000, guid: 41e213a6fc4f773469a9aab2eaad5399, type: 2}
 --- !u!4 &138681355
 Transform:
   m_ObjectHideFlags: 0
