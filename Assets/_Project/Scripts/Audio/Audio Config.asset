@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7e760679fe7be64fa3d3b54f3d2914c, type: 3}
-  m_Name: New Audio Config
+  m_Name: Audio Config
   m_EditorClassIdentifier: 
   shootSound: {fileID: 8300000, guid: 504bb2dbcf1af154aa80ae56555751f3, type: 3}
   objectExplosionSound: {fileID: 8300000, guid: 025e01b0d55b2a74da5d043af099b9d4, type: 3}

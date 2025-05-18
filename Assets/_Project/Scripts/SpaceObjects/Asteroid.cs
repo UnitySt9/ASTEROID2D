@@ -12,13 +12,15 @@ namespace _Project.Scripts
         private GameObject _loadedPrefab;
         private IConfigService _configService;
         private IAudioService _audioService;
+        private IVfxService _vfxService;
     
         [Inject]
-        public void Construct(Camera cameraMain, IConfigService configService, IAudioService audioService)
+        public void Construct(Camera cameraMain, IConfigService configService, IAudioService audioService, IVfxService vfxService)
         {
             _cameraMain = cameraMain;
             _configService = configService;
             _audioService = audioService;
+            _vfxService = vfxService;
             UpdateConfigValues();
             _configService.OnConfigUpdated += UpdateConfigValues;
         }
@@ -39,6 +41,7 @@ namespace _Project.Scripts
         {
             base.OnTriggerEnter2D(collision);
             _audioService.PlayObjectExplosionSound();
+            _vfxService.PlayObjectExplosionVfx(transform.position);
             if (collision.TryGetComponent(out Bullet _) || collision.TryGetComponent(out Lazer _))
             {
                 Shatter();

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994236148929280488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.005, y: 0.316, z: 0}
+  m_LocalPosition: {x: -0.005, y: 0.763, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserCooldown: 5
   currentLaserShots: 0
-  _firePoint: {fileID: 1994236150271174462}
+  _firePoint: {fileID: 1994236148929280489}
 --- !u!114 &-2164664611405664258
 MonoBehaviour:
   m_ObjectHideFlags: 0

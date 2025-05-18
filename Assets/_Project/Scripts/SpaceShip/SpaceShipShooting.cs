@@ -19,6 +19,7 @@ namespace _Project.Scripts
         private IConfigService _configService;
         private WaitForSeconds _waitRechargeLaser;
         private IAudioService _audioService;
+        private IVfxService _vfxService;
         private int _maxLaserShots;
 
         [Inject]
@@ -27,13 +28,15 @@ namespace _Project.Scripts
             LazerFactory lazerFactory, 
             IAnalyticsService analyticsService,
             IConfigService configService,
-            IAudioService audioService)
+            IAudioService audioService,
+            IVfxService vfxService)
         {
             _bulletFactory = bulletFactory;
             _lazerFactory = lazerFactory;
             _analyticsService = analyticsService;
             _configService = configService;
             _audioService = audioService;
+            _vfxService = vfxService;
             UpdateConfigValues();
             _configService.OnConfigUpdated += UpdateConfigValues;
         }
@@ -67,6 +70,7 @@ namespace _Project.Scripts
         {
             _bulletFactory.CreateBullet(_firePoint);
             _audioService.PlayShootSound();
+            _vfxService.PlayShootVfx(_firePoint.position);
             ShotsFired++;
         }
         
@@ -76,6 +80,7 @@ namespace _Project.Scripts
             {
                 _lazerFactory.CreateLazer(_firePoint);
                 _audioService.PlayShootSound();
+                _vfxService.PlayShootVfx(_firePoint.position);
                 currentLaserShots--;
                 LasersUsed++;
                 _analyticsService.TrackLaserUsed();

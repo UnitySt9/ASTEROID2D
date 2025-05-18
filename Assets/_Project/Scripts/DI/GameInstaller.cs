@@ -8,6 +8,7 @@ namespace _Project.Scripts
         [SerializeField] private ShipSpawnPoint _shipSpawnPoint;
         [SerializeField] private Camera _cameraMain;
         [SerializeField] private AudioConfig _audioConfig;
+        [SerializeField] private VfxConfig _vfxConfig;
 
         public override void InstallBindings()
         {
@@ -36,6 +37,8 @@ namespace _Project.Scripts
             
             Container.Bind<AudioConfig>().FromInstance(_audioConfig).AsSingle();
             Container.BindInterfacesAndSelfTo<AudioService>().AsSingle();
+            Container.Bind<VfxConfig>().FromInstance(_vfxConfig).AsSingle();
+            Container.BindInterfacesAndSelfTo<VfxService>().AsSingle();
         }
     }
 }
